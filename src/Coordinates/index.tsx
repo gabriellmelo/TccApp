@@ -1,3 +1,12 @@
+export const CoordenadasPorBairro: { [bairro: string]: { latitude: number; longitude: number } } = {
+  "Centro": { latitude: -20.539076, longitude: -47.399781 },
+  "Vila Santa Cruz": { latitude: -20.535939, longitude: -47.394847 },
+  "Parque Vicente Leporace": { latitude: -20.535432, longitude: -47.408214 },
+  "Jardim Alvorada": { latitude: -20.543598, longitude: -47.396508 },
+  "Cidade Nova": { latitude: -20.541429, longitude: -47.390267 },
+};
+
+
 export const CoordenadasPorRua: { [bairro: string]: { [rua: string]: { latitude: number; longitude: number } } } = {
     "Centro": {
       "Rua Monsenhor Rosa": { latitude: -20.539076, longitude: -47.399781 },

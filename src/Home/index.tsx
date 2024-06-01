@@ -4,7 +4,7 @@ import { Picker } from "@react-native-picker/picker";
 import MapView, { Marker } from "react-native-maps";
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { bairros, RuasPorBairro, AcidenteDadosPorRua } from "../Data";
-import { CoordenadasPorRua } from "../Coordinates";
+import { CoordenadasPorBairro, CoordenadasPorRua } from "../Coordinates";
 
 type RootStackParamList = {
   Detail: { bairro: string; rua: string; };
@@ -35,15 +35,23 @@ export default function Home() {
     setRuaSelecionada("");
     if (bairro === "") {
       setMostrarPickerRua(false);
+      setCoordenadas({ latitude: -20.5386, longitude: -47.4006 }); 
     } else {
       setMostrarPickerRua(true);
+      const coordenadasBairro = CoordenadasPorBairro[bairro];
+      if (coordenadasBairro) {
+        setCoordenadas(coordenadasBairro);
+      }
     }
   };
-
+  
   const handleRuaChange = (rua: string) => {
     setRuaSelecionada(rua);
+    if (rua === "") {
+      setCoordenadas({ latitude: -20.5386, longitude: -47.4006 }); 
+    }
   };
-
+  
   const handleButtonPress = () => {
     if (!bairroSelecionado || !ruaSelecionada) {
       Alert.alert("Seleção inválida", "Por favor, selecione um bairro e uma rua.");
@@ -57,6 +65,27 @@ export default function Home() {
     }
   };
 
+  const getMarkerColor = (ruaSelecionada: string) => {
+    if (ruaSelecionada && AcidenteDadosPorRua[ruaSelecionada]) {
+      const indiceAcidente = AcidenteDadosPorRua[ruaSelecionada].indiceAcidentes;
+      if (indiceAcidente !== undefined) {
+        if (indiceAcidente === 0) {
+          return "green";
+        } else if (indiceAcidente <= 5) {
+          return "yellow";
+        } else if (indiceAcidente <= 10) {
+          return "orange";
+        } else {
+          return "red";
+        }
+      }
+    }
+    return "blue";
+  };
+  
+
+  const markerColor = getMarkerColor(ruaSelecionada);
+
   return (
     <SafeAreaView style={styles.container}>
       <MapView
@@ -68,12 +97,32 @@ export default function Home() {
           longitudeDelta: 0.01,
         }}
       >
-        <Marker
-          coordinate={{
-            latitude: coordenadas.latitude,
-            longitude: coordenadas.longitude,
-          }}
-        />
+    
+      <Marker
+        key={markerColor}
+        coordinate={{
+          latitude: coordenadas.latitude,
+          longitude: coordenadas.longitude,
+        }}
+        pinColor={markerColor}
+        onPress={() => {
+          let message = '';
+          if (markerColor === 'blue') {
+            message = 'Sem dados';
+          } else if (markerColor === 'green') {
+            message = 'Sem acidente';
+          } else if (markerColor === 'yellow') {
+            message = 'Baixo indice de acidente';
+          } else if (markerColor === 'orange') {
+            message = 'Médio índice de acidente';
+          } else if (markerColor === 'red') {
+            message = 'Alto índice de acidente';
+          }
+          Alert.alert('Informação do Marcador', message);
+        }}
+      />
+
+
       </MapView>
 
       <View style={styles.overlay}>
