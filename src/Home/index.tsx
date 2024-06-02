@@ -1,14 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Alert } from "react-native";
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Alert, StatusBar } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import MapView, { Marker } from "react-native-maps";
 import { useNavigation, NavigationProp } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { bairros, RuasPorBairro, AcidenteDadosPorRua } from "../Data";
 import { CoordenadasPorBairro, CoordenadasPorRua } from "../Coordinates";
 
 type RootStackParamList = {
   Detail: { bairro: string; rua: string; };
+  News: undefined;
+  'Safety Tips': undefined;
+  'Data': undefined;
+  'Useful Phones': undefined;
 };
+
+const mapStyle = [
+  // Insira seu estilo de mapa personalizado aqui
+];
 
 export default function Home() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -19,6 +28,7 @@ export default function Home() {
     latitude: -20.5386,
     longitude: -47.4006,
   });
+  const [menuVisible, setMenuVisible] = useState(false);
 
   useEffect(() => {
     const coordenadasRua = CoordenadasPorRua[bairroSelecionado]?.[ruaSelecionada];
@@ -82,12 +92,49 @@ export default function Home() {
     }
     return "blue";
   };
-  
 
   const markerColor = getMarkerColor(ruaSelecionada);
 
+  const menuOptions = [
+    { label: "Notícias", screen: "News" },
+    { label: "Dados", screen: "Explore Data" },
+    { label: "Dicas Educativas", screen: "Safety Tips" },
+    { label: "Telefones Úteis", screen: "Useful Phones" },
+  ];
+
+  const handleMenuOptionPress = (option) => {
+    if (option.screen) {
+      navigation.navigate(option.screen);
+    } else if (option.action) {
+      option.action();
+    }
+    setMenuVisible(false);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="dark-content" backgroundColor="#fff" />
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Mapa</Text>
+        <TouchableOpacity onPress={() => setMenuVisible(!menuVisible)}>
+          <Icon name="menu" size={30} color="#000" />
+        </TouchableOpacity>
+      </View>
+
+      {menuVisible && (
+        <View style={styles.dropdownMenu}>
+          {menuOptions.map((option, index) => (
+            <TouchableOpacity
+              key={index}
+              style={styles.menuOption}
+              onPress={() => handleMenuOptionPress(option)}
+            >
+              <Text style={styles.menuOptionText}>{option.label}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      )}
+
       <MapView
         style={styles.map}
         region={{
@@ -96,33 +143,31 @@ export default function Home() {
           latitudeDelta: 0.01,
           longitudeDelta: 0.01,
         }}
+        customMapStyle={mapStyle}
       >
-    
-      <Marker
-        key={markerColor}
-        coordinate={{
-          latitude: coordenadas.latitude,
-          longitude: coordenadas.longitude,
-        }}
-        pinColor={markerColor}
-        onPress={() => {
-          let message = '';
-          if (markerColor === 'blue') {
-            message = 'Sem dados';
-          } else if (markerColor === 'green') {
-            message = 'Sem acidente';
-          } else if (markerColor === 'yellow') {
-            message = 'Baixo indice de acidente';
-          } else if (markerColor === 'orange') {
-            message = 'Médio índice de acidente';
-          } else if (markerColor === 'red') {
-            message = 'Alto índice de acidente';
-          }
-          Alert.alert('Informação do Marcador', message);
-        }}
-      />
-
-
+        <Marker
+          key={markerColor}
+          coordinate={{
+            latitude: coordenadas.latitude,
+            longitude: coordenadas.longitude,
+          }}
+          pinColor={markerColor}
+          onPress={() => {
+            let message = '';
+            if (markerColor === 'blue') {
+              message = 'Sem dados';
+            } else if (markerColor === 'green') {
+              message = 'Sem acidente';
+            } else if (markerColor === 'yellow') {
+              message = 'Baixo índice de acidente';
+            } else if (markerColor === 'orange') {
+              message = 'Médio índice de acidente';
+            } else if (markerColor === 'red') {
+              message = 'Alto índice de acidente';
+            }
+            Alert.alert('Informação do Marcador', message);
+          }}
+        />
       </MapView>
 
       <View style={styles.overlay}>
@@ -160,6 +205,41 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 16,
+    backgroundColor: '#fff',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+    marginTop: StatusBar.currentHeight || 0, 
+  },
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  dropdownMenu: {
+    position: 'absolute',
+    top: 100, 
+    right: 17, 
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 5,
+    zIndex: 1,
+  },
+  menuOption: {
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  menuOptionText: {
+    fontSize: 18,
   },
   map: {
     flex: 1,

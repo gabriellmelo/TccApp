@@ -1,4 +1,9 @@
 {
-  "compilerOptions": {},
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@react-navigation/native": ["node_modules/@react-navigation/native"]
+    }
+  },
   "extends": "expo/tsconfig.base"
 }
