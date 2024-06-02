@@ -31,7 +31,7 @@ export default function Details({ route }) {
   };
 
   const handleVerMaisPress = () => {
-    navigation.navigate('Graficos' as never);
+    navigation.navigate('Explore Data' as never);
   };
 
   return (
