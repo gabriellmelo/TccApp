@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Alert, StatusBar } from "react-native";
-import { Picker } from "@react-native-picker/picker";
-import MapView, { Marker, Overlay } from "react-native-maps";
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Alert, StatusBar, Platform } from "react-native";
+import RNPickerSelect from 'react-native-picker-select';
+import MapView, { Marker } from "react-native-maps";
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { bairros, RuasPorBairro, AcidenteDadosPorRua } from "../Data";
@@ -66,7 +66,7 @@ export default function Home() {
   const handleBairroChange = (bairro: string) => {
     setBairroSelecionado(bairro);
     setRuaSelecionada("");
-    setMostrarPickerRua(false); // Ocultar o picker de ruas inicialmente
+    setMostrarPickerRua(false);
     if (bairro === "") {
       setCoordenadas({ latitude: -20.5386, longitude: -47.4006 });
     } else {
@@ -74,9 +74,8 @@ export default function Home() {
       if (coordenadasBairro) {
         setCoordenadas(coordenadasBairro);
       }
-      // Verificar se o bairro tem ruas associadas
       if (RuasPorBairro[bairro] && RuasPorBairro[bairro].length > 0) {
-        setMostrarPickerRua(true); // Mostrar o picker de ruas se houver ruas associadas
+        setMostrarPickerRua(true);
       }
     }
   };
@@ -198,29 +197,31 @@ export default function Home() {
       </MapView>
 
       <View style={styles.overlay}>
-        <Picker
-          style={styles.picker}
-          selectedValue={bairroSelecionado}
-          onValueChange={handleBairroChange}
-        >
-          <Picker.Item label="Selecione um bairro" value="" />
-          {bairros.map((bairro, index) => (
-            <Picker.Item key={index} label={bairro} value={bairro} />
-          ))}
-        </Picker>
+      <RNPickerSelect
+        onValueChange={handleBairroChange}
+        items={bairros.map((bairro) => ({ label: bairro, value: bairro }))}
+        style={pickerSelectStyles}
+        placeholder={{ label: "Selecione um bairro", value: "" }}
+        useNativeAndroidPickerStyle={false}
+        Icon={() => {
+          return <Icon name="arrow-drop-down" size={24} color="gray" />;
+        }}
+      />
 
-        {mostrarPickerRua && (
-          <Picker
-            style={styles.picker}
-            selectedValue={ruaSelecionada}
-            onValueChange={handleRuaChange}
-          >
-            <Picker.Item label="Selecione uma rua" value="" />
-            {bairroSelecionado && RuasPorBairro[bairroSelecionado].map((rua, index) => (
-              <Picker.Item key={index} label={rua} value={rua} />
-            ))}
-          </Picker>
-        )}
+      {mostrarPickerRua && (
+        <RNPickerSelect
+          onValueChange={handleRuaChange}
+          items={bairroSelecionado && RuasPorBairro[bairroSelecionado].map((rua) => ({ label: rua, value: rua }))}
+          style={pickerSelectStyles}
+          placeholder={{ label: "Selecione uma rua", value: "" }}
+          useNativeAndroidPickerStyle={false}
+          Icon={() => {
+            return <Icon name="arrow-drop-down" size={24} color="gray" />;
+          }}
+        />
+      )}
+
+
         <TouchableOpacity style={styles.button} onPress={handleButtonPress}>
           <Text style={styles.buttonText}>Ver informações sobre essa área</Text>
         </TouchableOpacity>
@@ -229,13 +230,42 @@ export default function Home() {
   );
 }
 
+
+const pickerSelectStyles = StyleSheet.create({
+  inputIOS: {
+    height: 40,
+    width: '100%',
+    padding: 10,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: 'black',
+    backgroundColor: 'white',
+    zIndex: 3,
+  },
+  inputAndroid: {
+    height: 40,
+    width: '100%',
+    padding: 10,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: 'black',
+    backgroundColor: 'white',
+    zIndex: 3,
+  },
+  iconContainer: {
+    top: Platform.OS === 'ios' ? 10 : 15,
+    right: Platform.OS === 'ios' ? 12 : 10,
+  },
+});
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: Platform.OS === 'ios' ? 40 : 0,
+    backgroundColor: '#fff',
   },
   header: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     padding: 16,
     backgroundColor: '#fff',
@@ -243,13 +273,20 @@ const styles = StyleSheet.create({
     borderBottomColor: '#ccc',
   },
   headerTitle: {
+    flex: 1,
+    textAlign: 'center',
     fontSize: 20,
     fontWeight: 'bold',
+    color: '#000',
+  },
+  headerIcon: {
+    position: 'absolute',
+    right: 16,
   },
   dropdownMenu: {
     position: 'absolute',
-    top: 100, 
-    right: 17, 
+    top: Platform.OS === 'ios' ? 101 : 42,
+    right: 17,
     backgroundColor: '#fff',
     borderRadius: 8,
     shadowColor: '#000',
@@ -269,34 +306,30 @@ const styles = StyleSheet.create({
   },
   map: {
     flex: 1,
+    zIndex: -1,
   },
   overlay: {
-    position: 'relative',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
     padding: 20,
-    backgroundColor: 'white',
-    width: '90%',
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
     borderRadius: 20,
     alignSelf: 'center',
     zIndex: 2,
   },
-  picker: {
-    position: 'relative',
-    height: 50,
-    top: 10,
-    borderColor: "#ccc",
-    zIndex: 3,
-  },
   button: {
-    backgroundColor: '#322153',
+    backgroundColor: '#007BFF',
     padding: 10,
     borderRadius: 10,
     marginTop: 20,
-    zIndex: 1,
+    zIndex: 3,
   },
   buttonText: {
-    marginTop: 5,
     color: '#fff',
     textAlign: 'center',
     fontSize: 16,
   },
 });
+

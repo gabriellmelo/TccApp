@@ -111,11 +111,11 @@ const styles = StyleSheet.create({
   },
   label: {
     fontWeight: 'bold',
-    color: '#322153',
+    color: '#007BFF',
   },
   highlightedText: {
     fontWeight: 'bold',
-    color: '#322153',
+    color: '#007BFF',
   },
   noInfo: {
     fontSize: 16,
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   button: {
-    backgroundColor: '#322153',
+    backgroundColor: '#007BFF',
     padding: 15,
     borderRadius: 10,
     marginHorizontal: 20,
