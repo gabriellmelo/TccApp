@@ -1,10 +1,14 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import { WebView } from 'react-native-webview';
 
 const DicasSegurancaScreen = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Dicas de Segurança no Trânsito</Text>
+      <WebView 
+        source={{ uri: 'http://www.ccb.policiamilitar.sp.gov.br/portal_conteudo/_lib/file/midia/Dicas-acidentes-de-transito.jpg' }}
+        style={styles.webview}
+      />
     </View>
   );
 };
@@ -12,11 +16,9 @@ const DicasSegurancaScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
-  text: {
-    fontSize: 24,
+  webview: {
+    flex: 1,
   },
 });
 
