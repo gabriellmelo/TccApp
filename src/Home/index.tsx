@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Alert, StatusBar } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Marker, Overlay } from "react-native-maps";
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { bairros, RuasPorBairro, AcidenteDadosPorRua } from "../Data";
@@ -9,14 +9,37 @@ import { CoordenadasPorBairro, CoordenadasPorRua } from "../Coordinates";
 
 type RootStackParamList = {
   Detail: { bairro: string; rua: string; };
-  News: undefined;
+  'News': undefined;
   'Safety Tips': undefined;
   'Data': undefined;
   'Useful Phones': undefined;
 };
 
 const mapStyle = [
-  // Insira seu estilo de mapa personalizado aqui
+  {
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#ffffff"
+      }
+    ]
+  },
+  {
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#000000"
+      }
+    ]
+  },
+  {
+    "elementType": "labels.text.stroke",
+    "stylers": [
+      {
+        "color": "#ffffff"
+      }
+    ]
+  },
 ];
 
 export default function Home() {
@@ -43,27 +66,30 @@ export default function Home() {
   const handleBairroChange = (bairro: string) => {
     setBairroSelecionado(bairro);
     setRuaSelecionada("");
+    setMostrarPickerRua(false); // Ocultar o picker de ruas inicialmente
     if (bairro === "") {
-      setMostrarPickerRua(false);
-      setCoordenadas({ latitude: -20.5386, longitude: -47.4006 }); 
+      setCoordenadas({ latitude: -20.5386, longitude: -47.4006 });
     } else {
-      setMostrarPickerRua(true);
       const coordenadasBairro = CoordenadasPorBairro[bairro];
       if (coordenadasBairro) {
         setCoordenadas(coordenadasBairro);
       }
+      // Verificar se o bairro tem ruas associadas
+      if (RuasPorBairro[bairro] && RuasPorBairro[bairro].length > 0) {
+        setMostrarPickerRua(true); // Mostrar o picker de ruas se houver ruas associadas
+      }
     }
   };
-  
+
   const handleRuaChange = (rua: string) => {
     setRuaSelecionada(rua);
     if (rua === "") {
-      setCoordenadas({ latitude: -20.5386, longitude: -47.4006 }); 
+      setCoordenadas({ latitude: -20.5386, longitude: -47.4006 });
     }
   };
-  
+
   const handleButtonPress = () => {
-    if (!bairroSelecionado || !ruaSelecionada) {
+    if (!bairroSelecionado || (mostrarPickerRua && !ruaSelecionada)) {
       Alert.alert("Seleção inválida", "Por favor, selecione um bairro e uma rua.");
     } else {
       const info = AcidenteDadosPorRua[ruaSelecionada];
@@ -96,10 +122,10 @@ export default function Home() {
   const markerColor = getMarkerColor(ruaSelecionada);
 
   const menuOptions = [
-    { label: "Notícias", screen: "News" },
-    { label: "Dados", screen: "Explore Data" },
-    { label: "Dicas Educativas", screen: "Safety Tips" },
-    { label: "Telefones Úteis", screen: "Useful Phones" },
+    { label: "Notícias", screen: "Notícias" },
+    { label: "Dados", screen: "Explorar Dados" },
+    { label: "Dicas Educativas", screen: "Dicas de Segurança" },
+    { label: "Telefones Úteis", screen: "Telefones Úteis" },
   ];
 
   const handleMenuOptionPress = (option) => {
@@ -137,6 +163,7 @@ export default function Home() {
 
       <MapView
         style={styles.map}
+        mapType="terrain"
         region={{
           latitude: coordenadas.latitude,
           longitude: coordenadas.longitude,
@@ -214,7 +241,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
-    marginTop: StatusBar.currentHeight || 0, 
   },
   headerTitle: {
     fontSize: 20,
@@ -245,26 +271,30 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   overlay: {
-    position: 'absolute',
-    bottom: 30,
+    position: 'relative',
+    padding: 20,
     backgroundColor: 'white',
     width: '90%',
-    padding: 20,
     borderRadius: 20,
     alignSelf: 'center',
+    zIndex: 2,
   },
   picker: {
+    position: 'relative',
     height: 50,
-    borderWidth: 1,
+    top: 10,
     borderColor: "#ccc",
+    zIndex: 3,
   },
   button: {
     backgroundColor: '#322153',
     padding: 10,
     borderRadius: 10,
     marginTop: 20,
+    zIndex: 1,
   },
   buttonText: {
+    marginTop: 5,
     color: '#fff',
     textAlign: 'center',
     fontSize: 16,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, StyleSheet, TouchableOpacity, Linking, ScrollView } from 'react-native';
 
-const UsefulPhonesScreen = () => {
+const TelefonesUteisScreen = () => {
   const phones = [
     { label: 'Polícia Militar', number: '190' },
     { label: 'Corpo de Bombeiros', number: '193' },
@@ -49,4 +49,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UsefulPhonesScreen;
+export default TelefonesUteisScreen;

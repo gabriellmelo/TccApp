@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const SafetyTipsScreen = () => {
+const DicasSegurancaScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Dicas de Segurança no Trânsito</Text>
@@ -20,4 +20,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SafetyTipsScreen;
+export default DicasSegurancaScreen;
