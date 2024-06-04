@@ -18,7 +18,7 @@ export default function Details({ route }) {
   }, [navigation]);
 
   const handleVerMaisPress = () => {
-    navigation.navigate('Explore Data' as never);
+    navigation.navigate('Explorar Dados' as never);
   };
 
   const toggleCausas = () => {
