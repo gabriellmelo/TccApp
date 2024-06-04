@@ -1,38 +1,141 @@
 export const bairros = [
-  "Centro",
-  "Vila Santa Cruz",
-  "Parque Vicente Leporace",
-  "Jardim Alvorada",
-  "Cidade Nova",
+  "ALTO DA BOA VISTA - JOAO BARBOSA LIMA", "AUGUSTO JOSE MONTEIRO", "BAIRRO SAO JOAQUIM", "BELVEDERE DOS CRISTAIS", "BOA VISTA", "CENTRO - RIBEIRAO CORRENTE", 
+  "BAIRRO ESTRADA DA FAZENDA BOM JARDIM", "BAIRRO GROSSO", "BAIRRO MARTINESIA", "BAIRRO SANTA BARBARA", "BAIRRO SANTA RITA", 
+  "CENTRO COMERCIAL JARDIM REDENTOR", "CENTRO COMERCIAL VL IMPERADOR E PQ PINHAIS", "CHACARA SANTA MARIA", "CHACARA SAO PAULO - GLEBA 25", "CHACARA SAO PAULO", "CHACARAS OURO VERDE CITY PETROPOLIS", 
+  "CONDOMINIO BETEL (LOTEAMENTO)", "CONJ HABIT JARDIM IRMAS MATTOS", "CONJ HABIT JARDIM ZOROASTRO FERREIRA COELHO", "CONJ HABIT PARQUE DO HORTO", 
+  "PARQUE", "CONJ HABIT PQ VICENTE LEPORACE 1", "CONJ HABIT PQ VICENTE LEPORACE 2", 
 ];
 
 export const RuasPorBairro: { [bairro: string]: string[] } = {
-  Centro: [
+  "ALTO DA BOA VISTA - JOAO BARBOSA LIMA": [
     "Rua Monsenhor Rosa",
     "Avenida Presidente Vargas",
     "Rua Major Claudiano",
     "Rua General Osório",
     "Rua do Comércio",
   ],
-  "Vila Santa Cruz": [
+  "AUGUSTO JOSE MONTEIRO": [
     "Antônio Scarabucci",
     "Rua B",
     "Rua C",
   ],
-  "Parque Vicente Leporace": [
+  "BAIRRO SAO JOAQUIM": [
     "Avenida Doutor Abrahão Brickmann",
     "Avenida Geralda Rocha Silva",
     "Avenida Lisete Coelho Lourenço",
   ],
-  "Jardim Alvorada": [
+  "BELVEDERE DOS CRISTAIS": [
     "Avenida Paulo VI",
     "Rua K",
     "Rua L",
   ],
-  "Cidade Nova": [
+  "BOA VISTA": [
+    "Avenida Paulo VI",
+    "Rua K",
+    "Rua L",
+  ],
+  "CENTRO - RIBEIRAO CORRENTE": [
     "Avenida Presidente Vargas",
     "Avenida Major Nicácio",
     "Rua Álvaro Abranches",
+  ],
+  "BAIRRO ESTRADA DA FAZENDA BOM JARDIM": [
+    "Avenida Presidente Vargas",
+    "Avenida Major Nicácio",
+    "Rua Álvaro Abranches",
+  ],
+  "BAIRRO GROSSO": [
+    "Avenida Doutor Abrahão Brickmann",
+    "Avenida Geralda Rocha Silva",
+    "Avenida Lisete Coelho Lourenço",
+  ],
+  "BAIRRO MARTINESIA": [
+    "Avenida Presidente Vargas",
+    "Avenida Major Nicácio",
+    "Rua Álvaro Abranches",
+  ],
+  "BAIRRO SANTA BARBARA": [
+    "Avenida Doutor Abrahão Brickmann",
+    "Avenida Geralda Rocha Silva",
+    "Avenida Lisete Coelho Lourenço",
+  ],
+  "BAIRRO SANTA RITA": [
+    "Avenida Presidente Vargas",
+    "Avenida Major Nicácio",
+    "Rua Álvaro Abranches",
+  ],
+  "CENTRO COMERCIAL JARDIM REDENTOR": [
+    "Avenida Doutor Abrahão Brickmann",
+    "Avenida Geralda Rocha Silva",
+    "Avenida Lisete Coelho Lourenço",
+  ],
+  "CENTRO COMERCIAL VL IMPERADOR E PQ PINHAIS": [
+    "Rua Monsenhor Rosa",
+    "Avenida Presidente Vargas",
+    "Rua Major Claudiano",
+    "Rua General Osório",
+    "Rua do Comércio",
+  ],
+  "CHACARA SANTA MARIA": [
+    "Rua Monsenhor Rosa",
+    "Avenida Presidente Vargas",
+    "Rua Major Claudiano",
+    "Rua General Osório",
+    "Rua do Comércio",
+  ],
+  "CHACARA SAO PAULO - GLEBA 25": [
+    "Rua Monsenhor Rosa",
+    "Avenida Presidente Vargas",
+    "Rua Major Claudiano",
+    "Rua General Osório",
+    "Rua do Comércio",
+  ],
+  "CHACARA SAO PAULO": [
+    "Rua Monsenhor Rosa",
+    "Avenida Presidente Vargas",
+    "Rua Major Claudiano",
+    "Rua General Osório",
+    "Rua do Comércio",
+  ],
+  "CHACARAS OURO VERDE CITY PETROPOLIS": [
+    "Avenida Presidente Vargas",
+    "Avenida Major Nicácio",
+    "Rua Álvaro Abranches",
+  ],
+  "CONDOMINIO BETEL (LOTEAMENTO)": [
+    "Avenida Presidente Vargas",
+    "Avenida Major Nicácio",
+    "Rua Álvaro Abranches",
+  ],
+  "CONJ HABIT JARDIM IRMAS MATTOS": [
+    "Avenida Presidente Vargas",
+    "Avenida Major Nicácio",
+    "Rua Álvaro Abranches",
+  ],
+  "CONJ HABIT JARDIM ZOROASTRO FERREIRA COELHO": [
+    "Avenida Presidente Vargas",
+    "Avenida Major Nicácio",
+    "Rua Álvaro Abranches",
+  ],
+  "CONJ HABIT PARQUE DO HORTO": [
+    "Avenida Paulo VI",
+    "Rua K",
+    "Rua L",
+  ],
+  "PARQUE": [
+    "Avenida Paulo VI",
+    "Rua K",
+    "Rua L",
+  ],
+  "CONJ HABIT PQ VICENTE LEPORACE 1": [
+    "Avenida Paulo VI",
+    "Rua K",
+    "Rua L",
+  ],
+  "CONJ HABIT PQ VICENTE LEPORACE 2": [
+    "Avenida Paulo VI",
+    "Rua K",
+    "Rua L",
   ],
 };
 

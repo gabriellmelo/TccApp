@@ -43,27 +43,30 @@ export default function Home() {
   const handleBairroChange = (bairro: string) => {
     setBairroSelecionado(bairro);
     setRuaSelecionada("");
+    setMostrarPickerRua(false); // Ocultar o picker de ruas inicialmente
     if (bairro === "") {
-      setMostrarPickerRua(false);
-      setCoordenadas({ latitude: -20.5386, longitude: -47.4006 }); 
+      setCoordenadas({ latitude: -20.5386, longitude: -47.4006 });
     } else {
-      setMostrarPickerRua(true);
       const coordenadasBairro = CoordenadasPorBairro[bairro];
       if (coordenadasBairro) {
         setCoordenadas(coordenadasBairro);
       }
+      // Verificar se o bairro tem ruas associadas
+      if (RuasPorBairro[bairro] && RuasPorBairro[bairro].length > 0) {
+        setMostrarPickerRua(true); // Mostrar o picker de ruas se houver ruas associadas
+      }
     }
   };
-  
+
   const handleRuaChange = (rua: string) => {
     setRuaSelecionada(rua);
     if (rua === "") {
-      setCoordenadas({ latitude: -20.5386, longitude: -47.4006 }); 
+      setCoordenadas({ latitude: -20.5386, longitude: -47.4006 });
     }
   };
-  
+
   const handleButtonPress = () => {
-    if (!bairroSelecionado || !ruaSelecionada) {
+    if (!bairroSelecionado || (mostrarPickerRua && !ruaSelecionada)) {
       Alert.alert("Seleção inválida", "Por favor, selecione um bairro e uma rua.");
     } else {
       const info = AcidenteDadosPorRua[ruaSelecionada];
@@ -214,7 +217,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
-    marginTop: StatusBar.currentHeight || 0, 
   },
   headerTitle: {
     fontSize: 20,
