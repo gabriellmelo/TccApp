@@ -217,6 +217,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
+    marginTop: StatusBar.currentHeight || 0, 
   },
   headerTitle: {
     fontSize: 20,
