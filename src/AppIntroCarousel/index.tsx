@@ -106,12 +106,13 @@ import React from 'react';
    },
    icon: {
      marginBottom: 20,
+     color: '#007BFF',
    },
    title: {
      fontSize: 24,
      fontWeight: 'bold',
      textAlign: 'center',
-     color: '#322153',
+     color: '#007BFF',
    },
    text: {
      fontSize: 16,
@@ -120,7 +121,7 @@ import React from 'react';
      color: '#666',
    },
    activeDot: {
-     backgroundColor: '#322153',
+     backgroundColor: '#007BFF',
      width: 10,
      height: 10,
      borderRadius: 5,
@@ -134,7 +135,7 @@ import React from 'react';
      marginHorizontal: 3,
    },
    skipButton: {
-     backgroundColor: '#322153',
+     backgroundColor: '#007BFF',
      padding: 10,
      borderRadius: 10,
      marginTop: 20,
