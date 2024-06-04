@@ -1,4 +1,7 @@
 {
+  "exclude": [
+    // "LoadingSpinner.js" - Remove this line
+  ],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const NewsScreen = () => {
+const NoticiasScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Notícias</Text>
@@ -20,4 +20,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NewsScreen;
+export default NoticiasScreen;
