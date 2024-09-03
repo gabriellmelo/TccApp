@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   phoneButton: {
     marginVertical: 10,
     padding: 16,
-    backgroundColor: '#322153',
+    backgroundColor: '#007BFF',
     borderRadius: 10,
     width: '100%',
   },

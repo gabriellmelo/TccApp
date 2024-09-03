@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Alert, StatusBar, Platform } from "react-native";
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Alert, StatusBar, Platform, } from "react-native";
 import RNPickerSelect from 'react-native-picker-select';
 import MapView, { Marker } from "react-native-maps";
 import { useNavigation, NavigationProp } from '@react-navigation/native';
@@ -54,12 +54,24 @@ export default function Home() {
   const [menuVisible, setMenuVisible] = useState(false);
 
   useEffect(() => {
-    const coordenadasRua = CoordenadasPorRua[bairroSelecionado]?.[ruaSelecionada];
-    if (coordenadasRua) {
-      setCoordenadas({
-        latitude: coordenadasRua.latitude,
-        longitude: coordenadasRua.longitude,
-      });
+    // Atualiza coordenadas com base na rua selecionada, se houver
+    if (ruaSelecionada && bairroSelecionado) {
+      const coordenadasRua = CoordenadasPorRua[bairroSelecionado]?.[ruaSelecionada];
+      if (coordenadasRua) {
+        setCoordenadas({
+          latitude: coordenadasRua.latitude,
+          longitude: coordenadasRua.longitude,
+        });
+        return; // Sai do useEffect após encontrar as coordenadas da rua
+      }
+    }
+
+    // Atualiza coordenadas com base no bairro selecionado
+    if (bairroSelecionado) {
+      const coordenadasBairro = CoordenadasPorBairro[bairroSelecionado];
+      if (coordenadasBairro) {
+        setCoordenadas(coordenadasBairro);
+      }
     }
   }, [bairroSelecionado, ruaSelecionada]);
 
@@ -67,24 +79,13 @@ export default function Home() {
     setBairroSelecionado(bairro);
     setRuaSelecionada("");
     setMostrarPickerRua(false);
-    if (bairro === "") {
-      setCoordenadas({ latitude: -20.5386, longitude: -47.4006 });
-    } else {
-      const coordenadasBairro = CoordenadasPorBairro[bairro];
-      if (coordenadasBairro) {
-        setCoordenadas(coordenadasBairro);
-      }
-      if (RuasPorBairro[bairro] && RuasPorBairro[bairro].length > 0) {
-        setMostrarPickerRua(true);
-      }
+    if (bairro && RuasPorBairro[bairro]?.length > 0) {
+      setMostrarPickerRua(true);
     }
   };
 
   const handleRuaChange = (rua: string) => {
     setRuaSelecionada(rua);
-    if (rua === "") {
-      setCoordenadas({ latitude: -20.5386, longitude: -47.4006 });
-    }
   };
 
   const handleButtonPress = () => {
@@ -332,4 +333,3 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
-
