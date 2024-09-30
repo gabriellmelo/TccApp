@@ -7,9 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 export default function Details({ route }) {
   const { bairro, rua } = route.params;
   const navigation = useNavigation(); 
-  const [showOverlay, setShowOverlay] = useState(false);
   const [causasExpanded, setCausasExpanded] = useState(false);
-  const [rotasExpanded, setRotasExpanded] = useState(false);
   const info = AcidenteDadosPorRua[rua];
 
   useLayoutEffect(() => {
@@ -24,10 +22,6 @@ export default function Details({ route }) {
 
   const toggleCausas = () => {
     setCausasExpanded(!causasExpanded);
-  };
-
-  const toggleRotas = () => {
-    setRotasExpanded(!rotasExpanded);
   };
 
   return (
@@ -48,17 +42,6 @@ export default function Details({ route }) {
             </View>
             {causasExpanded && (
               <Text style={styles.infoText}>{info.causasMaisFrequentes.join(", ")}</Text>
-            )}
-            <View style={styles.rowWithBorder}>
-              <Text style={styles.infoText}>
-                <Text style={styles.label}>Rotas alternativas:</Text>
-              </Text>
-              <TouchableOpacity onPress={toggleRotas} style={styles.expandButton}>
-                <Icon name={rotasExpanded ? "expand-less" : "expand-more"} size={24} color="#007BFF" />
-              </TouchableOpacity>
-            </View>
-            {rotasExpanded && (
-              <Text style={styles.infoText}>{info.rotasAlternativas.join(", ")}</Text>
             )}
           </View>
         ) : (
