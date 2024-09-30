@@ -13,7 +13,7 @@ const ExploreDadosScreen = () => {
         </View>
       )}
       <WebView 
-        source={{ uri: 'https://app-acidentes-franca-2018-2023.streamlit.app' }} 
+        source={{ uri: 'https://eda-acidentes-franca.streamlit.app/' }} 
         style={{ flex: 1 }} 
         onLoadEnd={() => setLoading(false)}
       />
