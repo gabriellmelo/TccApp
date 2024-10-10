@@ -1,16 +1,16 @@
 export const bairros = [
-  "Belvedere Bandeirante", "Centro", "Cidade Nova", 
-  "City Petrópolis", "Estação", "Jardim Aeroporto I", 
-  "Jardim Aeroporto III", "Jardim Alvorada", "Jardim Brasilândia", 
-  "Jardim Cambuí", "Jardim Conceição Leite", "Jardim Dermínio", 
-  "Jardim Francano", "Jardim Integração", "Jardim Luiza", 
-  "Jardim Marambaia", "Jardim Paulista", "Jardim Paulistano", 
-  "Jardim Primavera", "Jardim Roselândia", "Jardim São Luiz II", "Jardim Tropical", "Parque Moema", 
-  "Parque Progresso", "Parque Residencial Santa Maria", "Parque Santa Adélia", 
-  "Parque Vicente Leporace I", "Prolongamento Jardim Ângela Rosa", "Prolongamento Jardim Brasilândia", 
-  "Prolongamento Jardim Paulista", "Prolongamento Vila Santa Cruz", "Recanto Cap. Heliodoro Pinheiro", 
-  "Residencial Jardim Vera Cruz", "São Joaquim", "Vila Aparecida", 
-  "Vila Europa", "Vila Marta", "Vila Rezende", 
+  "Belvedere Bandeirante", "Centro", "Cidade Nova",
+  "City Petrópolis", "Estação", "Jardim Aeroporto I",
+  "Jardim Aeroporto III", "Jardim Alvorada", "Jardim Brasilândia",
+  "Jardim Cambuí", "Jardim Conceição Leite", "Jardim Dermínio",
+  "Jardim Francano", "Jardim Integração", "Jardim Luiza",
+  "Jardim Marambaia", "Jardim Paulista", "Jardim Paulistano",
+  "Jardim Primavera", "Jardim Roselândia", "Jardim São Luiz II", "Jardim Tropical", "Parque Moema",
+  "Parque Progresso", "Parque Residencial Santa Maria", "Parque Santa Adélia",
+  "Parque Vicente Leporace I", "Prolongamento Jardim Ângela Rosa", "Prolongamento Jardim Brasilândia",
+  "Prolongamento Jardim Paulista", "Prolongamento Vila Santa Cruz", "Recanto Cap. Heliodoro Pinheiro",
+  "Residencial Jardim Vera Cruz", "São Joaquim", "Vila Aparecida",
+  "Vila Europa", "Vila Marta", "Vila Rezende",
   "Vila Santa Rita", "Vila Santa Terezinha", "Vila Santa Cruz"
 ];
 

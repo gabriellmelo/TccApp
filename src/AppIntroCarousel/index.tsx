@@ -65,8 +65,8 @@ const CarrosselScreen = ({ navigation }) => {
         loop={false}
         showsPagination={true}
         onIndexChanged={MudancaIndice}
-        containerStyle={styles.swiperContainer} 
-        style={styles.swiper} 
+        containerStyle={styles.swiperContainer}
+        style={styles.swiper}
         activeDotStyle={styles.activeDot}
         dotStyle={styles.dot}
       >

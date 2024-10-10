@@ -12,9 +12,9 @@ const ExplorarDadosScreen = () => {
           <ActivityIndicator size="large" color="#0000ff" />
         </View>
       )}
-      <WebView 
-        source={{ uri: 'https://eda-acidentes-franca.streamlit.app/' }} 
-        style={{ flex: 1 }} 
+      <WebView
+        source={{ uri: 'https://eda-acidentes-franca.streamlit.app/' }}
+        style={{ flex: 1 }}
         onLoadEnd={() => setLoading(false)}
       />
     </View>
