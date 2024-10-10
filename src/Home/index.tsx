@@ -121,7 +121,7 @@ export default function Home() {
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
       <View style={styles.header}>
         <TouchableOpacity onPress={() => setLegendaVisivel(true)}>
-          <Icon name="info" size={30} color="#000" />
+          <Icon name="info" size={30} color="#007BFF" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Mapa</Text>
         <TouchableOpacity onPress={() => setMenuVisivel(!MenuVisivel)}>
@@ -213,7 +213,7 @@ export default function Home() {
       >
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Legenda das Cores dos Marcadores</Text>
+            <Text style={styles.modalTitle}>Legenda das cores dos marcadores</Text>
             <View style={styles.legendItem}>
               <View style={[styles.legendColor, { backgroundColor: 'blue' }]} />
               <Text> Sem dados disponíveis</Text>
