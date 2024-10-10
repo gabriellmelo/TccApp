@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View, ActivityIndicator } from 'react-native';
 import { WebView } from 'react-native-webview';
 
-const ExploreDadosScreen = () => {
+const ExplorarDadosScreen = () => {
   const [loading, setLoading] = useState(true);
 
   return (
@@ -34,4 +34,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ExploreDadosScreen;
+export default ExplorarDadosScreen;

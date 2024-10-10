@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, SafeAreaView, Dimensions, TouchableOpacity } fr
 import Swiper from 'react-native-swiper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const carouselItems = [
+const itensCarrosel = [
   {
     title: "Bem-vindo!",
     text: "O aplicativo foi desenvolvido para fornecer uma visão detalhada sobre a recorrência de acidentes na cidade de Franca, usando dados de fontes oficiais. Nossa missão é democratizar o acesso a essas informações, tornando os dados de acidentes acessíveis a todos.",
@@ -43,19 +43,19 @@ const carouselItems = [
 
 const { width, height } = Dimensions.get('window');
 
-const CarouselScreen = ({ navigation }) => {
-  const [isLastSlide, setIsLastSlide] = useState(false);
+const CarrosselScreen = ({ navigation }) => {
+  const [isUltimoSlide, setIsUltimoSlide] = useState(false);
 
-  const handleIndexChanged = (index) => {
+  const MudancaIndice = (index) => {
     // Verifica se está no último slide
-    if (index === carouselItems.length - 1) {
-      setIsLastSlide(true);
+    if (index === itensCarrosel.length - 1) {
+      setIsUltimoSlide(true);
     } else {
-      setIsLastSlide(false);
+      setIsUltimoSlide(false);
     }
   };
 
-  const handleSkip = () => {
+  const Pular = () => {
     navigation.navigate('Home');
   };
 
@@ -64,13 +64,13 @@ const CarouselScreen = ({ navigation }) => {
       <Swiper
         loop={false}
         showsPagination={true}
-        onIndexChanged={handleIndexChanged}
+        onIndexChanged={MudancaIndice}
         containerStyle={styles.swiperContainer} 
         style={styles.swiper} 
         activeDotStyle={styles.activeDot}
         dotStyle={styles.dot}
       >
-        {carouselItems.map((item, index) => (
+        {itensCarrosel.map((item, index) => (
           <View style={styles.slide} key={index}>
             <Icon name={item.icon} size={50} color="#322153" style={styles.icon} />
             <Text style={styles.title}>{item.title}</Text>
@@ -78,12 +78,12 @@ const CarouselScreen = ({ navigation }) => {
           </View>
         ))}
       </Swiper>
-      {isLastSlide ? (
-        <TouchableOpacity style={styles.skipButton} onPress={handleSkip}>
+      {isUltimoSlide ? (
+        <TouchableOpacity style={styles.skipButton} onPress={Pular}>
           <Text style={styles.skipButtonText}>Ir para o Mapa</Text>
         </TouchableOpacity>
       ) : (
-        <TouchableOpacity style={styles.skipButton} onPress={handleSkip}>
+        <TouchableOpacity style={styles.skipButton} onPress={Pular}>
           <Text style={styles.skipButtonText}>Pular</Text>
         </TouchableOpacity>
       )}
@@ -168,4 +168,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CarouselScreen;
+export default CarrosselScreen;

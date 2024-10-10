@@ -12,14 +12,14 @@ const TelefonesUteisScreen = () => {
     { label: 'ViaPaulista', number: '0800 001 1255' },
   ];
 
-  const handlePress = (number: string) => {
+  const EscolherTelefone = (number: string) => {
     Linking.openURL(`tel:${number}`);
   };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {phones.map((phone, index) => (
-        <TouchableOpacity key={index} style={styles.phoneButton} onPress={() => handlePress(phone.number)}>
+        <TouchableOpacity key={index} style={styles.phoneButton} onPress={() => EscolherTelefone(phone.number)}>
           <Text style={styles.phoneText}>{phone.label}: {phone.number}</Text>
         </TouchableOpacity>
       ))}

@@ -55,21 +55,21 @@ const noticias = [
 ];
 
 const NoticiasScreen = () => {
-  const [selectedNoticia, setSelectedNoticia] = useState(null);
+  const [selecionarNoticia, setSelecionarNoticia] = useState(null);
 
-  const handleNoticiaPress = (noticia) => {
-    setSelectedNoticia(noticia);
+  const ApertarNoticia = (noticia) => {
+    setSelecionarNoticia(noticia);
   };
 
-  const handleBackPress = () => {
-    setSelectedNoticia(null);
+  const SelecionarVoltar = () => {
+    setSelecionarNoticia(null);
   };
 
-  if (selectedNoticia) {
+  if (selecionarNoticia) {
     return (
       <View style={{ flex: 1 }}>
-        <Button title="Voltar" onPress={handleBackPress} />
-        <WebView source={{ uri: selectedNoticia.link }} style={{ flex: 1 }} />
+        <Button title="Voltar" onPress={SelecionarVoltar} />
+        <WebView source={{ uri: selecionarNoticia.link }} style={{ flex: 1 }} />
       </View>
     );
   }
@@ -77,7 +77,7 @@ const NoticiasScreen = () => {
   return (
     <ScrollView style={styles.container}>
       {noticias.map(noticia => (
-        <TouchableOpacity key={noticia.id} onPress={() => handleNoticiaPress(noticia)}>
+        <TouchableOpacity key={noticia.id} onPress={() => ApertarNoticia(noticia)}>
           <View style={styles.noticiaContainer}>
             <Image source={noticia.imagem} style={styles.imagem} />
             <View style={styles.textContainer}>

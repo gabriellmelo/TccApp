@@ -6,8 +6,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default function Details({ route }) {
   const { bairro, rua } = route.params;
-  const navigation = useNavigation(); 
-  const [causasExpanded, setCausasExpanded] = useState(false);
+  const navigation = useNavigation();
+  const [causas, setCausas] = useState(false);
   const info = AcidenteDadosPorRua[rua];
 
   useLayoutEffect(() => {
@@ -16,12 +16,12 @@ export default function Details({ route }) {
     });
   }, [navigation]);
 
-  const handleVerMaisPress = () => {
+  const ExplorarDados = () => {
     navigation.navigate('Explorar Dados' as never);
   };
 
-  const toggleCausas = () => {
-    setCausasExpanded(!causasExpanded);
+  const alternarCausas = () => {
+    setCausas(!causas);
   };
 
   return (
@@ -36,11 +36,11 @@ export default function Details({ route }) {
               <Text style={styles.infoText}>
                 <Text style={styles.label}>Causas mais frequentes:</Text>
               </Text>
-              <TouchableOpacity onPress={toggleCausas} style={styles.expandButton}>
-                <Icon name={causasExpanded ? "expand-less" : "expand-more"} size={24} color="#007BFF" />
+              <TouchableOpacity onPress={alternarCausas} style={styles.expandButton}>
+                <Icon name={causas ? "expand-less" : "expand-more"} size={24} color="#007BFF" />
               </TouchableOpacity>
             </View>
-            {causasExpanded && (
+            {causas && (
               <Text style={styles.infoText}>{info.causasMaisFrequentes.join(", ")}</Text>
             )}
           </View>
@@ -48,7 +48,7 @@ export default function Details({ route }) {
           <Text style={styles.noInfo}>Não há informações disponíveis para esta rua.</Text>
         )}
       </ScrollView>
-      <TouchableOpacity style={styles.button} onPress={handleVerMaisPress}>
+      <TouchableOpacity style={styles.button} onPress={ExplorarDados}>
         <Text style={styles.buttonText}>Acessar Análise Interativa</Text>
       </TouchableOpacity>
     </View>
