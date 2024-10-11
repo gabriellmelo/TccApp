@@ -4,7 +4,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import MapView, { Marker } from "react-native-maps";
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { bairros, RuasPorBairro, AcidenteDadosPorRua, contagemAcidentesPorBairro } from "../Data";
+import { bairros, RuasPorBairro, AcidenteDadosPorRua, contagemAcidentesPorBairro, causasMaisFrequentesPorBairro } from "../Data";
 
 type RootStackParamList = {
   Detail: { bairro: string; rua: string; };
@@ -77,8 +77,8 @@ export default function Home() {
   };
 
   const PressionarBotao = () => {
-    if (!bairroSelecionado || (mostrarPickerRua && !ruaSelecionada)) {
-      Alert.alert("Seleção inválida", "Por favor, selecione um bairro e uma rua.");
+    if (!bairroSelecionado) {
+      Alert.alert("Seleção inválida", "Por favor, selecione um bairro.");
     } else {
       navigation.navigate('Detail', { bairro: bairroSelecionado, rua: ruaSelecionada });
     }
@@ -182,8 +182,9 @@ export default function Home() {
           pinColor={corMarcador}
           onPress={() => {
             let message = '';
+            let indiceAcidente = ruaSelecionada ? AcidenteDadosPorRua[ruaSelecionada]?.indiceAcidentes : contagemAcidentesPorBairro[bairroSelecionado];
             if (corMarcador === 'blue') {
-              message = 'Sem dados';
+              message = 'Sem dados disponíveis';
             } else if (corMarcador === 'green') {
               message = 'Sem acidente';
             } else if (corMarcador === 'yellow') {
@@ -192,6 +193,9 @@ export default function Home() {
               message = 'Médio índice de acidente';
             } else if (corMarcador === 'red') {
               message = 'Alto índice de acidente';
+            }
+            if (indiceAcidente !== undefined) {
+              message += `\n(Acidentes registrados: ${indiceAcidente})`;
             }
             Alert.alert('Informação do Marcador', message);
           }}
@@ -233,7 +237,7 @@ export default function Home() {
       >
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Legenda das Cores dos Marcadores</Text>
+            <Text style={styles.modalTitle}>Legenda das cores dos marcadores</Text>
             <View style={styles.legendItem}>
               <View style={[styles.legendColor, { backgroundColor: 'blue' }]} />
               <Text> Sem dados disponíveis</Text>

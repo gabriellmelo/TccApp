@@ -5,13 +5,15 @@ export const bairros = [
   "Jardim Cambuí", "Jardim Conceição Leite", "Jardim Dermínio",
   "Jardim Francano", "Jardim Integração", "Jardim Luiza",
   "Jardim Marambaia", "Jardim Paulista", "Jardim Paulistano",
-  "Jardim Primavera", "Jardim Roselândia", "Jardim São Luiz II", "Jardim Tropical", "Parque Moema",
-  "Parque Progresso", "Parque Residencial Santa Maria", "Parque Santa Adélia",
-  "Parque Vicente Leporace I", "Prolongamento Jardim Ângela Rosa", "Prolongamento Jardim Brasilândia",
-  "Prolongamento Jardim Paulista", "Prolongamento Vila Santa Cruz", "Recanto Cap. Heliodoro Pinheiro",
+  "Jardim Primavera", "Jardim Roselândia", "Jardim São Luiz II",
+  "Jardim Tropical", "Parque Moema", "Parque Progresso",
+  "Parque Residencial Santa Maria", "Parque Santa Adélia",
+  "Parque Vicente Leporace I", "Prolongamento Jardim Ângela Rosa",
+  "Prolongamento Jardim Brasilândia", "Prolongamento Jardim Paulista",
+  "Prolongamento Vila Santa Cruz", "Recanto Cap. Heliodoro Pinheiro",
   "Residencial Jardim Vera Cruz", "São Joaquim", "Vila Aparecida",
-  "Vila Europa", "Vila Marta", "Vila Rezende",
-  "Vila Santa Rita", "Vila Santa Terezinha", "Vila Santa Cruz"
+  "Vila Europa", "Vila Marta", "Vila Rezende", "Vila Santa Cruz",
+  "Vila Santa Rita", "Vila Santa Terezinha"
 ];
 
 export const RuasPorBairro: { [bairro: string]: string[] } = {
@@ -20,13 +22,14 @@ export const RuasPorBairro: { [bairro: string]: string[] } = {
   ],
   "Centro": [
     "Avenida Champagnat",
+    "Rua Couto Magalhães",
+    "Rua do Comércio",
     "Rua Doutor Júlio Cardoso",
     "Rua General Carneiro",
     "Rua Homero Pachêco Alves",
     "Rua Monsenhor Rosa",
     "Rua Ouvidor Freire",
-    "Rua do Comércio",
-    "Rua Couto Magalhães",
+    "Rua Voluntários da Franca",
   ],
   "Cidade Nova": [
     "Avenida Major Nicácio",
@@ -46,10 +49,6 @@ export const RuasPorBairro: { [bairro: string]: string[] } = {
     "Rua Diogo Feijó",
     "Rua General Teles",
   ],
-  "Jardim Alvorada": [
-    "Avenida José Moisés Pereira",
-    "Avenida Paulo VI",
-  ],
   "Jardim Aeroporto I": [
     "Avenida Carlos Roberto Hadade",
     "Rua Maria Conceição Machado",
@@ -57,6 +56,10 @@ export const RuasPorBairro: { [bairro: string]: string[] } = {
   "Jardim Aeroporto III": [
     "Avenida César Martins Pirajá",
     "Rua Geraldo Bassoteli",
+  ],
+  "Jardim Alvorada": [
+    "Avenida José Moisés Pereira",
+    "Avenida Paulo VI",
   ],
   "Jardim Brasilândia": [
     "Avenida Adhemar Pereira De Barros",
@@ -139,6 +142,7 @@ export const RuasPorBairro: { [bairro: string]: string[] } = {
   "Parque Vicente Leporace I": [
     "Avenida Doutor Abrahão Brickmann",
     "Avenida Geralda Rocha Silva",
+    "Avenida Martinho Ribeiro",
     "Rua Rachide Salomão",
   ],
   "Prolongamento Jardim Ângela Rosa": [
@@ -873,11 +877,25 @@ export const AcidenteDadosPorRua: {
 }
 
 export const contagemAcidentesPorBairro: { [bairro: string]: number } = {};
+export const causasMaisFrequentesPorBairro: { [bairro: string]: string[] } = {};
 
 for (const rua in AcidenteDadosPorRua) {
-  const { bairro, indiceAcidentes } = AcidenteDadosPorRua[rua];
+  const { bairro, indiceAcidentes, causasMaisFrequentes } = AcidenteDadosPorRua[rua];
+
   if (!contagemAcidentesPorBairro[bairro]) {
     contagemAcidentesPorBairro[bairro] = 0;
   }
   contagemAcidentesPorBairro[bairro] += indiceAcidentes;
+
+  if (!causasMaisFrequentesPorBairro[bairro]) {
+    causasMaisFrequentesPorBairro[bairro] = [];
+  }
+  causasMaisFrequentes.forEach(causa => {
+    if (!causasMaisFrequentesPorBairro[bairro].includes(causa)) {
+      causasMaisFrequentesPorBairro[bairro].push(causa);
+    }
+  });
 }
+
+console.log(contagemAcidentesPorBairro);
+console.log(causasMaisFrequentesPorBairro);
