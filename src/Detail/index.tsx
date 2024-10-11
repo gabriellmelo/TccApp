@@ -32,16 +32,20 @@ export default function Details({ route }) {
           <View style={styles.infoContainer}>
             <Text style={styles.infoTextWithBorder}><Text style={styles.label}>Bairro:</Text> {info.bairro}</Text>
             <Text style={styles.infoTextWithBorder}><Text style={styles.label}>Acidentes já registrados nessa via:</Text> {info.indiceAcidentes}</Text>
-            <View style={styles.rowWithBorder}>
-              <Text style={styles.infoText}>
-                <Text style={styles.label}>Causas mais frequentes:</Text>
-              </Text>
-              <TouchableOpacity onPress={alternarCausas} style={styles.expandButton}>
-                <Icon name={causas ? "expand-less" : "expand-more"} size={24} color="#007BFF" />
-              </TouchableOpacity>
-            </View>
-            {causas && (
-              <Text style={styles.infoText}>{info.causasMaisFrequentes.join(", ")}</Text>
+            {info.indiceAcidentes > 0 && (
+              <>
+                <View style={styles.rowWithBorder}>
+                  <Text style={styles.infoText}>
+                    <Text style={styles.label}>Causas mais frequentes:</Text>
+                  </Text>
+                  <TouchableOpacity onPress={alternarCausas} style={styles.expandButton}>
+                    <Icon name={causas ? "expand-less" : "expand-more"} size={24} color="#007BFF" />
+                  </TouchableOpacity>
+                </View>
+                {causas && (
+                  <Text style={styles.infoText}>{info.causasMaisFrequentes.join(", ")}</Text>
+                )}
+              </>
             )}
           </View>
         ) : (

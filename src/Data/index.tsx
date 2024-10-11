@@ -25,10 +25,13 @@ export const RuasPorBairro: { [bairro: string]: string[] } = {
     "Rua Homero Pachêco Alves",
     "Rua Monsenhor Rosa",
     "Rua Ouvidor Freire",
+    "Rua do Comércio",
+    "Rua Couto Magalhães",
   ],
   "Cidade Nova": [
     "Avenida Major Nicácio",
     "Avenida Presidente Vargas",
+    "Rua Franscisco Barbosa",
   ],
   "City Petrópolis": [
     "Avenida Coelho Neto",
@@ -632,6 +635,15 @@ export const AcidenteDadosPorRua: {
       "Choque"
     ]
   },
+
+  "Rua Couto Magalhães": {
+    bairro: "Centro",
+    indiceAcidentes: 0,
+    horarioMaiorIncidencia: "",
+    causasMaisFrequentes: [
+      "Colisão Frontal"
+    ]
+  },
   "Rua Das Orquídeas": {
     bairro: "Jardim Florida",
     indiceAcidentes: 1,
@@ -858,4 +870,14 @@ export const AcidenteDadosPorRua: {
       "Atropelamento"
     ]
   }
+}
+
+export const contagemAcidentesPorBairro: { [bairro: string]: number } = {};
+
+for (const rua in AcidenteDadosPorRua) {
+  const { bairro, indiceAcidentes } = AcidenteDadosPorRua[rua];
+  if (!contagemAcidentesPorBairro[bairro]) {
+    contagemAcidentesPorBairro[bairro] = 0;
+  }
+  contagemAcidentesPorBairro[bairro] += indiceAcidentes;
 }

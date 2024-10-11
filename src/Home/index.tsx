@@ -4,7 +4,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import MapView, { Marker } from "react-native-maps";
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { bairros, RuasPorBairro, AcidenteDadosPorRua } from "../Data";
+import { bairros, RuasPorBairro, AcidenteDadosPorRua, contagemAcidentesPorBairro } from "../Data";
 
 type RootStackParamList = {
   Detail: { bairro: string; rua: string; };
@@ -40,6 +40,7 @@ export default function Home() {
   const [mostrarPickerRua, setMostrarPickerRua] = useState(false);
   const [MenuVisivel, setMenuVisivel] = useState(false);
   const [legendaVisivel, setLegendaVisivel] = useState(false);
+  const [corMarcadorBairro, setCorMarcadorBairro] = useState("blue");
 
   useEffect(() => {
     const atualizarCoordenadas = async () => {
@@ -68,6 +69,7 @@ export default function Home() {
     setBairroSelecionado(bairro);
     setRuaSelecionada(""); // Limpa a rua selecionada ao mudar de bairro
     setMostrarPickerRua(bairro && RuasPorBairro[bairro]?.length > 0); // Atualiza o estado para exibir o picker de ruas
+    setCorMarcadorBairro(obterCorMarcadorBairro(bairro)); // Atualiza a cor do marcador do bairro
   };
 
   const MudancaRua = (rua: string) => {
@@ -114,7 +116,25 @@ export default function Home() {
     return "blue";
   };
 
-  const corMarcador = obterCorMarcador(ruaSelecionada);
+  const obterCorMarcadorBairro = (bairroSelecionado: string) => {
+    if (bairroSelecionado && contagemAcidentesPorBairro[bairroSelecionado]) {
+      const indiceAcidente = contagemAcidentesPorBairro[bairroSelecionado];
+      if (indiceAcidente !== undefined) {
+        if (indiceAcidente === 0) {
+          return "green";
+        } else if (indiceAcidente <= 5) {
+          return "yellow";
+        } else if (indiceAcidente <= 10) {
+          return "orange";
+        } else {
+          return "red";
+        }
+      }
+    }
+    return "blue";
+  };
+
+  const corMarcador = ruaSelecionada ? obterCorMarcador(ruaSelecionada) : corMarcadorBairro;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -213,7 +233,7 @@ export default function Home() {
       >
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Legenda das cores dos marcadores</Text>
+            <Text style={styles.modalTitle}>Legenda das Cores dos Marcadores</Text>
             <View style={styles.legendItem}>
               <View style={[styles.legendColor, { backgroundColor: 'blue' }]} />
               <Text> Sem dados disponíveis</Text>
