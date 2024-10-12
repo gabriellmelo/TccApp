@@ -19,8 +19,8 @@ const DicasSegurancaScreen = () => {
       <Swiper
         loop={false}
         showsPagination={true}
-        dot={<View style={styles.dot} />} 
-        activeDot={<View style={styles.activeDot} />} 
+        dot={<View style={styles.dot} />}
+        activeDot={<View style={styles.activeDot} />}
         paginationStyle={styles.pagination}
       >
         {images.map((image, index) => (
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingBottom: height * 0.2,   
+    paddingBottom: height * 0.2,
   },
   slide: {
     flex: 1,
@@ -48,16 +48,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   imageWrapper: {
-    width: '90%',              
-    height: '95%',    
-    marginTop: 20,  
-    borderRadius: 20,           
-    overflow: 'hidden',         
-    backgroundColor: '#eee',    
+    width: '90%',
+    height: '95%',
+    marginTop: 20,
+    borderRadius: 20,
+    overflow: 'hidden',
+    backgroundColor: '#eee',
   },
   image: {
-    width: '100%',              
-    height: '100%',             
+    width: '100%',
+    height: '100%',
   },
   activeDot: {
     backgroundColor: '#007BFF',
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   pagination: {
-    top: height * 0.9,   
+    top: height * 0.9,
     position: 'absolute',
     left: 0,
     right: 0,

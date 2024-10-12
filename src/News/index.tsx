@@ -8,7 +8,7 @@ const noticias = [
     titulo: "Comerciante faz maquete com 'solução' para trânsito da Portinari",
     descricao: "Projeto artesanal foi desenvolvido para apontar 'soluções' e cobrar melhorias em trecho urbano da rodovia Cândido Portinari.",
     data: '07/05/2024',
-    imagem: require('assets/image.png'), 
+    imagem: require('assets/image.png'),
     link: 'https://sampi.net.br/franca/noticias/2831557/franca-e-regiao/2024/05/comerciante-faz-maquete-com-solucao-para-transito-da-portinari'
   },
   {
@@ -16,7 +16,7 @@ const noticias = [
     titulo: 'Trânsito assassino: carros e motos matam mais que armas em Franca',
     descricao: 'De acordo com dados divulgados pela PM, nos últimos cinco anos, foram 229 mortes nas ruas, avenidas e rodovias de Franca; motociclistas são as principais vítimas.',
     data: '27/09/2023',
-    imagem: require('assets/imagebombeiro.png'), 
+    imagem: require('assets/imagebombeiro.png'),
     link: 'https://sampi.net.br/franca/noticias/2789401/local/2023/09/transito-assassino-carros-e-motos-matam-mais-que-armas-em-franca'
   },
   {
@@ -24,7 +24,7 @@ const noticias = [
     titulo: 'Acidente em alça de acesso causa lentidão na rodovia Portinari',
     descricao: 'Colisão entre mociclista e ciclista na alça de acesso da rodovia Cândido Portinari para o Jardim Guanabara, em Franca, deixou duas pessoas feridas.',
     data: '03/06/2024',
-    imagem: require('assets/imagelentidao.png'), 
+    imagem: require('assets/imagelentidao.png'),
     link: 'https://sampi.net.br/franca/noticias/2836946/franca-e-regiao/2024/06/acidente-em-alca-de-acesso-causa-lentidao-na-rodovia-portinari'
   },
   {
@@ -32,7 +32,7 @@ const noticias = [
     titulo: 'Produtor rural de Batatais morre em grave acidente em Passos',
     descricao: 'Com a gravidade do impacto, o produtor rural Altair José Capato morreu no local do acidente, sem chances de ser socorrido.',
     data: '03/06/2024',
-    imagem: require('assets/imagebombeiro.png'), 
+    imagem: require('assets/imagebombeiro.png'),
     link: 'https://sampi.net.br/franca/noticias/2836833/franca-e-regiao/2024/06/produtor-rural-de-batatais-morre-em-grave-acidente-em-passos'
   },
   {
@@ -40,7 +40,7 @@ const noticias = [
     titulo: 'Idoso de 86 anos morre atropelado em Franca',
     descricao: 'Após o acidente, o motorista de veículo não identificado, que atingiu o idoso, fugiu do local.',
     data: '02/06/2024',
-    imagem: require('assets/imageidoso.png'), 
+    imagem: require('assets/imageidoso.png'),
     link: 'https://sampi.net.br/franca/noticias/2836763/franca-e-regiao/2024/06/idoso-de-86-anos-morre-atropelado-em-franca'
   },
   {
@@ -48,28 +48,28 @@ const noticias = [
     titulo: 'Câmera filmou acidente fatal na Av. Santos Dumont; ASSISTA',
     descricao: 'Rafael Batista Borges e seu amigo Fernando Borges da Silva voltavam da Expoagro quando o acidente aconteceu. Aos policiais, Fernando disse que ambos beberam na madrugada.',
     data: '27/05/2024',
-    imagem: require('assets/imageacfatal.png'), 
+    imagem: require('assets/imageacfatal.png'),
     link: 'https://sampi.net.br/franca/noticias/2835630/franca-e-regiao/2024/05/camera-filmou-acidente-fatal-na-av-santos-dumont-assista'
   },
   // Adicione mais notícias aqui
 ];
 
 const NoticiasScreen = () => {
-  const [selectedNoticia, setSelectedNoticia] = useState(null);
+  const [selecionarNoticia, setSelecionarNoticia] = useState(null);
 
-  const handleNoticiaPress = (noticia) => {
-    setSelectedNoticia(noticia);
+  const ApertarNoticia = (noticia) => {
+    setSelecionarNoticia(noticia);
   };
 
-  const handleBackPress = () => {
-    setSelectedNoticia(null);
+  const SelecionarVoltar = () => {
+    setSelecionarNoticia(null);
   };
 
-  if (selectedNoticia) {
+  if (selecionarNoticia) {
     return (
       <View style={{ flex: 1 }}>
-        <Button title="Voltar" onPress={handleBackPress} />
-        <WebView source={{ uri: selectedNoticia.link }} style={{ flex: 1 }} />
+        <Button title="Voltar" onPress={SelecionarVoltar} />
+        <WebView source={{ uri: selecionarNoticia.link }} style={{ flex: 1 }} />
       </View>
     );
   }
@@ -77,7 +77,7 @@ const NoticiasScreen = () => {
   return (
     <ScrollView style={styles.container}>
       {noticias.map(noticia => (
-        <TouchableOpacity key={noticia.id} onPress={() => handleNoticiaPress(noticia)}>
+        <TouchableOpacity key={noticia.id} onPress={() => ApertarNoticia(noticia)}>
           <View style={styles.noticiaContainer}>
             <Image source={noticia.imagem} style={styles.imagem} />
             <View style={styles.textContainer}>

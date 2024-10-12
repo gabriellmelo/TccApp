@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View, ActivityIndicator } from 'react-native';
 import { WebView } from 'react-native-webview';
 
-const ExploreDadosScreen = () => {
+const ExplorarDadosScreen = () => {
   const [loading, setLoading] = useState(true);
 
   return (
@@ -12,9 +12,9 @@ const ExploreDadosScreen = () => {
           <ActivityIndicator size="large" color="#0000ff" />
         </View>
       )}
-      <WebView 
-        source={{ uri: 'https://eda-acidentes-franca.streamlit.app/' }} 
-        style={{ flex: 1 }} 
+      <WebView
+        source={{ uri: 'https://eda-acidentes-franca.streamlit.app/' }}
+        style={{ flex: 1 }}
         onLoadEnd={() => setLoading(false)}
       />
     </View>
@@ -34,4 +34,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ExploreDadosScreen;
+export default ExplorarDadosScreen;
