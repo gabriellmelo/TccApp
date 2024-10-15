@@ -1,7 +1,8 @@
 export const bairros = [
   "Belvedere Bandeirante", "Centro", "Cidade Nova",
   "City Petrópolis", "Estação", "Jardim Aeroporto I",
-  "Jardim Aeroporto III", "Jardim Alvorada", "Jardim Brasilândia",
+  "Jardim Aeroporto II", "Jardim Aeroporto III", "Jardim Aeroporto IV",
+  "Jardim Alvorada", "Jardim Brasilândia",
   "Jardim Cambuí", "Jardim Conceição Leite", "Jardim Dermínio",
   "Jardim Francano", "Jardim Integração", "Jardim Luiza",
   "Jardim Marambaia", "Jardim Paulista", "Jardim Paulistano",
@@ -52,6 +53,11 @@ export const RuasPorBairro: { [bairro: string]: string[] } = {
   "Jardim Aeroporto I": [
     "Avenida Carlos Roberto Hadade",
     "Rua Maria Conceição Machado",
+  ],
+  "Jardim Aeroporto II": [
+    "Rua Nelson Ribeiro",
+    "Rua Carlos de Campos",
+    
   ],
   "Jardim Aeroporto III": [
     "Avenida César Martins Pirajá",

@@ -78,11 +78,15 @@ export default function Home() {
 
   const PressionarBotao = () => {
     if (!bairroSelecionado) {
-      Alert.alert("Seleção inválida", "Por favor, selecione um bairro.");
+        Alert.alert("Seleção inválida", "Por favor, selecione um bairro.");
+    } else if (!RuasPorBairro[bairroSelecionado] || RuasPorBairro[bairroSelecionado].length === 0) {
+        Alert.alert("Informação indisponível", "Não há informações sobre este bairro.");
+    } else if (!contagemAcidentesPorBairro[bairroSelecionado] || contagemAcidentesPorBairro[bairroSelecionado] === 0) {
+        Alert.alert("Informação indisponível", "Não há informações de acidentes registradas para este bairro.");
     } else {
-      navigation.navigate('Detail', { bairro: bairroSelecionado, rua: ruaSelecionada });
+        navigation.navigate('Detail', { bairro: bairroSelecionado, rua: ruaSelecionada });
     }
-  };
+};
 
   const opcoesMenu = [
     { label: "Notícias", screen: "Notícias" },
