@@ -41,7 +41,10 @@ export default function Details({ route }) {
             {info ? (
               <View style={styles.infoContainer}>
                 <Text style={styles.infoTextWithBorder}><Text style={styles.label}>Bairro:</Text> {info.bairro}</Text>
-                <Text style={styles.infoTextWithBorder}><Text style={styles.label}>Acidentes já registrados nessa via:</Text> {info.indiceAcidentes}</Text>
+                <Text style={styles.infoTextWithBorder}>
+                  <Text style={styles.label}>Acidentes já registrados nessa via: </Text> 
+                  {info.indiceAcidentes === 0 ? 'Nenhum acidente registrado' : `${info.indiceAcidentes} ${info.indiceAcidentes === 1 ? 'acidente' : 'acidentes'}`}
+                </Text>
                 {info.indiceAcidentes > 0 && (
                   <>
                     <View style={styles.rowWithBorder}>
@@ -66,7 +69,10 @@ export default function Details({ route }) {
           <>
             <Text style={styles.title}>No bairro <Text style={styles.highlightedText}>{bairro}</Text>, encontramos as seguintes informações:</Text>
             <View style={styles.infoContainer}>
-              <Text style={styles.infoTextWithBorder}><Text style={styles.label}>Total de acidentes:</Text> {totalAcidentes}</Text>
+              <Text style={styles.infoTextWithBorder}>
+                <Text style={styles.label}>Total de acidentes: </Text> 
+                {totalAcidentes === 0 ? 'Nenhum acidente registrado' : `${totalAcidentes} ${totalAcidentes === 1 ? 'acidente' : 'acidentes'}`}
+              </Text>
               <View style={styles.rowWithBorder}>
                 <Text style={styles.infoText}>
                   <Text style={styles.label}>Causas mais frequentes:</Text>
@@ -90,7 +96,7 @@ export default function Details({ route }) {
                 <View style={styles.ruasContainer}>
                   {ruasBairro.map((rua, index) => (
                     <Text key={index} style={styles.infoTextWithBorder}>
-                      <Text style={styles.label}>{rua}:</Text> {AcidenteDadosPorRua[rua]?.indiceAcidentes !== undefined ? `${AcidenteDadosPorRua[rua].indiceAcidentes} acidentes` : "Sem dados disponíveis"}
+                      <Text style={styles.label}>{rua}:</Text> {AcidenteDadosPorRua[rua]?.indiceAcidentes !== undefined ? `${AcidenteDadosPorRua[rua].indiceAcidentes === 0 ? 'Nenhum acidente registrado' : `${AcidenteDadosPorRua[rua].indiceAcidentes} ${AcidenteDadosPorRua[rua].indiceAcidentes === 1 ? 'acidente' : 'acidentes'}`}` : "Sem dados disponíveis"}
                     </Text>
                   ))}
                 </View>

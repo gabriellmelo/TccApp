@@ -32,7 +32,7 @@ const noticias = [
     titulo: 'Produtor rural de Batatais morre em grave acidente em Passos',
     descricao: 'Com a gravidade do impacto, o produtor rural Altair José Capato morreu no local do acidente, sem chances de ser socorrido.',
     data: '03/06/2024',
-    imagem: require('assets/imagebombeiro.png'),
+    imagem: require('assets/imagepassos.png'),
     link: 'https://sampi.net.br/franca/noticias/2836833/franca-e-regiao/2024/06/produtor-rural-de-batatais-morre-em-grave-acidente-em-passos'
   },
   {
@@ -51,7 +51,54 @@ const noticias = [
     imagem: require('assets/imageacfatal.png'),
     link: 'https://sampi.net.br/franca/noticias/2835630/franca-e-regiao/2024/05/camera-filmou-acidente-fatal-na-av-santos-dumont-assista'
   },
-  // Adicione mais notícias aqui
+  {
+    id: 7,
+    titulo: 'Médico francano sobrevive a grave acidente perto do Paineirão',
+    descricao: 'Veículo do médico francano atingiu a traseira de um caminhão que iria acessar o Posto Paineirão',
+    data: '13/10/2024',
+    imagem: require('assets/imageCarroMedico.webp'),
+    link: 'https://sampi.net.br/franca/noticias/2861942/policia/2024/10/medico-francano-sobrevive-a-grave-acidente-perto-do-paineirao'
+  },
+  {
+    id: 8,
+    titulo: 'VÍDEO: Conversão proibida de moto causa grave acidente na Vargasco francano sobrevive a grave acidente perto do Paineirão',
+    descricao: 'Uma conversão proibida resultou em um grave acidente na noite desta segunda-feira, 14, no cruzamento da avenida Presidente Vargas com a rua Afonso Pena, na Cidade Nova, região central de Franca.',
+    data: '14/10/2024',
+    imagem: require('assets/imageVargas.webp'),
+    link: 'https://sampi.net.br/franca/noticias/2862124/franca-e-regiao/2024/10/video-conversao-proibida-de-moto-causa-grave-acidente-na-vargas'
+  },
+  {
+    id: 9,
+    titulo: 'Colisão na Portinari deixa 3 vítimas presas às ferragens; VÍDEO',
+    descricao: 'Caminhão tombou ao atingir mureta de proteção na rodovia Cândido Portinari',
+    data: '14/10/2024',
+    imagem: require('assets/imageCandidoPortinari.webp'),
+    link: 'https://sampi.net.br/franca/noticias/2861944/regiao/2024/10/colisao-na-portinari-deixa-3-vitimas-presas-as-ferragens-video'
+  },
+  {
+    id: 10,
+    titulo: "Motorista desrespeita 'pare' e causa acidente no Cidade Nova",
+    descricao: 'EcoSport tombou e atingiu outro veículo estacionado',
+    data: '14/10/2024',
+    imagem: require('assets/imageCidadeNova.webp'),
+    link: 'https://sampi.net.br/franca/noticias/2862059/franca-e-regiao/2024/10/motorista-desrespeita-pare-e-causa-acidente-no-cidade-nova'
+  },
+  {
+    id: 11,
+    titulo: "Grave acidente entre motos deixa dois feridos em Franca",
+    descricao: 'Um grave acidente envolvendo duas motocicletas foi registrado na avenida Major Elias Motta, no bairro Jardim São Luiz, em Franca, no final da tarde deste domingo, 13.',
+    data: '14/10/2024',
+    imagem: require('assets/imageMoto.webp'),
+    link: 'https://sampi.net.br/franca/noticias/2861969/franca-e-regiao/2024/10/grave-acidente-entre-motos-deixa-dois-feridos-em-franca'
+  },
+  {
+    id: 12,
+    titulo: "Motoqueiro fica em estado grave após acidente com ciclista",
+    descricao: 'Um motociclista de 18 anos ficou em estado grave e um outro rapaz numa bicicleta sofreu ferimentos leves após se envolverem em um acidente de trânsito na noite desta sexta-feira, 11, na rua Érico Veríssimo, no Miramontes, zona norte de Franca.',
+    data: '11/10/2024',
+    imagem: require('assets/imageSamu.webp'),
+    link: 'https://sampi.net.br/franca/noticias/2861969/franca-e-regiao/2024/10/grave-acidente-entre-motos-deixa-dois-feridos-em-franca'
+  },
 ];
 
 const NoticiasScreen = () => {
@@ -68,8 +115,10 @@ const NoticiasScreen = () => {
   if (selecionarNoticia) {
     return (
       <View style={{ flex: 1 }}>
-        <Button title="Voltar" onPress={SelecionarVoltar} />
-        <WebView source={{ uri: selecionarNoticia.link }} style={{ flex: 1 }} />
+        <TouchableOpacity style={styles.voltarButton} onPress={SelecionarVoltar}>
+          <Text style={styles.voltarButtonText}>Voltar para notícias</Text>
+        </TouchableOpacity>
+        <WebView source={{ uri: selecionarNoticia.link }} style={styles.webView} />
       </View>
     );
   }
@@ -124,6 +173,25 @@ const styles = StyleSheet.create({
   data: {
     fontSize: 12,
     color: '#666',
+  },
+  voltarButton: {
+    position: 'absolute',
+    top: 10,
+    left: 20,
+    right: 20,
+    zIndex: 1,
+    backgroundColor: '#007BFF',
+    padding: 10,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  voltarButtonText: {
+    color: '#FFF',
+    fontSize: 16,
+  },
+  webView: {
+    flex: 1,
+    marginTop: 60,
   },
 });
 
