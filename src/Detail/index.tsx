@@ -1,18 +1,18 @@
 import React, { useLayoutEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { RuasPorBairro, AcidenteDadosPorRua, contagemAcidentesPorBairro, causasMaisFrequentesPorBairro } from '../Data';
+import { ViasPorBairro, AcidentesPorVias, contagemAcidentesPorBairro, causasMaisFrequentesPorBairro } from '../Data';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default function Details({ route }) {
-  const { bairro, rua } = route.params;
+  const { bairro, via } = route.params;
   const navigation = useNavigation();
   const [causas, setCausas] = useState(false);
-  const [ruas, setRuas] = useState(false);
-  const info = rua ? AcidenteDadosPorRua[rua] : null;
+  const [vias, setVias] = useState(false);
+  const info = via ? AcidentesPorVias[via] : null;
   const totalAcidentes = contagemAcidentesPorBairro[bairro];
   const causasBairro = causasMaisFrequentesPorBairro[bairro];
-  const ruasBairro = RuasPorBairro[bairro] || [];
+  const viasBairro = ViasPorBairro[bairro] || [];
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -28,21 +28,21 @@ export default function Details({ route }) {
     setCausas(!causas);
   };
 
-  const alternarRuas = () => {
-    setRuas(!ruas);
+  const alternarVias = () => {
+    setVias(!vias);
   };
 
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
-        {rua ? (
+        {via ? (
           <>
-            <Text style={styles.title}>Na <Text style={styles.highlightedText}>{rua}</Text>, encontramos as seguintes informações:</Text>
+            <Text style={styles.title}>Na <Text style={styles.highlightedText}>{via}</Text>, encontramos as seguintes informações:</Text>
             {info ? (
               <View style={styles.infoContainer}>
                 <Text style={styles.infoTextWithBorder}><Text style={styles.label}>Bairro:</Text> {info.bairro}</Text>
                 <Text style={styles.infoTextWithBorder}>
-                  <Text style={styles.label}>Acidentes já registrados nessa via: </Text> 
+                  <Text style={styles.label}>Acidentes já registrados nessa via: </Text>
                   {info.indiceAcidentes === 0 ? 'Nenhum acidente registrado' : `${info.indiceAcidentes} ${info.indiceAcidentes === 1 ? 'acidente' : 'acidentes'}`}
                 </Text>
                 {info.indiceAcidentes > 0 && (
@@ -62,7 +62,7 @@ export default function Details({ route }) {
                 )}
               </View>
             ) : (
-              <Text style={styles.noInfo}>Não há informações disponíveis para esta rua.</Text>
+              <Text style={styles.noInfo}>Não há informações disponíveis para esta via.</Text>
             )}
           </>
         ) : (
@@ -70,7 +70,7 @@ export default function Details({ route }) {
             <Text style={styles.title}>No bairro <Text style={styles.highlightedText}>{bairro}</Text>, encontramos as seguintes informações:</Text>
             <View style={styles.infoContainer}>
               <Text style={styles.infoTextWithBorder}>
-                <Text style={styles.label}>Total de acidentes: </Text> 
+                <Text style={styles.label}>Total de acidentes: </Text>
                 {totalAcidentes === 0 ? 'Nenhum acidente registrado' : `${totalAcidentes} ${totalAcidentes === 1 ? 'acidente' : 'acidentes'}`}
               </Text>
               <View style={styles.rowWithBorder}>
@@ -86,17 +86,17 @@ export default function Details({ route }) {
               )}
               <View style={styles.rowWithBorder}>
                 <Text style={styles.infoText}>
-                  <Text style={styles.label}>Ruas e índices de acidentes:</Text>
+                  <Text style={styles.label}>Vias e índices de acidentes:</Text>
                 </Text>
-                <TouchableOpacity onPress={alternarRuas} style={styles.expandButton}>
-                  <Icon name={ruas ? "expand-less" : "expand-more"} size={24} color="#007BFF" />
+                <TouchableOpacity onPress={alternarVias} style={styles.expandButton}>
+                  <Icon name={vias ? "expand-less" : "expand-more"} size={24} color="#007BFF" />
                 </TouchableOpacity>
               </View>
-              {ruas && (
-                <View style={styles.ruasContainer}>
-                  {ruasBairro.map((rua, index) => (
+              {vias && (
+                <View style={styles.viasContainer}>
+                  {viasBairro.map((via, index) => (
                     <Text key={index} style={styles.infoTextWithBorder}>
-                      <Text style={styles.label}>{rua}:</Text> {AcidenteDadosPorRua[rua]?.indiceAcidentes !== undefined ? `${AcidenteDadosPorRua[rua].indiceAcidentes === 0 ? 'Nenhum acidente registrado' : `${AcidenteDadosPorRua[rua].indiceAcidentes} ${AcidenteDadosPorRua[rua].indiceAcidentes === 1 ? 'acidente' : 'acidentes'}`}` : "Sem dados disponíveis"}
+                      <Text style={styles.label}>{via}:</Text> {AcidentesPorVias[via]?.indiceAcidentes !== undefined ? `${AcidentesPorVias[via].indiceAcidentes === 0 ? 'Nenhum acidente registrado' : `${AcidentesPorVias[via].indiceAcidentes} ${AcidentesPorVias[via].indiceAcidentes === 1 ? 'acidente' : 'acidentes'}`}` : "Sem dados disponíveis"}
                     </Text>
                   ))}
                 </View>
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#ddd',
   },
-  ruasContainer: {
+  viasContainer: {
     marginTop: 10,
   },
 });

@@ -17,7 +17,7 @@ export const bairros = [
   "Vila Santa Rita", "Vila Santa Terezinha"
 ];
 
-export const RuasPorBairro: { [bairro: string]: string[] } = {
+export const ViasPorBairro: { [bairro: string]: string[] } = {
   "Belvedere Bandeirante": [
     "Avenida Jaime Telini",
   ],
@@ -57,7 +57,7 @@ export const RuasPorBairro: { [bairro: string]: string[] } = {
   "Jardim Aeroporto II": [
     "Rua Nelson Ribeiro",
     "Rua Carlos de Campos",
-    
+
   ],
   "Jardim Aeroporto III": [
     "Avenida César Martins Pirajá",
@@ -203,8 +203,8 @@ export const RuasPorBairro: { [bairro: string]: string[] } = {
   ],
 };
 
-export const AcidenteDadosPorRua: {
-  [rua: string]: {
+export const AcidentesPorVias: {
+  [via: string]: {
     bairro: string;
     indiceAcidentes: number;
     causasMaisFrequentes: string[];
@@ -803,8 +803,8 @@ export const AcidenteDadosPorRua: {
 export const contagemAcidentesPorBairro: { [bairro: string]: number } = {};
 export const causasMaisFrequentesPorBairro: { [bairro: string]: string[] } = {};
 
-for (const rua in AcidenteDadosPorRua) {
-  const { bairro, indiceAcidentes, causasMaisFrequentes } = AcidenteDadosPorRua[rua];
+for (const rua in AcidentesPorVias) {
+  const { bairro, indiceAcidentes, causasMaisFrequentes } = AcidentesPorVias[rua];
 
   if (!contagemAcidentesPorBairro[bairro]) {
     contagemAcidentesPorBairro[bairro] = 0;
