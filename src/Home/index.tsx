@@ -242,21 +242,26 @@ export default function Home() { // Componente principal da tela inicial
 
       <View style={styles.overlay}>
         <View style={styles.pesquisaContainer}>
-          <FontAwesome name="search" size={20} color="#000" />
+          <FontAwesome name="search" size={20} color="#007BFF" />
           <TextInput
             style={styles.input}
-            placeholder="Selecione um bairro"
+            placeholder="Pesquise ou selecione um bairro"
             value={bairroSelecionado || pesquisa} // Exibe o bairro selecionado ou o texto da pesquisa
             onChangeText={Busca} // Atualiza a pesquisa ao digitar
             onFocus={() => setBairrosDropdownAberto(true)} // Abre o dropdown ao focar no campo
           />
           <View style={styles.iconContainer}>
-            <TouchableOpacity onPress={() => setBairrosDropdownAberto(!bairrosDropdownAberto)}>
-              <FontAwesome name={bairrosDropdownAberto ? "chevron-up" : "chevron-down"} size={20} color="#000" />
+            <TouchableOpacity onPress={() => { // Abre ou fecha o dropdown de bairros
+              setBairrosDropdownAberto(!bairrosDropdownAberto); // Atualiza o estado do dropdown
+              if (bairrosDropdownAberto) {
+                Keyboard.dismiss(); // Fecha o teclado quando desabilitar a lista de bairros
+              }
+            }}>
+              <FontAwesome name={bairrosDropdownAberto ? "chevron-up" : "chevron-down"} size={20} color="#007BFF" />
             </TouchableOpacity>
             {(pesquisa !== '' || bairroSelecionado) && ( // Exibe o ícone de limpar a seleção
               <TouchableOpacity onPress={limparSelecao} style={styles.clearIcon}>
-                <FontAwesome name="times-circle" size={20} color="#FF0000" />
+                <FontAwesome name="close" size={20} color="#007BFF" />
               </TouchableOpacity>
             )}
           </View>
@@ -289,10 +294,10 @@ export default function Home() { // Componente principal da tela inicial
               editable={false}  // Impede a edição direta do campo
             />
             <View style={styles.iconContainer}>
-              <FontAwesome name={viasDropdownAberto ? "chevron-up" : "chevron-down"} size={20} color="#000" />
+              <FontAwesome name={viasDropdownAberto ? "chevron-up" : "chevron-down"} size={20} color="#007BFF" />
               {viaSelecionada && (
                 <TouchableOpacity onPress={limparSelecaoRua} style={styles.clearIcon}>
-                  <FontAwesome name="times-circle" size={20} color="#FF0000" />
+                  <FontAwesome name="close" size={20} color="#007BFF" />
                 </TouchableOpacity>
               )}
             </View>
@@ -319,7 +324,7 @@ export default function Home() { // Componente principal da tela inicial
               (!ViasPorBairro[bairroSelecionado] || ViasPorBairro[bairroSelecionado].length === 0) && styles.buttonDisabled // Desabilita o botão se não houver vias disponíveis
             ]}
             onPress={PressionarBotao}
-            disabled={!ViasPorBairro[bairroSelecionado] || ViasPorBairro[bairroSelecionado].length === 0} 
+            disabled={!ViasPorBairro[bairroSelecionado] || ViasPorBairro[bairroSelecionado].length === 0}
           >
             <Text style={styles.buttonText}>Ver informações sobre essa área</Text>
           </TouchableOpacity>
