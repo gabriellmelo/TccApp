@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Alert, StatusBar, Platform, Modal } from "react-native";
-import RNPickerSelect from 'react-native-picker-select';
-import MapView, { Marker } from "react-native-maps";
-import { useNavigation, NavigationProp } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import { bairros, RuasPorBairro, AcidenteDadosPorRua, contagemAcidentesPorBairro, causasMaisFrequentesPorBairro } from "../Data";
+import React, { useState, useEffect } from "react"; // Importa os hooks do React
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Alert, StatusBar, Platform, Modal, TextInput, FlatList, Keyboard } from "react-native"; // Importa componentes do React Native
+import MapView, { Marker } from "react-native-maps"; // Importa o MapView e o Marker do React Native Maps
+import { useNavigation, NavigationProp } from '@react-navigation/native'; // Importa os hooks de navegação
+import Icon from 'react-native-vector-icons/MaterialIcons'; // Importa ícones do Material Icons
+import { FontAwesome } from '@expo/vector-icons'; // Importa ícones do FontAwesome
+import { bairros, ViasPorBairro, AcidentesPorVias, contagemAcidentesPorBairro } from "../Data"; // Importa os dados de bairros, vias e acidentes
 
-type RootStackParamList = {
-  Detail: { bairro: string; rua: string; };
+type RootStackParamList = { // Definição das rotas disponíveis na navegação
+  Detail: { bairro: string; via: string; }; // Parâmetros da tela de detalhes
   'News': undefined;
   'Safety Tips': undefined;
   'Data': undefined;
@@ -17,92 +17,101 @@ type RootStackParamList = {
 // Chave da API do Google Maps
 const chaveApi = 'AIzaSyCQ1V4vK2zPgPwtbgS8F7H0Em63PYK5jJ4';
 
-// Função para obter coordenadas a partir do endereço
+// Função para obter coorden a partir do endereço
 async function obterCoordenadas(endereco) {
-  const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(endereco + ', Franca, SP')}&key=${chaveApi}`;
-  const resposta = await fetch(url);
-  const dados = await resposta.json();
+  const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(endereco + ', Franca, SP')}&key=${chaveApi}`; // URL da API do Google Maps
+  const resposta = await fetch(url); // Faz a requisição à API do Google Maps
+  const dados = await resposta.json(); // Converte a resposta para JSON
 
-  if (dados.status === "OK") {
-    const { lat, lng } = dados.results[0].geometry.location;
+  if (dados.status === "OK") { // Verifica se a requisição foi bem-sucedida
+    const { lat, lng } = dados.results[0].geometry.location; // Obtém as coordenadas
     return { latitude: lat, longitude: lng }; // Retorna o formato aceito pelo MapView
   } else {
-    console.error(`Erro ao obter coordenadas para ${endereco}: ${dados.status}`);
-    return null;
+    console.error(`Erro ao obter coordenadas para ${endereco}: ${dados.status}`); // Exibe o erro no console
+    return null; // Retorna nulo em caso de erro
   }
 }
 
-export default function Home() {
-  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const [bairroSelecionado, setBairroSelecionado] = useState("");
-  const [ruaSelecionada, setRuaSelecionada] = useState("");
-  const [coordenadas, setCoordenadas] = useState({ latitude: -20.5386, longitude: -47.4006 });
-  const [mostrarPickerRua, setMostrarPickerRua] = useState(false);
-  const [MenuVisivel, setMenuVisivel] = useState(false);
-  const [legendaVisivel, setLegendaVisivel] = useState(false);
-  const [corMarcadorBairro, setCorMarcadorBairro] = useState("blue");
+export default function Home() { // Componente principal da tela inicial
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>(); // navegação
+  const [bairroSelecionado, setBairroSelecionado] = useState(""); // Estado do bairro selecionado
+  const [viaSelecionada, setViaSelecionada] = useState(""); // Estado da via selecionada
+  const [coordenadas, setCoordenadas] = useState({ latitude: -20.5386, longitude: -47.4006 }); // Estado das coordenadas
+  const [mostrarListaVias, setMostrarListaVias] = useState(false); // Estado para exibir o picker de vias
+  const [MenuVisivel, setMenuVisivel] = useState(false); // Estado do menu de navegação
+  const [legendaVisivel, setLegendaVisivel] = useState(false); // Estado da legenda
+  const [corMarcadorBairro, setCorMarcadorBairro] = useState("blue"); // Estado da cor do marcador do bairro
+  const [pesquisa, setPesquisa] = useState(''); // Estado da pesquisa
+  const [bairrosFiltrados, setBairrosFiltrados] = useState(bairros); // Estado dos bairros filtrados
+  const [bairrosDropdownAberto, setBairrosDropdownAberto] = useState(false); // Estado do dropdown de bairros
+  const [viasDropdownAberto, setViasDropdownAberto] = useState(false); // Estado do dropdown de vias
 
-  useEffect(() => {
+  useEffect(() => { // Atualiza as coordenadas ao selecionar um bairro ou via
     const atualizarCoordenadas = async () => {
-      let endereco = bairroSelecionado;
-      if (ruaSelecionada) {
-        endereco += ` ${ruaSelecionada}`;
+      let endereco = bairroSelecionado; // Inicia o endereço com o bairro selecionado
+      if (viaSelecionada) { // Verifica se uma via foi selecionada
+        endereco += ` ${viaSelecionada}`; // Adiciona a via ao endereço
       }
 
-      const coords = await obterCoordenadas(endereco);
-      if (coords) {
-        setCoordenadas(coords);
+      const coords = await obterCoordenadas(endereco); // Obtém as coordenadas do endereço
+      if (coords) { // Verifica se as coordenadas foram obtidas com sucesso
+        setCoordenadas(coords); // Atualiza as coordenadas
       } else {
-        Alert.alert("Erro", "Não foi possível obter as coordenadas.");
+        Alert.alert("Erro", "Não foi possível obter as coordenadas."); // Exibe um alerta em caso de erro
       }
     };
 
-    if (bairroSelecionado || ruaSelecionada) {
-      atualizarCoordenadas();
+    if (bairroSelecionado || viaSelecionada) { // Verifica se um bairro ou via foi selecionado
+      atualizarCoordenadas(); // Atualiza as coordenadas
     } else {
-      // Retorna ao centro da cidade se nada estiver selecionado
-      setCoordenadas({ latitude: -20.5386, longitude: -47.4006 });
+      setCoordenadas({ latitude: -20.5386, longitude: -47.4006 }); // Retorna ao centro da cidade se nada estiver selecionado
     }
-  }, [bairroSelecionado, ruaSelecionada]);
+  }, [bairroSelecionado, viaSelecionada]); // Atualiza as coordenadas ao mudar o bairro ou via
 
-  const MudancaBairro = (bairro: string) => {
-    setBairroSelecionado(bairro);
-    setRuaSelecionada(""); // Limpa a rua selecionada ao mudar de bairro
-    setMostrarPickerRua(bairro && RuasPorBairro[bairro]?.length > 0); // Atualiza o estado para exibir o picker de ruas
+  const MudancaBairro = (bairro: string) => { // Função para mudar o bairro selecionado
+    setBairroSelecionado(bairro); // Atualiza o estado do bairro selecionado
+    setViaSelecionada(""); // Limpa a via selecionada ao mudar de bairro
+    setMostrarListaVias(bairro && ViasPorBairro[bairro]?.length > 0); // Atualiza o estado para exibir o picker de vias
     setCorMarcadorBairro(obterCorMarcadorBairro(bairro)); // Atualiza a cor do marcador do bairro
+    setViasDropdownAberto(true); // Abre a lista de vias automaticamente
   };
 
-  const MudancaRua = (rua: string) => {
-    setRuaSelecionada(rua);
+  const MudancaVia = (via: string) => { // Função para mudar a via selecionada
+    setViaSelecionada(via); // Atualiza o estado da via selecionada
+    setViasDropdownAberto(false); // Fecha o dropdown ao selecionar uma via
   };
 
-  const PressionarBotao = () => {
-    if (!bairroSelecionado) {
+  const PressionarBotao = () => { // Função para exibir informações sobre a área selecionada
+    if (!bairroSelecionado) { // Verifica se um bairro foi selecionado
       Alert.alert("Seleção inválida", "Por favor, selecione um bairro.");
+    } else if (!ViasPorBairro[bairroSelecionado] || ViasPorBairro[bairroSelecionado].length === 0) { // Verifica se há vias disponíveis para o bairro selecionado
+      Alert.alert("Informação indisponível", "Não há informações sobre este bairro.");
+    } else if (!contagemAcidentesPorBairro[bairroSelecionado] || contagemAcidentesPorBairro[bairroSelecionado] === 0) { // Verifica se há acidentes registrados para o bairro selecionado
+      Alert.alert("Informação indisponível", "Não há informações de acidentes registradas para este bairro.");
     } else {
-      navigation.navigate('Detail', { bairro: bairroSelecionado, rua: ruaSelecionada });
+      navigation.navigate('Detail', { bairro: bairroSelecionado, via: viaSelecionada });
     }
   };
 
-  const opcoesMenu = [
+  const opcoesMenu = [ // Opções do menu de navegação 
     { label: "Notícias", screen: "Notícias" },
     { label: "Dados", screen: "Explorar Dados" },
     { label: "Dicas Educativas", screen: "Dicas de Segurança" },
     { label: "Telefones Úteis", screen: "Telefones Úteis" },
   ];
 
-  const PressionarMenu = (option) => {
-    if (option.screen) {
+  const PressionarMenu = (option) => { // Função para navegar para a tela correspondente à opção selecionada
+    if (option.screen) { // Navega para a tela correspondente à opção selecionada
       navigation.navigate(option.screen);
     }
-    setMenuVisivel(false);
+    setMenuVisivel(false); // Fecha o menu após selecionar uma opção
   };
 
-  const obterCorMarcador = (ruaSelecionada: string) => {
-    if (ruaSelecionada && AcidenteDadosPorRua[ruaSelecionada]) {
-      const indiceAcidente = AcidenteDadosPorRua[ruaSelecionada].indiceAcidentes;
-      if (indiceAcidente !== undefined) {
-        if (indiceAcidente === 0) {
+  const obterCorMarcador = (viaSelecionada: string) => { // Função para obter a cor do marcador da via
+    if (viaSelecionada && AcidentesPorVias[viaSelecionada]) { // Verifica se a via selecionada existe
+      const indiceAcidente = AcidentesPorVias[viaSelecionada].indiceAcidentes; // Obtém o índice de acidentes
+      if (indiceAcidente !== undefined) { // Verifica se o índice é válido
+        if (indiceAcidente === 0) { // Define a cor do marcador com base no índice de acidentes
           return "green";
         } else if (indiceAcidente <= 5) {
           return "yellow";
@@ -113,14 +122,14 @@ export default function Home() {
         }
       }
     }
-    return "blue";
+    return "blue"; // Retorna azul se não houver dados disponíveis
   };
 
-  const obterCorMarcadorBairro = (bairroSelecionado: string) => {
-    if (bairroSelecionado && contagemAcidentesPorBairro[bairroSelecionado]) {
-      const indiceAcidente = contagemAcidentesPorBairro[bairroSelecionado];
-      if (indiceAcidente !== undefined) {
-        if (indiceAcidente === 0) {
+  const obterCorMarcadorBairro = (bairroSelecionado: string) => { // Função para obter a cor do marcador do bairro
+    if (bairroSelecionado && contagemAcidentesPorBairro[bairroSelecionado]) { // Verifica se o bairro selecionado existe
+      const indiceAcidente = contagemAcidentesPorBairro[bairroSelecionado]; // Obtém o índice de acidentes
+      if (indiceAcidente !== undefined) { // Verifica se o índice é válido
+        if (indiceAcidente === 0) { // Define a cor do marcador com base no índice de acidentes
           return "green";
         } else if (indiceAcidente <= 5) {
           return "yellow";
@@ -131,31 +140,60 @@ export default function Home() {
         }
       }
     }
-    return "blue";
+    return "blue"; // Retorna azul se não houver dados disponíveis
   };
 
-  const corMarcador = ruaSelecionada ? obterCorMarcador(ruaSelecionada) : corMarcadorBairro;
+  const corMarcador = viaSelecionada ? obterCorMarcador(viaSelecionada) : corMarcadorBairro; // Define a cor do marcador
 
-  return (
+  const limparSelecao = () => { // Função para limpar a seleção de bairro e via
+    setBairroSelecionado(""); // Limpa a seleção de bairro
+    setViaSelecionada(""); // Limpa a seleção de via
+    setPesquisa(""); // Limpa a pesquisa ao limpar a seleção
+    setBairrosFiltrados(bairros); // Reseta os bairros filtrados
+    setBairrosDropdownAberto(false); // Fecha o dropdown de bairros
+    setMostrarListaVias(false); // Esconde o picker de vias
+    setCoordenadas({ latitude: -20.5386, longitude: -47.4006 }); // Retorna ao centro da cidade
+    setCorMarcadorBairro("blue"); // Reseta a cor do marcador do bairro
+  };
+
+  const limparSelecaoRua = () => { // Função para limpar a seleção de via
+    setViaSelecionada(""); // Limpa a seleção de via
+    setViasDropdownAberto(false); // Fecha o dropdown de vias
+  };
+
+  const Busca = (text) => { // Função para buscar bairros
+    setPesquisa(text); // Atualiza o estado da pesquisa
+    setBairrosFiltrados(bairros.filter(bairro => bairro.toLowerCase().includes(text.toLowerCase()))); // Filtra os bairros
+    setBairrosDropdownAberto(true); // Abre o dropdown ao digitar
+
+    if (text === "") { // Limpa a seleção ao apagar o texto
+      limparSelecao(); // Limpa a seleção de bairro e via
+    } else if (bairroSelecionado && text.length < bairroSelecionado.length) { // Limpa a seleção ao apagar o texto
+      setBairroSelecionado(text); // Atualiza o estado do bairro selecionado
+      setCoordenadas({ latitude: -20.5386, longitude: -47.4006 }); // Retorna ao centro da cidade
+    }
+  };
+
+  return ( // Renderiza o componente
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
       <View style={styles.header}>
         <TouchableOpacity onPress={() => setLegendaVisivel(true)}>
           <Icon name="info" size={30} color="#007BFF" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Mapa</Text>
+        <Text style={styles.headerTitle}>Mapa de Franca</Text>
         <TouchableOpacity onPress={() => setMenuVisivel(!MenuVisivel)}>
           <Icon name="menu" size={30} color="#000" />
         </TouchableOpacity>
       </View>
 
-      {MenuVisivel && (
+      {MenuVisivel && ( // Exibe o menu de navegação
         <View style={styles.dropdownMenu}>
-          {opcoesMenu.map((option, index) => (
+          {opcoesMenu.map((option, index) => (  // Mapeia as opções do menu
             <TouchableOpacity
-              key={index}
-              style={styles.menuOption}
-              onPress={() => PressionarMenu(option)}
+              key={index}  // Chave única para cada opção
+              style={styles.menuOption}  // Estilo da opção
+              onPress={() => PressionarMenu(option)}  // Função ao pressionar a opção
             >
               <Text style={styles.menuOptionText}>{option.label}</Text>
             </TouchableOpacity>
@@ -163,27 +201,27 @@ export default function Home() {
         </View>
       )}
 
-      <MapView
-        style={styles.map}
-        mapType="terrain"
-        region={{
+      <MapView // Mapa de Franca
+        style={styles.map} // Estilo do mapa
+        mapType="terrain" // Tipo de mapa
+        region={{  // Região inicial
           latitude: coordenadas.latitude,
           longitude: coordenadas.longitude,
-          latitudeDelta: 0.01,
+          latitudeDelta: 0.01,  // Zoom
           longitudeDelta: 0.01,
         }}
       >
-        <Marker
-          key={corMarcador}
-          coordinate={{
+        <Marker // Marcador do bairro
+          key={corMarcador} // Chave única para o marcador
+          coordinate={{ // Coordenadas do marcador
             latitude: coordenadas.latitude,
             longitude: coordenadas.longitude,
           }}
-          pinColor={corMarcador}
-          onPress={() => {
-            let message = '';
-            let indiceAcidente = ruaSelecionada ? AcidenteDadosPorRua[ruaSelecionada]?.indiceAcidentes : contagemAcidentesPorBairro[bairroSelecionado];
-            if (corMarcador === 'blue') {
+          pinColor={corMarcador} // Cor do marcador
+          onPress={() => { // Exibe informações ao tocar no marcador
+            let message = ''; // Mensagem do marcador
+            let indiceAcidente = viaSelecionada ? AcidentesPorVias[viaSelecionada]?.indiceAcidentes : contagemAcidentesPorBairro[bairroSelecionado]; // Índice de acidentes
+            if (corMarcador === 'blue') { // Define a mensagem com base na cor do marcador
               message = 'Sem dados disponíveis';
             } else if (corMarcador === 'green') {
               message = 'Sem acidente';
@@ -194,50 +232,114 @@ export default function Home() {
             } else if (corMarcador === 'red') {
               message = 'Alto índice de acidente';
             }
-            if (indiceAcidente !== undefined) {
+            if (indiceAcidente !== undefined) { // Adiciona o número de acidentes à mensagem
               message += `\n(Acidentes registrados: ${indiceAcidente})`;
             }
-            Alert.alert('Informação do Marcador', message);
+            Alert.alert('Informação do Marcador', message); // Exibe a mensagem em um alerta
           }}
         />
       </MapView>
 
       <View style={styles.overlay}>
-        <RNPickerSelect
-          onValueChange={MudancaBairro}
-          items={bairros.map(bairro => ({ label: bairro, value: bairro }))}
-          placeholder={{ label: "Selecione um bairro", value: "" }}
-          style={pickerSelectStyles}
-          useNativeAndroidPickerStyle={false}
-          Icon={() => <Icon name="arrow-drop-down" size={24} color="gray" />}
-        />
+        <View style={styles.pesquisaContainer}>
+          <FontAwesome name="search" size={20} color="#007BFF" />
+          <TextInput
+            style={styles.input}
+            placeholder="Pesquise ou selecione um bairro"
+            value={bairroSelecionado || pesquisa} // Exibe o bairro selecionado ou o texto da pesquisa
+            onChangeText={Busca} // Atualiza a pesquisa ao digitar
+            onFocus={() => setBairrosDropdownAberto(true)} // Abre o dropdown ao focar no campo
+          />
+          <View style={styles.iconContainer}>
+            <TouchableOpacity onPress={() => { // Abre ou fecha o dropdown de bairros
+              setBairrosDropdownAberto(!bairrosDropdownAberto); // Atualiza o estado do dropdown
+              if (bairrosDropdownAberto) {
+                Keyboard.dismiss(); // Fecha o teclado quando desabilitar a lista de bairros
+              }
+            }}>
+              <FontAwesome name={bairrosDropdownAberto ? "chevron-up" : "chevron-down"} size={20} color="#007BFF" />
+            </TouchableOpacity>
+            {(pesquisa !== '' || bairroSelecionado) && ( // Exibe o ícone de limpar a seleção
+              <TouchableOpacity onPress={limparSelecao} style={styles.clearIcon}>
+                <FontAwesome name="close" size={20} color="#007BFF" />
+              </TouchableOpacity>
+            )}
+          </View>
+        </View>
 
-        {mostrarPickerRua && (
-          <RNPickerSelect
-            value={ruaSelecionada} // Aqui está o controle do valor selecionado
-            onValueChange={MudancaRua}
-            items={RuasPorBairro[bairroSelecionado]?.map(rua => ({ label: rua, value: rua }))}
-            placeholder={{ label: "Selecione uma rua", value: "" }}
-            style={pickerSelectStyles}
-            useNativeAndroidPickerStyle={false}
-            Icon={() => <Icon name="arrow-drop-down" size={24} color="gray" />}
+        {bairrosDropdownAberto && ( // Exibe o dropdown de bairros
+          <FlatList // Lista de bairros
+            data={bairrosFiltrados} // Dados do dropdown
+            keyExtractor={(item) => item} // Chave única para cada item
+            renderItem={({ item }) => ( // Renderiza cada item
+              <TouchableOpacity onPress={() => { // Atualiza o bairro selecionado ao pressionar um item
+                MudancaBairro(item); // Atualiza o bairro selecionado
+                setBairrosDropdownAberto(false); // Fecha o dropdown ao selecionar um bairro
+                Keyboard.dismiss(); // Fecha o teclado quando selecionar algum bairro
+              }}>
+                <Text style={styles.dropdownItem}>{item}</Text>
+              </TouchableOpacity>
+            )}
+            style={styles.dropdown}
+            keyboardShouldPersistTaps="handled" // Permite tocar nos itens da lista mesmo com o teclado aberto
           />
         )}
 
-        <TouchableOpacity style={styles.button} onPress={PressionarBotao}>
-          <Text style={styles.buttonText}>Ver informações sobre essa área</Text>
-        </TouchableOpacity>
+        {mostrarListaVias && ( // Exibe o picker de vias
+          <TouchableOpacity style={styles.pesquisaContainer} onPress={() => setViasDropdownAberto(!viasDropdownAberto)}>
+            <TextInput
+              style={[styles.input, styles.inputRua]}
+              placeholder="Selecione uma via"
+              value={viaSelecionada} // Exibe a via selecionada
+              editable={false}  // Impede a edição direta do campo
+            />
+            <View style={styles.iconContainer}>
+              <FontAwesome name={viasDropdownAberto ? "chevron-up" : "chevron-down"} size={20} color="#007BFF" />
+              {viaSelecionada && (
+                <TouchableOpacity onPress={limparSelecaoRua} style={styles.clearIcon}>
+                  <FontAwesome name="close" size={20} color="#007BFF" />
+                </TouchableOpacity>
+              )}
+            </View>
+          </TouchableOpacity>
+        )}
+
+        {viasDropdownAberto && ( // Exibe o dropdown de vias
+          <FlatList // Lista de vias
+            data={ViasPorBairro[bairroSelecionado]} // Dados do dropdown
+            keyExtractor={(item) => item} // Chave única para cada item
+            renderItem={({ item }) => ( // Renderiza cada item
+              <TouchableOpacity onPress={() => MudancaVia(item)}>
+                <Text style={styles.dropdownItem}>{item}</Text>
+              </TouchableOpacity>
+            )}
+            style={styles.dropdown}
+          />
+        )}
+
+        {bairroSelecionado && ( // Exibe o botão de informações
+          <TouchableOpacity
+            style={[
+              styles.button,
+              (!ViasPorBairro[bairroSelecionado] || ViasPorBairro[bairroSelecionado].length === 0) && styles.buttonDisabled // Desabilita o botão se não houver vias disponíveis
+            ]}
+            onPress={PressionarBotao}
+            disabled={!ViasPorBairro[bairroSelecionado] || ViasPorBairro[bairroSelecionado].length === 0}
+          >
+            <Text style={styles.buttonText}>Ver informações sobre essa área</Text>
+          </TouchableOpacity>
+        )}
       </View>
 
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={legendaVisivel}
-        onRequestClose={() => setLegendaVisivel(false)}
+      <Modal // legenda das cores dos marcadores
+        animationType="slide"  // Tipo de animação
+        transparent={true}  // Fundo transparente
+        visible={legendaVisivel}  // Visibilidade da legenda
+        onRequestClose={() => setLegendaVisivel(false)}  // Fecha a legenda ao pressionar o botão de voltar
       >
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Legenda das cores dos marcadores</Text>
+            <Text style={styles.modalTitle}>Cores dos marcadores</Text>
             <View style={styles.legendItem}>
               <View style={[styles.legendColor, { backgroundColor: 'blue' }]} />
               <Text> Sem dados disponíveis</Text>
@@ -258,7 +360,7 @@ export default function Home() {
               <View style={[styles.legendColor, { backgroundColor: 'red' }]} />
               <Text> Alto índice de acidentes</Text>
             </View>
-            <TouchableOpacity style={styles.closeButton} onPress={() => setLegendaVisivel(false)}>
+            <TouchableOpacity style={[styles.closeButton]} onPress={() => setLegendaVisivel(false)}>
               <Text style={styles.buttonText}>Fechar</Text>
             </TouchableOpacity>
           </View>
@@ -268,40 +370,11 @@ export default function Home() {
   );
 }
 
-// Estilos para os pickers
-const pickerSelectStyles = StyleSheet.create({
-  inputIOS: {
-    height: 40,
-    width: '100%',
-    padding: 10,
-    textAlign: 'center',
-    fontWeight: 'bold',
-    color: 'black',
-    backgroundColor: 'white',
-    zIndex: 3,
-  },
-  inputAndroid: {
-    height: 40,
-    width: '100%',
-    padding: 10,
-    textAlign: 'center',
-    fontWeight: 'bold',
-    color: 'black',
-    backgroundColor: 'white',
-    zIndex: 3,
-  },
-  iconContainer: {
-    top: Platform.OS === 'ios' ? 10 : 15,
-    right: Platform.OS === 'ios' ? 12 : 10,
-  },
-});
-
 // Estilos gerais do componente
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: Platform.OS === 'ios' ? 40 : 0,
-    backgroundColor: '#fff',
   },
   header: {
     flexDirection: 'row',
@@ -350,16 +423,54 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     padding: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
     borderRadius: 20,
     alignSelf: 'center',
     zIndex: 2,
+  },
+  pesquisaContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 10,
+  },
+  input: {
+    flex: 1,
+    marginLeft: 10,
+  },
+  inputRua: {
+    color: '#000',
+  },
+  iconContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  clearIcon: {
+    marginLeft: 10,
+  },
+  dropdown: {
+    maxHeight: 200,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    backgroundColor: '#fff',
+  },
+  dropdownItem: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
   },
   button: {
     backgroundColor: '#007BFF',
     padding: 10,
     borderRadius: 10,
     marginTop: 10,
+  },
+  buttonDisabled: {
+    backgroundColor: '#ccc',
   },
   buttonText: {
     color: '#fff',

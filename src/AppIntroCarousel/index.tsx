@@ -3,11 +3,11 @@ import { View, Text, StyleSheet, SafeAreaView, Dimensions, TouchableOpacity } fr
 import Swiper from 'react-native-swiper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const itensCarrosel = [
+const itensCarrosel = [ // Itens do carrossel
   {
-    title: "Bem-vindo!",
+    title: "Bem-vindo!", // Título do slide
     text: "O aplicativo foi desenvolvido para fornecer uma visão detalhada sobre a recorrência de acidentes na cidade de Franca, usando dados de fontes oficiais. Nossa missão é democratizar o acesso a essas informações, tornando os dados de acidentes acessíveis a todos.",
-    icon: "info"
+    icon: "info" // Ícone do slide
   },
   {
     title: "Informações Detalhadas",
@@ -41,49 +41,48 @@ const itensCarrosel = [
   },
 ];
 
-const { width, height } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window'); // Obtém as dimensões da tela
 
-const CarrosselScreen = ({ navigation }) => {
-  const [isUltimoSlide, setIsUltimoSlide] = useState(false);
+const CarrosselScreen = ({ navigation }) => { // Componente do carrossel
+  const [isUltimoSlide, setIsUltimoSlide] = useState(false); // Estado para verificar se está no último slide
 
-  const MudancaIndice = (index) => {
-    // Verifica se está no último slide
-    if (index === itensCarrosel.length - 1) {
+  const MudancaIndice = (index) => { // Função para verificar o índice do slide
+    if (index === itensCarrosel.length - 1) { // Verifica se está no último slide
       setIsUltimoSlide(true);
-    } else {
+    } else { // Se não estiver no último slide, atualiza o estado
       setIsUltimoSlide(false);
     }
   };
 
-  const Pular = () => {
-    navigation.navigate('Home');
-  };
+  const Pular = () => { // Função para pular o carrossel
+    navigation.navigate('Home'); // Navega para a tela inicial
+  }; 
 
   return (
     <SafeAreaView style={styles.container}>
-      <Swiper
-        loop={false}
-        showsPagination={true}
-        onIndexChanged={MudancaIndice}
-        containerStyle={styles.swiperContainer}
-        style={styles.swiper}
-        activeDotStyle={styles.activeDot}
-        dotStyle={styles.dot}
+      <Swiper  // Componente do carrossel
+        loop={false}  // Desabilita o loop do carrossel
+        showsPagination={true} // Exibe a paginação
+        onIndexChanged={MudancaIndice} // Chama a função ao mudar de slide
+        containerStyle={styles.swiperContainer} // Estilo do container do carrossel
+        style={styles.swiper} // Estilo do carrossel
+        activeDotStyle={styles.activeDot} // Estilo do ponto ativo
+        dotStyle={styles.dot} // Estilo do ponto
       >
-        {itensCarrosel.map((item, index) => (
-          <View style={styles.slide} key={index}>
+        {itensCarrosel.map((item, index) => ( // Mapeia os itens do carrossel
+          <View style={styles.slide} key={index}> 
             <Icon name={item.icon} size={50} color="#322153" style={styles.icon} />
             <Text style={styles.title}>{item.title}</Text>
             <Text style={styles.text}>{item.text}</Text>
           </View>
         ))}
       </Swiper>
-      {isUltimoSlide ? (
+      {isUltimoSlide ? ( // Verifica se está no último slide
         <TouchableOpacity style={styles.skipButton} onPress={Pular}>
           <Text style={styles.skipButtonText}>Ir para o Mapa</Text>
         </TouchableOpacity>
       ) : (
-        <TouchableOpacity style={styles.skipButton} onPress={Pular}>
+        <TouchableOpacity style={styles.skipButton} onPress={Pular}> 
           <Text style={styles.skipButtonText}>Pular</Text>
         </TouchableOpacity>
       )}
@@ -91,7 +90,7 @@ const CarrosselScreen = ({ navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({ // Estilos do componente
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
@@ -168,4 +167,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CarrosselScreen;
+export default CarrosselScreen; // Exporta o componente do carrossel

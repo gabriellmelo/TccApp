@@ -1,7 +1,8 @@
-export const bairros = [
+export const bairros = [ // Lista de bairros
   "Belvedere Bandeirante", "Centro", "Cidade Nova",
   "City Petrópolis", "Estação", "Jardim Aeroporto I",
-  "Jardim Aeroporto III", "Jardim Alvorada", "Jardim Brasilândia",
+  "Jardim Aeroporto II", "Jardim Aeroporto III", "Jardim Aeroporto IV",
+  "Jardim Alvorada", "Jardim Brasilândia",
   "Jardim Cambuí", "Jardim Conceição Leite", "Jardim Dermínio",
   "Jardim Francano", "Jardim Integração", "Jardim Luiza",
   "Jardim Marambaia", "Jardim Paulista", "Jardim Paulistano",
@@ -16,7 +17,7 @@ export const bairros = [
   "Vila Santa Rita", "Vila Santa Terezinha"
 ];
 
-export const RuasPorBairro: { [bairro: string]: string[] } = {
+export const ViasPorBairro: { [bairro: string]: string[] } = { // lista de vias por bairro
   "Belvedere Bandeirante": [
     "Avenida Jaime Telini",
   ],
@@ -52,6 +53,11 @@ export const RuasPorBairro: { [bairro: string]: string[] } = {
   "Jardim Aeroporto I": [
     "Avenida Carlos Roberto Hadade",
     "Rua Maria Conceição Machado",
+  ],
+  "Jardim Aeroporto II": [
+    "Rua Nelson Ribeiro",
+    "Rua Carlos de Campos",
+
   ],
   "Jardim Aeroporto III": [
     "Avenida César Martins Pirajá",
@@ -197,18 +203,16 @@ export const RuasPorBairro: { [bairro: string]: string[] } = {
   ],
 };
 
-export const AcidenteDadosPorRua: {
-  [rua: string]: {
-    bairro: string;
-    indiceAcidentes: number;
-    horarioMaiorIncidencia: string;
-    causasMaisFrequentes: string[];
+export const AcidentesPorVias: { // Dados de acidentes por via
+  [via: string]: { // Chave é o nome da via
+    bairro: string; 
+    indiceAcidentes: number; 
+    causasMaisFrequentes: string[]; 
   };
 } = {
   "Avenida Ricarte Soares Silva": {
     bairro: "Jardim Marambaia",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Choque"
     ]
@@ -216,7 +220,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Adhemar Pereira De Barros": {
     bairro: "Jardim Brasilândia",
     indiceAcidentes: 2,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Choque"
     ]
@@ -224,7 +227,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Alagoas": {
     bairro: "Jardim Paulista",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Outros"
     ]
@@ -232,7 +234,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Antônio Barbosa Filho": {
     bairro: "Jardim Francano",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Choque"
     ]
@@ -240,7 +241,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Brasil": {
     bairro: "Vila Aparecida",
     indiceAcidentes: 3,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Tombamento",
       "Colisão Transversal",
@@ -250,7 +250,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Carlos Roberto Hadade": {
     bairro: "Jardim Aeroporto I",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Choque"
     ]
@@ -258,7 +257,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Cesar Martins Pirajá": {
     bairro: "Jardim Aeroporto III",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Atropelamento"
     ]
@@ -266,7 +264,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Champagnat": {
     bairro: "Centro",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Colisão Frontal"
     ]
@@ -274,7 +271,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Chico Júlio": {
     bairro: "Jardim Integração",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Colisão Transversal"
     ]
@@ -282,7 +278,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Cláudio da Cruz Ribeiro": {
     bairro: "Parque Progresso",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Atropelamento"
     ]
@@ -290,7 +285,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Coelho Neto": {
     bairro: "City Petrópolis",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Atropelamento"
     ]
@@ -298,7 +292,6 @@ export const AcidenteDadosPorRua: {
   "Avenida César Martins Pirajá": {
     bairro: "Jardim Aeroporto III",
     indiceAcidentes: 3,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Atropelamento",
       "Colisão Lateral",
@@ -308,7 +301,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Dom Pedro I": {
     bairro: "Parque Moema",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Colisão Transversal"
     ]
@@ -316,7 +308,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Doutor Abrahão Brickmann": {
     bairro: "Parque Vicente Leporace I",
     indiceAcidentes: 3,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Choque",
       "Atropelamento"
@@ -325,7 +316,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Doutor Chafic Facury": {
     bairro: "Prolongamento Jardim Ângela Rosa",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Atropelamento"
     ]
@@ -333,7 +323,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Doutor Flávio Rocha": {
     bairro: "Vila Santa Terezinha",
     indiceAcidentes: 3,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Choque",
       "Atropelamento"
@@ -342,7 +331,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Doutor Hélio Palermo": {
     bairro: "Estação",
     indiceAcidentes: 2,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Choque",
       "Outros"
@@ -351,7 +339,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Doutor Ismael Alonso Y Alonso": {
     bairro: "Prolongamento Jardim Paulista",
     indiceAcidentes: 3,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Choque",
       "Colisão Outros"
@@ -360,7 +347,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Frei Germano": {
     bairro: "Estação",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Choque"
     ]
@@ -368,7 +354,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Geralda Rocha Silva": {
     bairro: "Parque Vicente Leporace I",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Colisão Frontal"
     ]
@@ -376,7 +361,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Jaime Telini": {
     bairro: "Belvedere Bandeirante",
     indiceAcidentes: 2,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Choque",
       "Capotamento"
@@ -385,7 +369,6 @@ export const AcidenteDadosPorRua: {
   "Avenida José da Silva": {
     bairro: "Jardim Integração",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Atropelamento"
     ]
@@ -393,7 +376,6 @@ export const AcidenteDadosPorRua: {
   "Avenida José Lopes Ribeiro": {
     bairro: "Res. Oswaldo Maciel",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Atropelamento"
     ]
@@ -401,7 +383,6 @@ export const AcidenteDadosPorRua: {
   "Avenida José Moisés Pereira": {
     bairro: "Jardim Alvorada",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Atropelamento"
     ]
@@ -409,7 +390,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Lisete Coelho Lourenço": {
     bairro: "Jardim Tropical",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Atropelamento"
     ]
@@ -417,7 +397,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Major Elías Mota": {
     bairro: "Jardim São Luiz II",
     indiceAcidentes: 2,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Colisão Traseira",
       "Colisão Transversal"
@@ -426,7 +405,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Major Nicácio": {
     bairro: "Cidade Nova",
     indiceAcidentes: 3,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Atropelamento",
       "Colisão Transversal"
@@ -435,7 +413,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Martinho Ribeiro": {
     bairro: "Parque Vicente Leporace I",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Colisão Outros"
     ]
@@ -443,7 +420,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Miguel Sábio de Melo": {
     bairro: "Parque Progresso",
     indiceAcidentes: 2,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Choque",
       "Colisão Frontal"
@@ -452,7 +428,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Ministro Rui Barbosa": {
     bairro: "Vila Rezende",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Colisão Transversal"
     ]
@@ -460,7 +435,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Nelson Nogueira": {
     bairro: "Jardim das Palmeiras",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Colisão Frontal"
     ]
@@ -468,7 +442,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Nossa Senhora de Lourdes": {
     bairro: "Parque Residencial Santa Maria",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Choque"
     ]
@@ -476,7 +449,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Orlando Dom Pierre": {
     bairro: "Parque Santa Adélia",
     indiceAcidentes: 2,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Atropelamento",
       "Choque"
@@ -485,7 +457,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Paulino Puci": {
     bairro: "Jardim Francano",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Choque"
     ]
@@ -493,7 +464,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Paulo Roberto Cavalheiro Coelho": {
     bairro: "Vila Europa",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Atropelamento"
     ]
@@ -501,7 +471,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Paulo VI": {
     bairro: "Jardim Alvorada",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Atropelamento"
     ]
@@ -509,7 +478,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Presidente Vargas": {
     bairro: "Cidade Nova",
     indiceAcidentes: 8,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Atropelamento",
       "Colisão Transversal",
@@ -519,7 +487,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Primo Menegheti": {
     bairro: "Jardim Paulistano",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Colisão Transversal"
     ]
@@ -527,7 +494,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Rio Branco": {
     bairro: "Estação",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Tombamento"
     ]
@@ -535,7 +501,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Santos Dumont": {
     bairro: "Jardim California",
     indiceAcidentes: 3,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Choque",
       "Atropelamento",
@@ -545,7 +510,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Severino Toster Meireles": {
     bairro: "Distrito Industrial Antonio Della - Torre",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Choque"
     ]
@@ -553,7 +517,6 @@ export const AcidenteDadosPorRua: {
   "Avenida São Vicente": {
     bairro: "Jardim Noemia",
     indiceAcidentes: 2,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Choque",
       "Colisão Outros"
@@ -562,7 +525,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Vanderlei Silveira": {
     bairro: "Jardim Paineiras",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Atropelamento"
     ]
@@ -570,7 +532,6 @@ export const AcidenteDadosPorRua: {
   "Avenida Wilson Sábio de Mello": {
     bairro: "São Joaquim",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Colisão Outros"
     ]
@@ -578,7 +539,6 @@ export const AcidenteDadosPorRua: {
   "Rua Para": {
     bairro: "Jardim Paulista",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Outros"
     ]
@@ -586,7 +546,6 @@ export const AcidenteDadosPorRua: {
   "Rua Abílio Coutinho": {
     bairro: "São Joaquim",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Colisão Traseira"
     ]
@@ -594,7 +553,6 @@ export const AcidenteDadosPorRua: {
   "Rua Alfredo Tosi": {
     bairro: "Vila Marta",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Colisão Frontal"
     ]
@@ -602,7 +560,6 @@ export const AcidenteDadosPorRua: {
   "Rua Angelica Gomes Faleiros": {
     bairro: "Prolongamento Jardim Ângela Rosa",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Choque"
     ]
@@ -610,7 +567,6 @@ export const AcidenteDadosPorRua: {
   "Rua Angelo Melani": {
     bairro: "Prolongamento Vila Santa Cruz",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Colisão Transversal"
     ]
@@ -618,7 +574,6 @@ export const AcidenteDadosPorRua: {
   "Rua Artur Franchini": {
     bairro: "Vila Rezende",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Colisão Lateral"
     ]
@@ -626,7 +581,6 @@ export const AcidenteDadosPorRua: {
   "Rua Batatais": {
     bairro: "Jardim Roselândia",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Colisão Lateral"
     ]
@@ -634,7 +588,6 @@ export const AcidenteDadosPorRua: {
   "Rua Congonhas do Campo": {
     bairro: "Prolongamento Jardim Brasilândia",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Choque"
     ]
@@ -643,7 +596,6 @@ export const AcidenteDadosPorRua: {
   "Rua Couto Magalhães": {
     bairro: "Centro",
     indiceAcidentes: 0,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Colisão Frontal"
     ]
@@ -651,7 +603,6 @@ export const AcidenteDadosPorRua: {
   "Rua Das Orquídeas": {
     bairro: "Jardim Florida",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Outros"
     ]
@@ -659,7 +610,6 @@ export const AcidenteDadosPorRua: {
   "Rua Diogo Feijó": {
     bairro: "Estação",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Colisão Lateral"
     ]
@@ -667,7 +617,6 @@ export const AcidenteDadosPorRua: {
   "Rua Dos Bem-Te-Vi": {
     bairro: "Jardim Primavera",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Choque"
     ]
@@ -675,7 +624,6 @@ export const AcidenteDadosPorRua: {
   "Rua Doutor Júlio Cardoso": {
     bairro: "Centro",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Tombamento"
     ]
@@ -683,7 +631,6 @@ export const AcidenteDadosPorRua: {
   "Rua General Carneiro": {
     bairro: "Centro",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Atropelamento"
     ]
@@ -691,7 +638,6 @@ export const AcidenteDadosPorRua: {
   "Rua General José Oliveira Ramos": {
     bairro: "Vila Santa Rita",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Colisão Lateral"
     ]
@@ -699,7 +645,6 @@ export const AcidenteDadosPorRua: {
   "Rua General Teles": {
     bairro: "Estação",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Colisão Lateral"
     ]
@@ -707,7 +652,6 @@ export const AcidenteDadosPorRua: {
   "Rua Geraldo Bassoteli": {
     bairro: "Jardim Aeroporto III",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Tombamento"
     ]
@@ -715,7 +659,6 @@ export const AcidenteDadosPorRua: {
   "Rua Geraldo Flausino de Senne": {
     bairro: "Parque Res. Santa Maria",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Colisão Lateral"
     ]
@@ -723,7 +666,6 @@ export const AcidenteDadosPorRua: {
   "Rua Hipólito José da Costa": {
     bairro: "Jardim Conceição Leite",
     indiceAcidentes: 2,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Choque",
       "Colisão Lateral"
@@ -732,7 +674,6 @@ export const AcidenteDadosPorRua: {
   "Rua Homero Pachêco Alves": {
     bairro: "Centro",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Colisão Frontal"
     ]
@@ -740,7 +681,6 @@ export const AcidenteDadosPorRua: {
   "Rua José Abraão Mine": {
     bairro: "Jardim Paulistano",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Choque"
     ]
@@ -748,7 +688,6 @@ export const AcidenteDadosPorRua: {
   "Rua Major Moura Matos": {
     bairro: "Vila Rezende",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Atropelamento"
     ]
@@ -756,7 +695,6 @@ export const AcidenteDadosPorRua: {
   "Rua Maria Conceição Machado": {
     bairro: "Jardim Aeroporto I",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Colisão Frontal"
     ]
@@ -764,7 +702,6 @@ export const AcidenteDadosPorRua: {
   "Rua Martins MMDC": {
     bairro: "Vila Santa Terezinha",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Atropelamento"
     ]
@@ -772,7 +709,6 @@ export const AcidenteDadosPorRua: {
   "Rua Monsenhor Rosa": {
     bairro: "Centro",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Atropelamento"
     ]
@@ -780,7 +716,6 @@ export const AcidenteDadosPorRua: {
   "Rua Nelson Japaulo": {
     bairro: "Jardim Luiza",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Choque"
     ]
@@ -788,15 +723,13 @@ export const AcidenteDadosPorRua: {
   "Rua Ouvidor Freire": {
     bairro: "Centro",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Atropelamento"
     ]
   },
   "Rua Ovídio Vanine": {
-    bairro: "Jardim Derminio",
+    bairro: "Jardim Dermínio",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Outros"
     ]
@@ -804,7 +737,6 @@ export const AcidenteDadosPorRua: {
   "Rua Ozandir Hipólito da Silva": {
     bairro: "Vila Santa Cruz",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Atropelamento"
     ]
@@ -812,7 +744,6 @@ export const AcidenteDadosPorRua: {
   "Rua Padre Conrado": {
     bairro: "Jardim California",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Colisão Outros"
     ]
@@ -820,7 +751,6 @@ export const AcidenteDadosPorRua: {
   "Rua Rachide Salomão": {
     bairro: "Parque Vicente Leporace I",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Tombamento"
     ]
@@ -828,7 +758,6 @@ export const AcidenteDadosPorRua: {
   "Rua Raquel Jacinto Mesquita": {
     bairro: "Residencial Jardim Vera Cruz",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Atropelamento"
     ]
@@ -836,7 +765,6 @@ export const AcidenteDadosPorRua: {
   "Rua Sebastião Mantovani": {
     bairro: "Jardim Cambui",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Choque"
     ]
@@ -844,7 +772,6 @@ export const AcidenteDadosPorRua: {
   "Rua Valdir Carrijo Campos": {
     bairro: "Recanto Cap. Heliodoro Pinheiro",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Colisão Frontal"
     ]
@@ -852,7 +779,6 @@ export const AcidenteDadosPorRua: {
   "Rua Valdília Martins dos Santos": {
     bairro: "Jardim Florence",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Colisão Frontal"
     ]
@@ -860,7 +786,6 @@ export const AcidenteDadosPorRua: {
   "Rua Vitória": {
     bairro: "Jardim Brasilândia",
     indiceAcidentes: 1,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Atropelamento"
     ]
@@ -868,7 +793,6 @@ export const AcidenteDadosPorRua: {
   "Rua Voluntários da Franca": {
     bairro: "Centro",
     indiceAcidentes: 2,
-    horarioMaiorIncidencia: "",
     causasMaisFrequentes: [
       "Colisão Traseira",
       "Atropelamento"
@@ -876,26 +800,26 @@ export const AcidenteDadosPorRua: {
   }
 }
 
-export const contagemAcidentesPorBairro: { [bairro: string]: number } = {};
-export const causasMaisFrequentesPorBairro: { [bairro: string]: string[] } = {};
+export const contagemAcidentesPorBairro: { [bairro: string]: number } = {}; // Contagem de acidentes por bairro
+export const causasMaisFrequentesPorBairro: { [bairro: string]: string[] } = {}; // Causas mais frequentes por bairro
 
-for (const rua in AcidenteDadosPorRua) {
-  const { bairro, indiceAcidentes, causasMaisFrequentes } = AcidenteDadosPorRua[rua];
+for (const rua in AcidentesPorVias) { // Loop para percorrer todas as vias
+  const { bairro, indiceAcidentes, causasMaisFrequentes } = AcidentesPorVias[rua]; // Obtém o bairro, índice de acidentes e causas mais frequentes
 
-  if (!contagemAcidentesPorBairro[bairro]) {
-    contagemAcidentesPorBairro[bairro] = 0;
+  if (!contagemAcidentesPorBairro[bairro]) { // Verifica se o bairro já foi inicializado
+    contagemAcidentesPorBairro[bairro] = 0; // Inicializa a contagem de acidentes
   }
-  contagemAcidentesPorBairro[bairro] += indiceAcidentes;
+  contagemAcidentesPorBairro[bairro] += indiceAcidentes; // Incrementa a contagem de acidentes
 
-  if (!causasMaisFrequentesPorBairro[bairro]) {
-    causasMaisFrequentesPorBairro[bairro] = [];
+  if (!causasMaisFrequentesPorBairro[bairro]) { // Verifica se as causas mais frequentes já foram inicializadas
+    causasMaisFrequentesPorBairro[bairro] = [];  // Inicializa as causas mais frequentes
   }
-  causasMaisFrequentes.forEach(causa => {
-    if (!causasMaisFrequentesPorBairro[bairro].includes(causa)) {
-      causasMaisFrequentesPorBairro[bairro].push(causa);
+  causasMaisFrequentes.forEach(causa => { // Loop para percorrer todas as causas mais frequentes
+    if (!causasMaisFrequentesPorBairro[bairro].includes(causa)) { // Verifica se a causa já foi adicionada
+      causasMaisFrequentesPorBairro[bairro].push(causa); // Adiciona a causa mais frequente
     }
   });
 }
 
-console.log(contagemAcidentesPorBairro);
-console.log(causasMaisFrequentesPorBairro);
+//console.log(contagemAcidentesPorBairro);
+//console.log(causasMaisFrequentesPorBairro);

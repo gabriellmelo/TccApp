@@ -1,9 +1,9 @@
 import React from 'react';
 import { Text, StyleSheet, TouchableOpacity, Linking, ScrollView } from 'react-native';
 
-const TelefonesUteisScreen = () => {
-  const phones = [
-    { label: 'Polícia Militar', number: '190' },
+const TelefonesUteisScreen = () => { // Componente de tela
+  const phones = [ // Lista de telefones úteis 
+    { label: 'Polícia Militar', number: '190' }, 
     { label: 'Corpo de Bombeiros', number: '193' },
     { label: 'SAMU', number: '192' },
     { label: 'Polícia Civil', number: '197' },
@@ -12,14 +12,14 @@ const TelefonesUteisScreen = () => {
     { label: 'ViaPaulista', number: '0800 001 1255' },
   ];
 
-  const EscolherTelefone = (number: string) => {
-    Linking.openURL(`tel:${number}`);
+  const EscolherTelefone = (number: string) => { // Função para ligar para o número
+    Linking.openURL(`tel:${number}`); // Abre o discador com o número selecionado
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      {phones.map((phone, index) => (
-        <TouchableOpacity key={index} style={styles.phoneButton} onPress={() => EscolherTelefone(phone.number)}>
+    <ScrollView contentContainerStyle={styles.container}> 
+      {phones.map((phone, index) => ( // Mapeia os telefones
+        <TouchableOpacity key={index} style={styles.phoneButton} onPress={() => EscolherTelefone(phone.number)}> 
           <Text style={styles.phoneText}>{phone.label}: {phone.number}</Text>
         </TouchableOpacity>
       ))}
@@ -27,7 +27,7 @@ const TelefonesUteisScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({ // Estilos do componente
   container: {
     flexGrow: 1,
     justifyContent: 'center',
@@ -49,4 +49,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TelefonesUteisScreen;
+export default TelefonesUteisScreen; // Exporta o componente
