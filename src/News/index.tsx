@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Button } from 'react-native';
 import { WebView } from 'react-native-webview';
 
-const noticias = [
+const noticias = [ // Dados das notícias
   {
-    id: 1,
-    titulo: "Comerciante faz maquete com 'solução' para trânsito da Portinari",
-    descricao: "Projeto artesanal foi desenvolvido para apontar 'soluções' e cobrar melhorias em trecho urbano da rodovia Cândido Portinari.",
+    id: 1, // Identificador da notícia
+    titulo: "Comerciante faz maquete com 'solução' para trânsito da Portinari", 
+    descricao: "Projeto artesanal foi desenvolvido para apontar 'soluções' e cobrar melhorias em trecho urbano da rodovia Cândido Portinari.", 
     data: '07/05/2024',
-    imagem: require('assets/image.png'),
-    link: 'https://sampi.net.br/franca/noticias/2831557/franca-e-regiao/2024/05/comerciante-faz-maquete-com-solucao-para-transito-da-portinari'
+    imagem: require('assets/image.png'), 
+    link: 'https://sampi.net.br/franca/noticias/2831557/franca-e-regiao/2024/05/comerciante-faz-maquete-com-solucao-para-transito-da-portinari' 
   },
   {
     id: 2,
@@ -101,19 +101,19 @@ const noticias = [
   },
 ];
 
-const NoticiasScreen = () => {
-  const [selecionarNoticia, setSelecionarNoticia] = useState(null);
+const NoticiasScreen = () => { // Componente da tela de notícias
+  const [selecionarNoticia, setSelecionarNoticia] = useState(null); // Estado para selecionar notícia
 
-  const ApertarNoticia = (noticia) => {
-    setSelecionarNoticia(noticia);
+  const ApertarNoticia = (noticia) => { // Função para selecionar notícia
+    setSelecionarNoticia(noticia); // Atualiza o estado com a notícia selecionada
   };
 
-  const SelecionarVoltar = () => {
-    setSelecionarNoticia(null);
+  const SelecionarVoltar = () => { // Função para voltar para a lista de notícias
+    setSelecionarNoticia(null);  // Limpa o estado da notícia selecionada
   };
 
-  if (selecionarNoticia) {
-    return (
+  if (selecionarNoticia) { // Verifica se uma notícia foi selecionada
+    return ( // Retorna a interface da notícia selecionada
       <View style={{ flex: 1 }}>
         <TouchableOpacity style={styles.voltarButton} onPress={SelecionarVoltar}>
           <Text style={styles.voltarButtonText}>Voltar para notícias</Text>
@@ -124,9 +124,9 @@ const NoticiasScreen = () => {
   }
 
   return (
-    <ScrollView style={styles.container}>
-      {noticias.map(noticia => (
-        <TouchableOpacity key={noticia.id} onPress={() => ApertarNoticia(noticia)}>
+    <ScrollView style={styles.container}>  
+      {noticias.map(noticia => ( // Mapeia as notícias
+        <TouchableOpacity key={noticia.id} onPress={() => ApertarNoticia(noticia)}>  
           <View style={styles.noticiaContainer}>
             <Image source={noticia.imagem} style={styles.imagem} />
             <View style={styles.textContainer}>
@@ -141,7 +141,7 @@ const NoticiasScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({ // Estilos do componente
   container: {
     flex: 1,
     padding: 10,
@@ -195,4 +195,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NoticiasScreen;
+export default NoticiasScreen; // Exporta o componente da tela de notícias

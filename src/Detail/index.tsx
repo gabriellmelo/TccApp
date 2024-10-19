@@ -4,48 +4,48 @@ import { useNavigation } from '@react-navigation/native';
 import { ViasPorBairro, AcidentesPorVias, contagemAcidentesPorBairro, causasMaisFrequentesPorBairro } from '../Data';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-export default function Details({ route }) {
-  const { bairro, via } = route.params;
-  const navigation = useNavigation();
-  const [causas, setCausas] = useState(false);
-  const [vias, setVias] = useState(false);
-  const info = via ? AcidentesPorVias[via] : null;
-  const totalAcidentes = contagemAcidentesPorBairro[bairro];
-  const causasBairro = causasMaisFrequentesPorBairro[bairro];
-  const viasBairro = ViasPorBairro[bairro] || [];
+export default function Details({ route }) { // Componente da tela de detalhes
+  const { bairro, via } = route.params; // Parâmetros da tela
+  const navigation = useNavigation(); // Navegação
+  const [causas, setCausas] = useState(false); // Estado para exibir as causas
+  const [vias, setVias] = useState(false); // Estado para exibir as vias
+  const info = via ? AcidentesPorVias[via] : null; // Informações da via
+  const totalAcidentes = contagemAcidentesPorBairro[bairro]; // Total de acidentes no bairro
+  const causasBairro = causasMaisFrequentesPorBairro[bairro]; // Causas mais frequentes no bairro
+  const viasBairro = ViasPorBairro[bairro] || []; // Vias do bairro
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      title: '',
+  useLayoutEffect(() => { // Atualiza o título da tela
+    navigation.setOptions({ // Define as opções de navegação
+      title: 'Detalhes informativos', // Título da tela
     });
-  }, [navigation]);
+  }, [navigation]); // Dependência
 
-  const ExplorarDados = () => {
-    navigation.navigate('Explorar Dados' as never);
+  const ExplorarDados = () => { // Função para explorar os dados
+    navigation.navigate('Explorar Dados' as never); // Navega para a tela de exploração de dados
   };
 
-  const alternarCausas = () => {
-    setCausas(!causas);
+  const alternarCausas = () => { // Função para alternar as causas
+    setCausas(!causas); // Alterna o estado das causas
   };
 
-  const alternarVias = () => {
-    setVias(!vias);
+  const alternarVias = () => { // Função para alternar as vias
+    setVias(!vias); // Alterna o estado das vias
   };
 
-  return (
+  return ( // Retorna a interface da tela
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
         {via ? (
           <>
-            <Text style={styles.title}>Na <Text style={styles.highlightedText}>{via}</Text>, encontramos as seguintes informações:</Text>
-            {info ? (
+            <Text style={styles.title}>Na <Text style={styles.highlightedText}>{via}</Text>, encontramos as seguintes informações:</Text> 
+            {info ? ( // Verifica se há informações
               <View style={styles.infoContainer}>
                 <Text style={styles.infoTextWithBorder}><Text style={styles.label}>Bairro:</Text> {info.bairro}</Text>
                 <Text style={styles.infoTextWithBorder}>
                   <Text style={styles.label}>Acidentes já registrados nessa via: </Text>
-                  {info.indiceAcidentes === 0 ? 'Nenhum acidente registrado' : `${info.indiceAcidentes} ${info.indiceAcidentes === 1 ? 'acidente' : 'acidentes'}`}
+                  {info.indiceAcidentes === 0 ? 'Nenhum acidente registrado' : `${info.indiceAcidentes} ${info.indiceAcidentes === 1 ? 'acidente' : 'acidentes'}`}  
                 </Text>
-                {info.indiceAcidentes > 0 && (
+                {info.indiceAcidentes > 0 && ( // Verifica se há acidentes registrados
                   <>
                     <View style={styles.rowWithBorder}>
                       <Text style={styles.infoText}>
@@ -112,7 +112,7 @@ export default function Details({ route }) {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({ // Estilos do componente
   container: {
     flex: 1,
     padding: 20,

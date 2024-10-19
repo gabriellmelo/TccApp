@@ -1,4 +1,4 @@
-export const bairros = [
+export const bairros = [ // Lista de bairros
   "Belvedere Bandeirante", "Centro", "Cidade Nova",
   "City Petrópolis", "Estação", "Jardim Aeroporto I",
   "Jardim Aeroporto II", "Jardim Aeroporto III", "Jardim Aeroporto IV",
@@ -17,7 +17,7 @@ export const bairros = [
   "Vila Santa Rita", "Vila Santa Terezinha"
 ];
 
-export const ViasPorBairro: { [bairro: string]: string[] } = {
+export const ViasPorBairro: { [bairro: string]: string[] } = { // lista de vias por bairro
   "Belvedere Bandeirante": [
     "Avenida Jaime Telini",
   ],
@@ -203,11 +203,11 @@ export const ViasPorBairro: { [bairro: string]: string[] } = {
   ],
 };
 
-export const AcidentesPorVias: {
-  [via: string]: {
-    bairro: string;
-    indiceAcidentes: number;
-    causasMaisFrequentes: string[];
+export const AcidentesPorVias: { // Dados de acidentes por via
+  [via: string]: { // Chave é o nome da via
+    bairro: string; 
+    indiceAcidentes: number; 
+    causasMaisFrequentes: string[]; 
   };
 } = {
   "Avenida Ricarte Soares Silva": {
@@ -800,26 +800,26 @@ export const AcidentesPorVias: {
   }
 }
 
-export const contagemAcidentesPorBairro: { [bairro: string]: number } = {};
-export const causasMaisFrequentesPorBairro: { [bairro: string]: string[] } = {};
+export const contagemAcidentesPorBairro: { [bairro: string]: number } = {}; // Contagem de acidentes por bairro
+export const causasMaisFrequentesPorBairro: { [bairro: string]: string[] } = {}; // Causas mais frequentes por bairro
 
-for (const rua in AcidentesPorVias) {
-  const { bairro, indiceAcidentes, causasMaisFrequentes } = AcidentesPorVias[rua];
+for (const rua in AcidentesPorVias) { // Loop para percorrer todas as vias
+  const { bairro, indiceAcidentes, causasMaisFrequentes } = AcidentesPorVias[rua]; // Obtém o bairro, índice de acidentes e causas mais frequentes
 
-  if (!contagemAcidentesPorBairro[bairro]) {
-    contagemAcidentesPorBairro[bairro] = 0;
+  if (!contagemAcidentesPorBairro[bairro]) { // Verifica se o bairro já foi inicializado
+    contagemAcidentesPorBairro[bairro] = 0; // Inicializa a contagem de acidentes
   }
-  contagemAcidentesPorBairro[bairro] += indiceAcidentes;
+  contagemAcidentesPorBairro[bairro] += indiceAcidentes; // Incrementa a contagem de acidentes
 
-  if (!causasMaisFrequentesPorBairro[bairro]) {
-    causasMaisFrequentesPorBairro[bairro] = [];
+  if (!causasMaisFrequentesPorBairro[bairro]) { // Verifica se as causas mais frequentes já foram inicializadas
+    causasMaisFrequentesPorBairro[bairro] = [];  // Inicializa as causas mais frequentes
   }
-  causasMaisFrequentes.forEach(causa => {
-    if (!causasMaisFrequentesPorBairro[bairro].includes(causa)) {
-      causasMaisFrequentesPorBairro[bairro].push(causa);
+  causasMaisFrequentes.forEach(causa => { // Loop para percorrer todas as causas mais frequentes
+    if (!causasMaisFrequentesPorBairro[bairro].includes(causa)) { // Verifica se a causa já foi adicionada
+      causasMaisFrequentesPorBairro[bairro].push(causa); // Adiciona a causa mais frequente
     }
   });
 }
 
-console.log(contagemAcidentesPorBairro);
-console.log(causasMaisFrequentesPorBairro);
+//console.log(contagemAcidentesPorBairro);
+//console.log(causasMaisFrequentesPorBairro);

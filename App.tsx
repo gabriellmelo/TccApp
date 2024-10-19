@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
- import AsyncStorage from '@react-native-async-storage/async-storage';
  import { NavigationContainer } from '@react-navigation/native';
  import { createNativeStackNavigator } from '@react-navigation/native-stack';
  import HomeScreen from './src/Home';
@@ -10,31 +9,31 @@ import React, { useState, useEffect } from 'react';
  import CarouselScreen from 'src/AppIntroCarousel';
  import ExploreDadosScreen from './src/ExploreData';
  import TelefonesUteisScreen from './src/UsefulPhones';
- import { StyleSheet } from 'react-native';
+ 
+ const Stack = createNativeStackNavigator(); // Cria a pilha de navegação
 
- const Stack = createNativeStackNavigator();
+ export default function App() { // Componente principal do aplicativo
+  const [firstLaunch, setFirstLaunch] = useState(true); // Estado do primeiro lançamento
 
- export default function App() {
-  const [firstLaunch, setFirstLaunch] = useState(true);
-
-   // useEffect(() => {
-   //   AsyncStorage.getItem('alreadyLaunched').then(value => {
-   //     if (value === null) {
-   //       AsyncStorage.setItem('alreadyLaunched', 'true');
-   //       setFirstLaunch(true);
-   //     } else {
-   //       setFirstLaunch(false);
+  // Código para o carrosel de introdução aparecer apenas na primeira vez que o aplicativo é aberto
+   // useEffect(() => { // Verifica se o aplicativo já foi lançado
+   //   AsyncStorage.getItem('alreadyLaunched').then(value => { // Obtém o valor da chave 'alreadyLaunched'
+   //     if (value === null) { // Verifica se o valor é nulo
+   //       AsyncStorage.setItem('alreadyLaunched', 'true'); // Define o valor da chave 'alreadyLaunched' como 'true'
+   //       setFirstLaunch(true); // Define o estado do primeiro lançamento como verdadeiro
+   //     } else { // Se o valor não for nulo
+   //       setFirstLaunch(false); // Define o estado do primeiro lançamento como falso
    //     }
    //   });
    // }, []);
-   
-     if (firstLaunch === null) {
-       return <LoadingSpinner />;
+    
+     if (firstLaunch === null) { // Verifica se o estado do primeiro lançamento é nulo
+       return <LoadingSpinner />;  // Exibe o spinner de carregamento
      }
    
-     return (
-       <NavigationContainer>
-         <Stack.Navigator initialRouteName={firstLaunch ? "Carrossel" : "Home"}>
+     return ( // Retorna a pilha de navegação
+       <NavigationContainer> 
+         <Stack.Navigator initialRouteName={firstLaunch ? "Carrossel" : "Home"}> 
            <Stack.Screen name="Carrossel" component={CarouselScreen} options={{ headerShown: false }} />
            <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
            <Stack.Screen name="Detail" component={DetailScreen} />
@@ -46,12 +45,3 @@ import React, { useState, useEffect } from 'react';
        </NavigationContainer>
      );
    }
-
-      const styles = StyleSheet.create({
-        container: {
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-          padding: 20,
-        },
-      });

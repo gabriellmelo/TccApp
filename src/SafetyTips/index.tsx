@@ -2,8 +2,8 @@ import React from 'react';
 import { View, StyleSheet, Image, Dimensions } from 'react-native';
 import Swiper from 'react-native-swiper';
 
-const images = [
-  require('assets/acidente_1.jpg'),
+const images = [ // Imagens para exibição
+  require('assets/acidente_1.jpg'), // Importa a imagem
   require('assets/acidente_2.jpg'),
   require('assets/acidente_3.jpg'),
   require('assets/acidente_4.jpg'),
@@ -11,22 +11,22 @@ const images = [
   require('assets/acidente_6.jpg')
 ];
 
-const { width, height } = Dimensions.get('window');
+const { height } = Dimensions.get('window'); // Pega as dimensões da tela
 
-const DicasSegurancaScreen = () => {
+const DicasSegurancaScreen = () => { // Componente da tela de dicas de segurança
   return (
     <View style={styles.container}>
-      <Swiper
-        loop={false}
-        showsPagination={true}
-        dot={<View style={styles.dot} />}
-        activeDot={<View style={styles.activeDot} />}
-        paginationStyle={styles.pagination}
+      <Swiper // Componente Swiper para exibir as imagens
+        loop={false} // Desabilita o loop
+        showsPagination={true} // Exibe a paginação
+        dot={<View style={styles.dot} />} // Estilo do ponto
+        activeDot={<View style={styles.activeDot} />} // Estilo do ponto ativo
+        paginationStyle={styles.pagination} // Estilo da paginação
       >
-        {images.map((image, index) => (
-          <View style={styles.slide} key={index}>
+        {images.map((image, index) => ( // Mapeia as imagens
+          <View style={styles.slide} key={index}> 
             <View style={styles.imageWrapper}>
-              <Image source={image} style={styles.image} resizeMode="contain" />
+              <Image source={image} style={styles.image} resizeMode="contain" />  
             </View>
           </View>
         ))}
@@ -35,7 +35,7 @@ const DicasSegurancaScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({ // Estilos do componente
   container: {
     flex: 1,
     backgroundColor: '#fff',
@@ -83,4 +83,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DicasSegurancaScreen;
+export default DicasSegurancaScreen; // Exporta o componente
