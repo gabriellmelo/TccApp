@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"; // Importa os hooks do React
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Alert, StatusBar, Platform, Modal, TextInput, FlatList, Keyboard } from "react-native"; // Importa componentes do React Native
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Alert, StatusBar, Platform, Modal, TextInput, FlatList, Keyboard, KeyboardAvoidingView } from "react-native"; // Importa componentes do React Native
 import MapView, { Marker } from "react-native-maps"; // Importa o MapView e o Marker do React Native Maps
 import { useNavigation, NavigationProp } from '@react-navigation/native'; // Importa os hooks de navegação
 import Icon from 'react-native-vector-icons/MaterialIcons'; // Importa ícones do Material Icons
@@ -88,10 +88,13 @@ export default function Home() { // Componente principal da tela inicial
       Alert.alert("Informação indisponível", "Não há informações sobre este bairro.");
     } else if (!contagemAcidentesPorBairro[bairroSelecionado] || contagemAcidentesPorBairro[bairroSelecionado] === 0) { // Verifica se há acidentes registrados para o bairro selecionado
       Alert.alert("Informação indisponível", "Não há informações de acidentes registradas para este bairro.");
+    } else if (viaSelecionada && !AcidentesPorVias[viaSelecionada]) { // Verifica se há dados para a via selecionada
+      Alert.alert("Informação indisponível", "Não há informações de acidentes registradas para esta via.");
     } else {
-      navigation.navigate('Detail', { bairro: bairroSelecionado, via: viaSelecionada });
+      navigation.navigate('Detail', { bairro: bairroSelecionado, via: viaSelecionada }); // Navega para a tela de detalhes
     }
   };
+  
 
   const opcoesMenu = [ // Opções do menu de navegação 
     { label: "Notícias", screen: "Notícias" },
@@ -175,6 +178,10 @@ export default function Home() { // Componente principal da tela inicial
   };
 
   return ( // Renderiza o componente
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}
+    >
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
       <View style={styles.header}>
@@ -321,10 +328,10 @@ export default function Home() { // Componente principal da tela inicial
           <TouchableOpacity
             style={[
               styles.button,
-              (!ViasPorBairro[bairroSelecionado] || ViasPorBairro[bairroSelecionado].length === 0) && styles.buttonDisabled // Desabilita o botão se não houver vias disponíveis
+              (!ViasPorBairro[bairroSelecionado] || ViasPorBairro[bairroSelecionado].length === 0 || !contagemAcidentesPorBairro[bairroSelecionado]) && styles.buttonDisabled // Desabilita o botão se não houver vias ou informações de acidentes disponíveis
             ]}
             onPress={PressionarBotao}
-            disabled={!ViasPorBairro[bairroSelecionado] || ViasPorBairro[bairroSelecionado].length === 0}
+            disabled={!ViasPorBairro[bairroSelecionado] || ViasPorBairro[bairroSelecionado].length === 0 || !contagemAcidentesPorBairro[bairroSelecionado]} // Desabilita o botão se não houver vias ou informações de acidentes disponíveis
           >
             <Text style={styles.buttonText}>Ver informações sobre essa área</Text>
           </TouchableOpacity>
@@ -367,6 +374,7 @@ export default function Home() { // Componente principal da tela inicial
         </View>
       </Modal>
     </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -375,6 +383,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: Platform.OS === 'ios' ? 40 : 0,
+    backgroundColor: '#fff',
   },
   header: {
     flexDirection: 'row',
