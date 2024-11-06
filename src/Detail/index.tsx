@@ -3,12 +3,14 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-nati
 import { useNavigation } from '@react-navigation/native';
 import { ViasPorBairro, AcidentesPorVias, contagemAcidentesPorBairro, causasMaisFrequentesPorBairro } from '../Data';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { FontAwesome } from '@expo/vector-icons';
 
 export default function Details({ route }) { // Componente da tela de detalhes
   const { bairro, via } = route.params; // Parâmetros da tela
   const navigation = useNavigation(); // Navegação
   const [causas, setCausas] = useState(false); // Estado para exibir as causas
   const [vias, setVias] = useState(false); // Estado para exibir as vias
+  const [horarios, setHorarios] = useState(false); // Estado para exibir os horários
   const info = via ? AcidentesPorVias[via] : null; // Informações da via
   const totalAcidentes = contagemAcidentesPorBairro[bairro]; // Total de acidentes no bairro
   const causasBairro = causasMaisFrequentesPorBairro[bairro]; // Causas mais frequentes no bairro
@@ -32,18 +34,22 @@ export default function Details({ route }) { // Componente da tela de detalhes
     setVias(!vias); // Alterna o estado das vias
   };
 
+  const alternarHorarios = () => { // Função para alternar os horários
+    setHorarios(!horarios); // Alterna o estado dos horários
+  };
+
   return ( // Retorna a interface da tela
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
         {via ? (
           <>
-            <Text style={styles.title}>Na <Text style={styles.highlightedText}>{via}</Text>, encontramos as seguintes informações:</Text> 
+            <Text style={styles.title}>Na <Text style={styles.highlightedText}>{via}</Text>, encontramos as seguintes informações:</Text>
             {info ? ( // Verifica se há informações
               <View style={styles.infoContainer}>
                 <Text style={styles.infoTextWithBorder}><Text style={styles.label}>Bairro:</Text> {info.bairro}</Text>
                 <Text style={styles.infoTextWithBorder}>
                   <Text style={styles.label}>Acidentes já registrados nessa via: </Text>
-                  {info.indiceAcidentes === 0 ? 'Nenhum acidente registrado' : `${info.indiceAcidentes} ${info.indiceAcidentes === 1 ? 'acidente' : 'acidentes'}`}  
+                  {info.indiceAcidentes === 0 ? 'Nenhum acidente registrado' : `${info.indiceAcidentes} ${info.indiceAcidentes === 1 ? 'acidente' : 'acidentes'}`}
                 </Text>
                 {info.indiceAcidentes > 0 && ( // Verifica se há acidentes registrados
                   <>
@@ -57,6 +63,17 @@ export default function Details({ route }) { // Componente da tela de detalhes
                     </View>
                     {causas && (
                       <Text style={styles.infoText}>{info.causasMaisFrequentes.join(", ")}</Text>
+                    )}
+                    <View style={styles.rowWithBorder}>
+                      <Text style={styles.infoText}>
+                        <Text style={styles.label}>Horário de maior incidência:</Text>
+                      </Text>
+                      <TouchableOpacity onPress={alternarHorarios} style={styles.expandButton}>
+                        <Icon name={horarios ? "expand-less" : "expand-more"} size={24} color="#007BFF" />
+                      </TouchableOpacity>
+                    </View>
+                    {horarios && (
+                      <Text style={styles.infoText}>{info.horarioMaiorIncidencia.join(", ")}</Text>
                     )}
                   </>
                 )}
@@ -95,9 +112,28 @@ export default function Details({ route }) { // Componente da tela de detalhes
               {vias && (
                 <View style={styles.viasContainer}>
                   {viasBairro.map((via, index) => (
-                    <Text key={index} style={styles.infoTextWithBorder}>
-                      <Text style={styles.label}>{via}:</Text> {AcidentesPorVias[via]?.indiceAcidentes !== undefined ? `${AcidentesPorVias[via].indiceAcidentes === 0 ? 'Nenhum acidente registrado' : `${AcidentesPorVias[via].indiceAcidentes} ${AcidentesPorVias[via].indiceAcidentes === 1 ? 'acidente' : 'acidentes'}`}` : "Sem dados disponíveis"}
-                    </Text>
+                    <View key={index}>
+                      <Text style={styles.infoTextWithBorder}>
+                        <Text style={styles.label}>{via}:</Text> {AcidentesPorVias[via]?.indiceAcidentes !== undefined ? `${AcidentesPorVias[via].indiceAcidentes === 0 ? 'Nenhum acidente registrado' : `${AcidentesPorVias[via].indiceAcidentes} ${AcidentesPorVias[via].indiceAcidentes === 1 ? 'acidente' : 'acidentes'}`}` : "Sem dados disponíveis"}
+                      </Text>
+                      {AcidentesPorVias[via]?.horarioMaiorIncidencia.length > 0 && (
+                        <>
+                          <View style={styles.rowWithBorder}>
+                            <Text style={styles.infoText}>
+                              <Text style={styles.label}>Horário de maior incidência:</Text>
+                            </Text>
+                            <TouchableOpacity onPress={alternarHorarios} style={styles.expandButton}>
+                              <Icon name={horarios ? "expand-less" : "expand-more"} size={24} color="#007BFF" />
+                            </TouchableOpacity>
+                          </View>
+                          {horarios && (
+                            <Text style={styles.infoTextWithBorder}>
+                              {AcidentesPorVias[via].horarioMaiorIncidencia.join(", ")}
+                            </Text>
+                          )}
+                        </>
+                      )}
+                    </View>
                   ))}
                 </View>
               )}
@@ -106,7 +142,10 @@ export default function Details({ route }) { // Componente da tela de detalhes
         )}
       </ScrollView>
       <TouchableOpacity style={styles.button} onPress={ExplorarDados}>
-        <Text style={styles.buttonText}>Acessar Análise Interativa</Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <FontAwesome name="bar-chart" size={20} color="#FFF" style={{ marginRight: 10 }} />
+          <Text style={styles.buttonText}>Acessar Análise Interativa</Text>
+        </View>
       </TouchableOpacity>
     </View>
   );

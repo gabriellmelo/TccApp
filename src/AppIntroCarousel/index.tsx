@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, Dimensions, TouchableOpacity } from 'react-native';
 import Swiper from 'react-native-swiper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { FontAwesome } from '@expo/vector-icons'; // Importa ícones do FontAwesome
 
 const itensCarrosel = [ // Itens do carrossel
   {
@@ -36,7 +37,7 @@ const itensCarrosel = [ // Itens do carrossel
   },
   {
     title: "Marcadores de Acidentes",
-    text: "Os marcadores são utilizados para indicar a frequência de acidentes nas vias, com as cores representando o nível de gravidade.",
+    text: "Consulte informações pelos marcadores que são utilizados para indicar os índices de acidentes nas vias, com as cores representando o nível de frequência.",
     icon: "location-on",
   },
 ];
@@ -56,7 +57,7 @@ const CarrosselScreen = ({ navigation }) => { // Componente do carrossel
 
   const Pular = () => { // Função para pular o carrossel
     navigation.navigate('Home'); // Navega para a tela inicial
-  }; 
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -70,7 +71,7 @@ const CarrosselScreen = ({ navigation }) => { // Componente do carrossel
         dotStyle={styles.dot} // Estilo do ponto
       >
         {itensCarrosel.map((item, index) => ( // Mapeia os itens do carrossel
-          <View style={styles.slide} key={index}> 
+          <View style={styles.slide} key={index}>
             <Icon name={item.icon} size={50} color="#322153" style={styles.icon} />
             <Text style={styles.title}>{item.title}</Text>
             <Text style={styles.text}>{item.text}</Text>
@@ -79,11 +80,17 @@ const CarrosselScreen = ({ navigation }) => { // Componente do carrossel
       </Swiper>
       {isUltimoSlide ? ( // Verifica se está no último slide
         <TouchableOpacity style={styles.skipButton} onPress={Pular}>
-          <Text style={styles.skipButtonText}>Ir para o Mapa</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+            <Text style={[styles.skipButtonText, { textAlign: 'center', flex: 1 }]}>Ir para o Mapa</Text>
+            <FontAwesome name="map" size={20} color="#FFF" style={{ position: 'absolute', right: 10 }} />
+          </View>
         </TouchableOpacity>
       ) : (
-        <TouchableOpacity style={styles.skipButton} onPress={Pular}> 
-          <Text style={styles.skipButtonText}>Pular</Text>
+        <TouchableOpacity style={styles.skipButton} onPress={Pular}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+            <Text style={[styles.skipButtonText, { textAlign: 'center', flex: 1 }]}>Pular</Text>
+            <FontAwesome name="arrow-right" size={20} color="#FFF" style={{ position: 'absolute', right: 10 }} />
+          </View>
         </TouchableOpacity>
       )}
     </SafeAreaView>
