@@ -92,6 +92,8 @@ export default function Home() { // Componente principal da tela inicial
     }
   }, [bairroSelecionado, viaSelecionada]); // Atualiza as coordenadas ao mudar o bairro ou via
 
+  const deltaZoom = bairroSelecionado ? 0.02 : 0.03; // Ajusta o zoom delta com base na seleção do bairro
+
   const MudancaBairro = (bairro: string) => { // Função para mudar o bairro selecionado
     setBairroSelecionado(bairro); // Atualiza o estado do bairro selecionado
     setViaSelecionada(""); // Limpa a via selecionada ao mudar de bairro
@@ -243,8 +245,8 @@ export default function Home() { // Componente principal da tela inicial
           region={{
             latitude: coordenadas.latitude,
             longitude: coordenadas.longitude,
-            latitudeDelta: 0.01, 
-            longitudeDelta: 0.01,
+            latitudeDelta: deltaZoom, // Usa o deltaZoom ajustado
+            longitudeDelta: deltaZoom, // Usa o deltaZoom ajustado
           }}
         >
           {viaSelecionada && coordenadasViaSelecionada ? (
@@ -274,30 +276,6 @@ export default function Home() { // Componente principal da tela inicial
             />
           ) : bairroSelecionado ? (
             <>
-              <Marker
-                key={bairroSelecionado}
-                coordinate={coordenadas}
-                pinColor={corMarcadorBairro}
-                onPress={() => {
-                  let message = `Bairro: ${bairroSelecionado}\n`;
-                  let indiceAcidente = contagemAcidentesPorBairro[bairroSelecionado];
-                  if (corMarcadorBairro === 'blue') {
-                    message += 'Sem dados disponíveis';
-                  } else if (corMarcadorBairro === 'green') {
-                    message += 'Sem acidente';
-                  } else if (corMarcadorBairro === 'yellow') {
-                    message += 'Baixo índice de acidente';
-                  } else if (corMarcadorBairro === 'orange') {
-                    message += 'Médio índice de acidente';
-                  } else if (corMarcadorBairro === 'red') {
-                    message += 'Alto índice de acidente';
-                  }
-                  if (indiceAcidente !== undefined) {
-                    message += `\n(Acidentes registrados: ${indiceAcidente})`;
-                  }
-                  Alert.alert('Informação do Marcador', message);
-                }}
-              />
               {ViasPorBairro[bairroSelecionado]?.map(async (via) => {
                 const coordenadas = await obterCoordenadas(`${bairroSelecionado} ${via}`);
                 return (
