@@ -49,6 +49,8 @@ export default function Home() { // Componente principal da tela inicial
   const [viasDropdownAberto, setViasDropdownAberto] = useState(false); // Estado do dropdown de vias
   const [camadasVisivel, setCamadasVisivel] = useState(false); // Estado do modal de camadas
   const [tipoMapa, setTipoMapa] = useState<MapType>('terrain'); // Estado do tipo de mapa
+  const [modalVisivel, setModalVisivel] = useState(false);
+  const [informacoesMarcador, setInformacoesMarcador] = useState("");
 
   type MapType = 'standard' | 'satellite' | 'hybrid' | 'terrain' | 'none' | 'traffic'; // Tipos de mapas disponíveis
 
@@ -204,6 +206,24 @@ export default function Home() { // Componente principal da tela inicial
     }
   };
 
+  const abrirModalMarcador = (message: string) => { // Função para abrir o modal com as informações do marcador
+    setInformacoesMarcador(message); // Atualiza as informações do marcador
+    setModalVisivel(true); // Abre o modal com as informações do marcador
+  };
+
+  const obterCorBordaModal = (message: string) => { // Função para obter a cor da borda do modal
+    if (message.includes('Sem acidente')) { // Define a cor da borda com base no conteúdo da mensagem
+      return 'green';
+    } else if (message.includes('Baixo índice de acidente')) {
+      return 'yellow';
+    } else if (message.includes('Médio índice de acidente')) {
+      return 'orange'; 
+    } else if (message.includes('Alto índice de acidente')) { 
+      return 'red'; 
+    }
+    return 'blue'; // Retorna azul se não houver dados disponíveis
+  };
+
   return ( // Renderiza o componente
     <KeyboardAvoidingView // Evita que o teclado cubra o conteúdo
       behavior={Platform.OS === "ios" ? "padding" : "height"} // Comportamento do teclado
@@ -271,7 +291,7 @@ export default function Home() { // Componente principal da tela inicial
                 } else {
                   message += 'Sem dados disponíveis';
                 }
-                Alert.alert('Informação do Marcador', message);
+                abrirModalMarcador(message); // Abre o modal com as informações do marcador
               }}
             />
           ) : bairroSelecionado ? (
@@ -300,7 +320,7 @@ export default function Home() { // Componente principal da tela inicial
                       } else {
                         message += 'Sem dados disponíveis';
                       }
-                      Alert.alert('Informação do Marcador', message);
+                      abrirModalMarcador(message); // Abre o modal com as informações do marcador
                     }}
                   />
                 );
@@ -329,7 +349,7 @@ export default function Home() { // Componente principal da tela inicial
                   if (indiceAcidente !== undefined) {
                     message += `\n(Acidentes registrados: ${indiceAcidente})`;
                   }
-                  Alert.alert('Informação do Marcador', message);
+                  abrirModalMarcador(message); // Abre o modal com as informações do marcador
                 }}
               />
             ))}
@@ -405,7 +425,7 @@ export default function Home() { // Componente principal da tela inicial
               keyExtractor={(item) => item} // Chave única para cada item
               renderItem={({ item }) => ( // Renderiza cada item
                 <TouchableOpacity onPress={() => MudancaVia(item)}>
-                   <Text style={[styles.dropdownItem, item === viaSelecionada && styles.selectedItem]}>{item}</Text>
+                  <Text style={[styles.dropdownItem, item === viaSelecionada && styles.selectedItem]}>{item}</Text>
                 </TouchableOpacity>
               )}
               style={styles.dropdown}
@@ -471,11 +491,11 @@ export default function Home() { // Componente principal da tela inicial
           </TouchableOpacity>
         </View>
 
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={camadasVisivel}
-          onRequestClose={() => setCamadasVisivel(false)}
+        <Modal // Modal com opções de camadas
+          animationType="slide"  // Tipo de animação
+          transparent={true} // Fundo transparente
+          visible={camadasVisivel} // Visibilidade do modal 
+          onRequestClose={() => setCamadasVisivel(false)} // Fecha o modal ao pressionar o botão de voltar
         >
           <View style={styles.modalOverlayCamadas}>
             <View style={styles.modalContentCamadas}>
@@ -497,6 +517,23 @@ export default function Home() { // Componente principal da tela inicial
               </TouchableOpacity>
               <TouchableOpacity style={styles.closeButtonCamadas} onPress={() => setCamadasVisivel(false)}>
                 <Text style={styles.buttonTextCamadas}>Fechar</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+
+        <Modal // Modal com informações do marcador
+          animationType="fade" // Tipo de animação
+          transparent={true} // Fundo transparente
+          visible={modalVisivel} // Visibilidade do modal
+          onRequestClose={() => setModalVisivel(false)} // Fecha o modal ao pressionar o botão de voltar
+        >
+          <View style={styles.modalMarcador}> 
+            <View style={[styles.modalContentMarcador, { borderColor: obterCorBordaModal(informacoesMarcador) }]}> 
+              <Text style={styles.modalTitleMarcador}>Informação do Marcador</Text>
+              <Text style={styles.modalTextMarcador}>{informacoesMarcador}</Text>
+              <TouchableOpacity style={styles.closeButtonMarcador} onPress={() => setModalVisivel(false)}>
+                <Text style={styles.buttonTextMarcador}>Fechar</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -732,5 +769,51 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     marginTop: 10,
     alignSelf: 'center',
+  },
+modalMarcador: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContentMarcador: {
+    width: '80%',
+    backgroundColor: '#fff',
+    padding: 20,
+    borderWidth: 1,
+    borderRadius: 50,
+    borderColor: '#007BFF',
+    alignItems: 'flex-start',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 5,
+  },
+  modalTitleMarcador: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 15,
+    alignSelf: 'center',
+    color: '#007BFF',
+  },
+  modalTextMarcador: {
+    color: '#333',
+    fontSize: 16,
+    lineHeight: 22,
+  },
+  buttonTextMarcador: {
+    color: '#fff',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  closeButtonMarcador: {
+    backgroundColor: '#007BFF',
+    padding: 12,
+    borderRadius: 25,
+    marginTop: 15,
+    alignSelf: 'center',
+    width: '50%',
   },
 });
