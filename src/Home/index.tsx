@@ -372,7 +372,7 @@ export default function Home() { // Componente principal da tela inicial
                   setBairrosDropdownAberto(false); // Fecha o dropdown ao selecionar um bairro
                   Keyboard.dismiss(); // Fecha o teclado quando selecionar algum bairro
                 }}>
-                  <Text style={styles.dropdownItem}>{item}</Text>
+                  <Text style={[styles.dropdownItem, item === bairroSelecionado && styles.selectedItem]}>{item}</Text>
                 </TouchableOpacity>
               )}
               style={styles.dropdown}
@@ -405,7 +405,7 @@ export default function Home() { // Componente principal da tela inicial
               keyExtractor={(item) => item} // Chave única para cada item
               renderItem={({ item }) => ( // Renderiza cada item
                 <TouchableOpacity onPress={() => MudancaVia(item)}>
-                  <Text style={styles.dropdownItem}>{item}</Text>
+                   <Text style={[styles.dropdownItem, item === viaSelecionada && styles.selectedItem]}>{item}</Text>
                 </TouchableOpacity>
               )}
               style={styles.dropdown}
@@ -670,6 +670,10 @@ const styles = StyleSheet.create({
     padding: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
+  },
+  selectedItem: {
+    backgroundColor: '#007BFF',
+    color: '#fff',
   },
   button: {
     backgroundColor: '#007BFF',
