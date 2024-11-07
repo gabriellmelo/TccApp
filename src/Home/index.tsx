@@ -51,6 +51,7 @@ export default function Home() { // Componente principal da tela inicial
   const [tipoMapa, setTipoMapa] = useState<MapType>('terrain'); // Estado do tipo de mapa
   const [modalVisivel, setModalVisivel] = useState(false);
   const [informacoesMarcador, setInformacoesMarcador] = useState("");
+  const [camadaSelecionada, setCamadaSelecionada] = useState<MapType>('terrain'); // Estado da camada selecionada
 
   type MapType = 'standard' | 'satellite' | 'hybrid' | 'terrain' | 'none' | 'traffic'; // Tipos de mapas disponíveis
 
@@ -500,20 +501,20 @@ export default function Home() { // Componente principal da tela inicial
           <View style={styles.modalOverlayCamadas}>
             <View style={styles.modalContentCamadas}>
               <Text style={styles.modalTitleCamadas}>Selecione um mapa</Text>
-              <TouchableOpacity style={styles.menuOptionCamadas} onPress={() => { setTipoMapa("standard"); setCamadasVisivel(false); }}>
-                <Text style={styles.menuOptionTextCamadas}>Padrão</Text>
+              <TouchableOpacity style={[styles.menuOptionCamadas, camadaSelecionada === 'standard' && styles.selectedCamada]} onPress={() => { setTipoMapa("standard"); setCamadaSelecionada("standard"); setCamadasVisivel(false); }}>
+                <Text style={[styles.menuOptionTextCamadas, camadaSelecionada === 'standard' && styles.selectedText]}>Padrão</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.menuOptionCamadas} onPress={() => { setTipoMapa("satellite"); setCamadasVisivel(false); }}>
-                <Text style={styles.menuOptionTextCamadas}>Satélite</Text>
+              <TouchableOpacity style={[styles.menuOptionCamadas, camadaSelecionada === 'satellite' && styles.selectedCamada]} onPress={() => { setTipoMapa("satellite"); setCamadaSelecionada("satellite"); setCamadasVisivel(false); }}>
+                <Text style={[styles.menuOptionTextCamadas, camadaSelecionada === 'satellite' && styles.selectedText]}>Satélite</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.menuOptionCamadas} onPress={() => { setTipoMapa("terrain"); setCamadasVisivel(false); }}>
-                <Text style={styles.menuOptionTextCamadas}>Terreno</Text>
+              <TouchableOpacity style={[styles.menuOptionCamadas, camadaSelecionada === 'terrain' && styles.selectedCamada]} onPress={() => { setTipoMapa("terrain"); setCamadaSelecionada("terrain"); setCamadasVisivel(false); }}>
+                <Text style={[styles.menuOptionTextCamadas, camadaSelecionada === 'terrain' && styles.selectedText]}>Terreno</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.menuOptionCamadas} onPress={() => { setTipoMapa("hybrid"); setCamadasVisivel(false); }}>
-                <Text style={styles.menuOptionTextCamadas}>Híbrido</Text>
+              <TouchableOpacity style={[styles.menuOptionCamadas, camadaSelecionada === 'hybrid' && styles.selectedCamada]} onPress={() => { setTipoMapa("hybrid"); setCamadaSelecionada("hybrid"); setCamadasVisivel(false); }}>
+                <Text style={[styles.menuOptionTextCamadas, camadaSelecionada === 'hybrid' && styles.selectedText]}>Híbrido</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.menuOptionCamadas} onPress={() => { setTipoMapa("traffic"); setCamadasVisivel(false); }}>
-                <Text style={styles.menuOptionTextCamadas}>Tráfego</Text>
+              <TouchableOpacity style={[styles.menuOptionCamadas, camadaSelecionada === 'traffic' && styles.selectedCamada]} onPress={() => { setTipoMapa("traffic"); setCamadaSelecionada("traffic"); setCamadasVisivel(false); }}>
+                <Text style={[styles.menuOptionTextCamadas, camadaSelecionada === 'traffic' && styles.selectedText]}>Tráfego</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.closeButtonCamadas} onPress={() => setCamadasVisivel(false)}>
                 <Text style={styles.buttonTextCamadas}>Fechar</Text>
@@ -815,5 +816,11 @@ modalMarcador: {
     marginTop: 15,
     alignSelf: 'center',
     width: '50%',
+  },
+  selectedCamada: {
+    backgroundColor: '#007BFF',
+  },
+  selectedText: {
+    color: '#fff',
   },
 });
