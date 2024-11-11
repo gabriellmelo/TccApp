@@ -34,9 +34,10 @@ async function obterCoordenadas(endereco) {
 
 export default function Home() { // Componente principal da tela inicial
   const navigation = useNavigation<NavigationProp<RootStackParamList>>(); // navegação
-  const [todosMarcadores, setTodosMarcadores] = useState([]);
+  const [todosMarcadores, setTodosMarcadores] = useState([]); // Estado de todos os marcadores
   const [bairroSelecionado, setBairroSelecionado] = useState(""); // Estado do bairro selecionado
   const [viaSelecionada, setViaSelecionada] = useState(""); // Estado da via selecionada
+  const [zoom, setZoom] = useState(0.03); // Estado do zoom
   const [coordenadasViaSelecionada, setCoordenadasViaSelecionada] = useState(null);
   const [coordenadas, setCoordenadas] = useState({ latitude: -20.5386, longitude: -47.4006 }); // Estado das coordenadas
   const [mostrarListaVias, setMostrarListaVias] = useState(false); // Estado para exibir o picker de vias
@@ -49,28 +50,28 @@ export default function Home() { // Componente principal da tela inicial
   const [viasDropdownAberto, setViasDropdownAberto] = useState(false); // Estado do dropdown de vias
   const [camadasVisivel, setCamadasVisivel] = useState(false); // Estado do modal de camadas
   const [tipoMapa, setTipoMapa] = useState<MapType>('terrain'); // Estado do tipo de mapa
-  const [modalVisivel, setModalVisivel] = useState(false);
-  const [informacoesMarcador, setInformacoesMarcador] = useState("");
+  const [modalVisivel, setModalVisivel] = useState(false); // Estado do modal de informações do marcador
+  const [informacoesMarcador, setInformacoesMarcador] = useState(""); // Estado das informações do marcador
   const [camadaSelecionada, setCamadaSelecionada] = useState<MapType>('terrain'); // Estado da camada selecionada
 
   type MapType = 'standard' | 'satellite' | 'hybrid' | 'terrain' | 'none' | 'traffic'; // Tipos de mapas disponíveis
 
   useEffect(() => {
-    const inicializarMarcadores = async () => {
-      const marcadores = await Promise.all(
-        bairros.map(async (bairro) => {
-          const coords = await obterCoordenadas(bairro);
-          return {
-            bairro,
-            coords,
-            cor: obterCorMarcadorBairro(bairro),
+    const inicializarMarcadores = async () => { // Função para inicializar os marcadores
+      const marcadores = await Promise.all( // Obtém as coordenadas de todos os bairros
+        bairros.map(async (bairro) => { // Mapeia os bairros
+          const coords = await obterCoordenadas(bairro); // Obtém as coordenadas do bairro
+          return { // Retorna um objeto com as informações do marcador
+            bairro, // Define o nome do bairro
+            coords, // Define as coordenadas do bairro
+            cor: obterCorMarcadorBairro(bairro), // Define a cor do marcador com base no índice de acidentes
           };
         })
       );
-      setTodosMarcadores(marcadores);
+      setTodosMarcadores(marcadores); // Atualiza o estado dos marcadores
     };
 
-    inicializarMarcadores();
+    inicializarMarcadores(); // Inicializa os marcadores
   }, []);
 
   useEffect(() => { // Atualiza as coordenadas ao selecionar um bairro ou via
@@ -95,6 +96,14 @@ export default function Home() { // Componente principal da tela inicial
     }
   }, [bairroSelecionado, viaSelecionada]); // Atualiza as coordenadas ao mudar o bairro ou via
 
+  useEffect(() => { // Atualiza o zoom ao selecionar ou desmarcar um bairro
+    if (bairroSelecionado) { // Verifica se um bairro foi selecionado
+      setZoom(0.02); // Ajusta o zoom ao selecionar um bairro
+    } else { // Retorna ao zoom padrão se nenhum bairro estiver selecionado
+      setZoom(0.03); // Ajusta o zoom ao desmarcar o bairro
+    }
+  }, [bairroSelecionado]); // Atualiza o zoom ao mudar o bairro selecionado
+
   const deltaZoom = bairroSelecionado ? 0.02 : 0.03; // Ajusta o zoom delta com base na seleção do bairro
 
   const MudancaBairro = (bairro: string) => { // Função para mudar o bairro selecionado
@@ -105,11 +114,11 @@ export default function Home() { // Componente principal da tela inicial
     setViasDropdownAberto(false); // Abre a lista de vias automaticamente
   };
 
-  const MudancaVia = async (via: string) => {
-    setViaSelecionada(via);
-    const coords = await obterCoordenadas(`${bairroSelecionado} ${via}`);
-    setCoordenadasViaSelecionada(coords);
-    setViasDropdownAberto(false);
+  const MudancaVia = async (via: string) => { // Função para mudar a via selecionada
+    setViaSelecionada(via); // Atualiza o estado da via selecionada
+    const coords = await obterCoordenadas(`${bairroSelecionado} ${via}`); // Obtém as coordenadas da via
+    setCoordenadasViaSelecionada(coords); // Atualiza as coordenadas da via selecionada
+    setViasDropdownAberto(false); // Fecha o dropdown de vias ao selecionar uma via
   };
 
   const PressionarBotao = () => { // Função para exibir informações sobre a área selecionada
@@ -218,9 +227,9 @@ export default function Home() { // Componente principal da tela inicial
     } else if (message.includes('Baixo índice de acidente')) {
       return 'yellow';
     } else if (message.includes('Médio índice de acidente')) {
-      return 'orange'; 
-    } else if (message.includes('Alto índice de acidente')) { 
-      return 'red'; 
+      return 'orange';
+    } else if (message.includes('Alto índice de acidente')) {
+      return 'red';
     }
     return 'blue'; // Retorna azul se não houver dados disponíveis
   };
@@ -259,26 +268,30 @@ export default function Home() { // Componente principal da tela inicial
             ))}
           </View>
         )}
-        <MapView
-          style={styles.map}
-          mapType={tipoMapa === "traffic" ? "standard" : tipoMapa}
-          showsTraffic={tipoMapa === "traffic"}
-          region={{
-            latitude: coordenadas.latitude,
-            longitude: coordenadas.longitude,
+        <MapView // Mapa de Franca
+          style={styles.map} // Estilo do mapa
+          mapType={tipoMapa === "traffic" ? "standard" : tipoMapa} // Tipo de mapa
+          showsTraffic={tipoMapa === "traffic"} // Exibe informações de tráfego
+          region={{ // Região inicial
+            latitude: coordenadas.latitude, // Latitude inicial
+            longitude: coordenadas.longitude, // Longitude inicial
             latitudeDelta: deltaZoom, // Usa o deltaZoom ajustado
             longitudeDelta: deltaZoom, // Usa o deltaZoom ajustado
           }}
+          onRegionChangeComplete={(region) => { // Atualiza o zoom ao alterar a região
+            const newZoom = region.latitudeDelta; // Obtém o novo zoom
+            setZoom(newZoom); // Atualiza o estado do zoom
+          }}
         >
-          {viaSelecionada && coordenadasViaSelecionada ? (
-            <Marker
-              key={viaSelecionada}
-              coordinate={coordenadasViaSelecionada}
-              pinColor={obterCorMarcador(viaSelecionada)}
-              onPress={() => {
-                let message = `Via: ${viaSelecionada}\n`;
-                let indiceAcidente = AcidentesPorVias[viaSelecionada]?.indiceAcidentes;
-                if (indiceAcidente !== undefined) {
+          {viaSelecionada && coordenadasViaSelecionada && zoom <= 0.08 ? ( // Exibe o marcador da via selecionada
+            <Marker // Marcador da via selecionada
+              key={viaSelecionada} // Chave única para o marcador
+              coordinate={coordenadasViaSelecionada} // Coordenadas do marcador
+              pinColor={obterCorMarcador(viaSelecionada)} // Cor do marcador
+              onPress={() => { // Exibe informações sobre a via ao pressionar o marcador
+                let message = `Via: ${viaSelecionada}\n`; // Mensagem com o nome da via
+                let indiceAcidente = AcidentesPorVias[viaSelecionada]?.indiceAcidentes; // Índice de acidentes da via
+                if (indiceAcidente !== undefined) { // Verifica se o índice é válido
                   if (indiceAcidente === 0) {
                     message += 'Sem acidente';
                   } else if (indiceAcidente <= 5) {
@@ -288,26 +301,26 @@ export default function Home() { // Componente principal da tela inicial
                   } else {
                     message += 'Alto índice de acidente';
                   }
-                  message += `\n(Acidentes registrados: ${indiceAcidente})`;
+                  message += `\n(Acidentes registrados: ${indiceAcidente})`; // Adiciona o número de acidentes à mensagem
                 } else {
-                  message += 'Sem dados disponíveis';
+                  message += 'Sem dados disponíveis'; // Exibe mensagem de dados indisponíveis
                 }
                 abrirModalMarcador(message); // Abre o modal com as informações do marcador
               }}
             />
-          ) : bairroSelecionado ? (
+          ) : bairroSelecionado && zoom <= 0.02 ? ( // Exibe os marcadores das vias do bairro selecionado
             <>
-              {ViasPorBairro[bairroSelecionado]?.map(async (via) => {
-                const coordenadas = await obterCoordenadas(`${bairroSelecionado} ${via}`);
+              {ViasPorBairro[bairroSelecionado]?.map(async (via) => { // Mapeia as vias do bairro selecionado
+                const coordenadas = await obterCoordenadas(`${bairroSelecionado} ${via}`); // Obtém as coordenadas da via
                 return (
                   <Marker
                     key={via}
                     coordinate={coordenadas}
                     pinColor={obterCorMarcador(via)}
                     onPress={() => {
-                      let message = `Via: ${via}\n`;
-                      let indiceAcidente = AcidentesPorVias[via]?.indiceAcidentes;
-                      if (indiceAcidente !== undefined) {
+                      let message = `Via: ${via}\n`; // Mensagem com o nome da via
+                      let indiceAcidente = AcidentesPorVias[via]?.indiceAcidentes; // Índice de acidentes da via
+                      if (indiceAcidente !== undefined) { // Verifica se o índice é válido
                         if (indiceAcidente === 0) {
                           message += 'Sem acidente';
                         } else if (indiceAcidente <= 5) {
@@ -327,33 +340,57 @@ export default function Home() { // Componente principal da tela inicial
                 );
               })}
             </>
-          )
-            : todosMarcadores.map((marcador) => (
-              <Marker
-                key={marcador.bairro}
-                coordinate={marcador.coords}
-                pinColor={marcador.cor}
-                onPress={() => {
-                  let message = `Bairro: ${marcador.bairro}\n`;
-                  let indiceAcidente = contagemAcidentesPorBairro[marcador.bairro];
-                  if (marcador.cor === 'blue') {
-                    message += 'Sem dados disponíveis';
-                  } else if (marcador.cor === 'green') {
-                    message += 'Sem acidente';
-                  } else if (marcador.cor === 'yellow') {
-                    message += 'Baixo índice de acidente';
-                  } else if (marcador.cor === 'orange') {
-                    message += 'Médio índice de acidente';
-                  } else if (marcador.cor === 'red') {
-                    message += 'Alto índice de acidente';
-                  }
-                  if (indiceAcidente !== undefined) {
-                    message += `\n(Acidentes registrados: ${indiceAcidente})`;
-                  }
-                  abrirModalMarcador(message); // Abre o modal com as informações do marcador
-                }}
-              />
-            ))}
+          ) : bairroSelecionado ? ( // Exibe o marcador do bairro selecionado
+            <Marker
+              key={bairroSelecionado}
+              coordinate={coordenadas}
+              pinColor={corMarcadorBairro}
+              onPress={() => {
+                let message = `Bairro: ${bairroSelecionado}\n`;
+                let indiceAcidente = contagemAcidentesPorBairro[bairroSelecionado];
+                if (corMarcadorBairro === 'blue') {
+                  message += 'Sem dados disponíveis';
+                } else if (corMarcadorBairro === 'green') {
+                  message += 'Sem acidente';
+                } else if (corMarcadorBairro === 'yellow') {
+                  message += 'Baixo índice de acidente';
+                } else if (corMarcadorBairro === 'orange') {
+                  message += 'Médio índice de acidente';
+                } else if (corMarcadorBairro === 'red') {
+                  message += 'Alto índice de acidente';
+                }
+                if (indiceAcidente !== undefined) {
+                  message += `\n(Acidentes registrados: ${indiceAcidente})`;
+                }
+                abrirModalMarcador(message); // Abre o modal com as informações do marcador
+              }}
+            />
+          ) : todosMarcadores.map((marcador) => ( // Exibe os marcadores de todos os bairros
+            <Marker
+              key={marcador.bairro}
+              coordinate={marcador.coords}
+              pinColor={marcador.cor}
+              onPress={() => {
+                let message = `Bairro: ${marcador.bairro}\n`;
+                let indiceAcidente = contagemAcidentesPorBairro[marcador.bairro];
+                if (marcador.cor === 'blue') {
+                  message += 'Sem dados disponíveis';
+                } else if (marcador.cor === 'green') {
+                  message += 'Sem acidente';
+                } else if (marcador.cor === 'yellow') {
+                  message += 'Baixo índice de acidente';
+                } else if (marcador.cor === 'orange') {
+                  message += 'Médio índice de acidente';
+                } else if (marcador.cor === 'red') {
+                  message += 'Alto índice de acidente';
+                }
+                if (indiceAcidente !== undefined) {
+                  message += `\n(Acidentes registrados: ${indiceAcidente})`;
+                }
+                abrirModalMarcador(message); // Abre o modal com as informações do marcador
+              }}
+            />
+          ))}
         </MapView>
 
         <View style={styles.overlay}>
@@ -530,8 +567,8 @@ export default function Home() { // Componente principal da tela inicial
           onRequestClose={() => setModalVisivel(false)} // Fecha o modal ao pressionar o botão de voltar
         >
           <View style={styles.modalMarcador}> 
-            <View style={[styles.modalContentMarcador, { borderColor: obterCorBordaModal(informacoesMarcador) }]}> 
-              <Text style={styles.modalTitleMarcador}>Informação do Marcador</Text>
+            <View style={[styles.modalContentMarcador, { borderColor: obterCorBordaModal(informacoesMarcador) }]}>
+              <Text style={styles.modalTitleMarcador}>Informação do Marcador</Text> 
               <Text style={styles.modalTextMarcador}>{informacoesMarcador}</Text>
               <TouchableOpacity style={styles.closeButtonMarcador} onPress={() => setModalVisivel(false)}>
                 <Text style={styles.buttonTextMarcador}>Fechar</Text>
@@ -771,7 +808,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     alignSelf: 'center',
   },
-modalMarcador: {
+  modalMarcador: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
