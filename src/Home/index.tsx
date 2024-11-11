@@ -126,7 +126,7 @@ export default function Home() { // Componente principal da tela inicial
       Alert.alert("Seleção inválida", "Por favor, selecione um bairro.");
     } else if (!ViasPorBairro[bairroSelecionado] || ViasPorBairro[bairroSelecionado].length === 0) { // Verifica se há vias disponíveis para o bairro selecionado
       Alert.alert("Informação indisponível", "Não há informações sobre este bairro.");
-    } else if (!contagemAcidentesPorBairro[bairroSelecionado] || contagemAcidentesPorBairro[bairroSelecionado] === 0) { // Verifica se há acidentes registrados para o bairro selecionado
+    } else if (contagemAcidentesPorBairro[bairroSelecionado] === undefined) { // Verifica se há acidentes registrados para o bairro selecionado
       Alert.alert("Informação indisponível", "Não há informações de acidentes registradas para este bairro.");
     } else if (viaSelecionada && !AcidentesPorVias[viaSelecionada]) { // Verifica se há dados para a via selecionada
       Alert.alert("Informação indisponível", "Não há informações de acidentes registradas para esta via.");
@@ -155,9 +155,9 @@ export default function Home() { // Componente principal da tela inicial
       if (indiceAcidente !== undefined) { // Verifica se o índice é válido
         if (indiceAcidente === 0) { // Define a cor do marcador com base no índice de acidentes
           return "green";
-        } else if (indiceAcidente <= 5) {
+        } else if (indiceAcidente <= 4) {
           return "yellow";
-        } else if (indiceAcidente <= 10) {
+        } else if (indiceAcidente <= 9) {
           return "orange";
         } else {
           return "red";
@@ -168,18 +168,16 @@ export default function Home() { // Componente principal da tela inicial
   };
 
   const obterCorMarcadorBairro = (bairroSelecionado: string) => { // Função para obter a cor do marcador do bairro
-    if (bairroSelecionado && contagemAcidentesPorBairro[bairroSelecionado]) { // Verifica se o bairro selecionado existe
+    if (bairroSelecionado && contagemAcidentesPorBairro[bairroSelecionado] !== undefined) { // Verifica se o bairro selecionado existe
       const indiceAcidente = contagemAcidentesPorBairro[bairroSelecionado]; // Obtém o índice de acidentes
-      if (indiceAcidente !== undefined) { // Verifica se o índice é válido
-        if (indiceAcidente === 0) { // Define a cor do marcador com base no índice de acidentes
-          return "green";
-        } else if (indiceAcidente <= 5) {
-          return "yellow";
-        } else if (indiceAcidente <= 10) {
-          return "orange";
-        } else {
-          return "red";
-        }
+      if (indiceAcidente === 0) { // Define a cor do marcador com base no índice de acidentes
+        return "green";
+      } else if (indiceAcidente <= 4) {
+        return "yellow";
+      } else if (indiceAcidente <= 9) {
+        return "orange";
+      } else {
+        return "red";
       }
     }
     return "blue"; // Retorna azul se não houver dados disponíveis
@@ -323,9 +321,9 @@ export default function Home() { // Componente principal da tela inicial
                       if (indiceAcidente !== undefined) { // Verifica se o índice é válido
                         if (indiceAcidente === 0) {
                           message += 'Sem acidente';
-                        } else if (indiceAcidente <= 5) {
+                        } else if (indiceAcidente <= 4) {
                           message += 'Baixo índice de acidente';
-                        } else if (indiceAcidente <= 10) {
+                        } else if (indiceAcidente <= 9) {
                           message += 'Médio índice de acidente';
                         } else {
                           message += 'Alto índice de acidente';
@@ -474,10 +472,10 @@ export default function Home() { // Componente principal da tela inicial
             <TouchableOpacity
               style={[
                 styles.button,
-                (!ViasPorBairro[bairroSelecionado] || ViasPorBairro[bairroSelecionado].length === 0 || !contagemAcidentesPorBairro[bairroSelecionado]) && styles.buttonDisabled // Desabilita o botão se não houver vias ou informações de acidentes disponíveis
+                (!ViasPorBairro[bairroSelecionado] || ViasPorBairro[bairroSelecionado].length === 0 || contagemAcidentesPorBairro[bairroSelecionado] === undefined) && styles.buttonDisabled // Desabilita o botão se não houver vias ou informações de acidentes disponíveis
               ]}
               onPress={PressionarBotao}
-              disabled={!ViasPorBairro[bairroSelecionado] || ViasPorBairro[bairroSelecionado].length === 0 || !contagemAcidentesPorBairro[bairroSelecionado]} // Desabilita o botão se não houver vias ou informações de acidentes disponíveis
+              disabled={!ViasPorBairro[bairroSelecionado] || ViasPorBairro[bairroSelecionado].length === 0 || contagemAcidentesPorBairro[bairroSelecionado] === undefined} // Desabilita o botão se não houver vias ou informações de acidentes disponíveis
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <FontAwesome name="info-circle" size={20} color="#FFF" style={{ marginRight: 10 }} />
@@ -566,9 +564,9 @@ export default function Home() { // Componente principal da tela inicial
           visible={modalVisivel} // Visibilidade do modal
           onRequestClose={() => setModalVisivel(false)} // Fecha o modal ao pressionar o botão de voltar
         >
-          <View style={styles.modalMarcador}> 
+          <View style={styles.modalMarcador}>
             <View style={[styles.modalContentMarcador, { borderColor: obterCorBordaModal(informacoesMarcador) }]}>
-              <Text style={styles.modalTitleMarcador}>Informação do Marcador</Text> 
+              <Text style={styles.modalTitleMarcador}>Informação do Marcador</Text>
               <Text style={styles.modalTextMarcador}>{informacoesMarcador}</Text>
               <TouchableOpacity style={styles.closeButtonMarcador} onPress={() => setModalVisivel(false)}>
                 <Text style={styles.buttonTextMarcador}>Fechar</Text>
@@ -834,6 +832,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     alignSelf: 'center',
     color: '#007BFF',
+    textAlign: 'center',
   },
   modalTextMarcador: {
     color: '#333',

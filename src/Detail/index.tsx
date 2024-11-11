@@ -90,16 +90,20 @@ export default function Details({ route }) { // Componente da tela de detalhes
                 <Text style={styles.label}>Total de acidentes: </Text>
                 {totalAcidentes === 0 ? 'Nenhum acidente registrado' : `${totalAcidentes} ${totalAcidentes === 1 ? 'acidente' : 'acidentes'}`}
               </Text>
-              <View style={styles.rowWithBorder}>
-                <Text style={styles.infoText}>
-                  <Text style={styles.label}>Causas mais frequentes:</Text>
-                </Text>
-                <TouchableOpacity onPress={alternarCausas} style={styles.expandButton}>
-                  <Icon name={causas ? "expand-less" : "expand-more"} size={24} color="#007BFF" />
-                </TouchableOpacity>
-              </View>
-              {causas && (
-                <Text style={styles.infoText}>{causasBairro.join(", ")}</Text>
+              {totalAcidentes > 0 && ( // Verifica se há acidentes registrados
+                <>
+                  <View style={styles.rowWithBorder}>
+                    <Text style={styles.infoText}>
+                      <Text style={styles.label}>Causas mais frequentes:</Text>
+                    </Text>
+                    <TouchableOpacity onPress={alternarCausas} style={styles.expandButton}>
+                      <Icon name={causas ? "expand-less" : "expand-more"} size={24} color="#007BFF" />
+                    </TouchableOpacity>
+                  </View>
+                  {causas && (
+                    <Text style={styles.infoText}>{causasBairro.join(", ")}</Text>
+                  )}
+                </>
               )}
               <View style={styles.rowWithBorder}>
                 <Text style={styles.infoText}>

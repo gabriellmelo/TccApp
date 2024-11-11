@@ -13,8 +13,8 @@ export const bairros = [ // Lista de bairros
   "Prolongamento Jardim Brasilândia", "Prolongamento Jardim Paulista",
   "Prolongamento Vila Santa Cruz", "Recanto Cap. Heliodoro Pinheiro",
   "Residencial Jardim Vera Cruz", "São Joaquim", "Vila Aparecida",
-  "Vila Europa", "Vila Marta", "Vila Rezende", "Vila Santa Cruz",
-  "Vila Santa Rita", "Vila Santa Terezinha"
+  "Vila Europa", "Vila Marta", "Vila Rezende", "Vila São Sebastião",
+  "Vila Santa Cruz", "Vila Santa Rita", "Vila Santa Terezinha",
 ];
 
 export const ViasPorBairro: { [bairro: string]: string[] } = { // lista de vias por bairro
@@ -190,6 +190,9 @@ export const ViasPorBairro: { [bairro: string]: string[] } = { // lista de vias 
     "Avenida Ministro Rui Barbosa",
     "Rua Artur Franchini",
     "Rua Major Moura Matos",
+  ],
+  "Vila São Sebastião": [
+    "Rua João de Araújo Malheiros",
   ],
   "Vila Santa Cruz": [
     "Rua Ozandir Hipólito da Silva",
@@ -751,6 +754,14 @@ export const AcidentesPorVias: { // Dados de acidentes por via
       "Não disponível",
     ]
   },
+  "Rua Carlos de Campos": {
+    bairro: "Jardim Aeroporto II",
+    indiceAcidentes: 0,
+    causasMaisFrequentes: [
+    ],
+    horarioMaiorIncidencia: [
+    ]
+  },
   "Rua Congonhas do Campo": {
     bairro: "Prolongamento Jardim Brasilândia",
     indiceAcidentes: 1,
@@ -766,7 +777,7 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     bairro: "Centro",
     indiceAcidentes: 0,
     causasMaisFrequentes: [
-      
+
     ],
     horarioMaiorIncidencia: [
 
@@ -942,6 +953,14 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     ],
     horarioMaiorIncidencia: [
       "Noite",
+    ]
+  },
+  "Rua Nelson Ribeiro": {
+    bairro: "Jardim Aeroporto II",
+    indiceAcidentes: 0,
+    causasMaisFrequentes: [
+    ],
+    horarioMaiorIncidencia: [
     ]
   },
   "Rua Ouvidor Freire": {
