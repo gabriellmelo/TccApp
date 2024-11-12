@@ -120,23 +120,6 @@ export default function Details({ route }) { // Componente da tela de detalhes
                       <Text style={styles.infoTextWithBorder}>
                         <Text style={styles.label}>{via}:</Text> {AcidentesPorVias[via]?.indiceAcidentes !== undefined ? `${AcidentesPorVias[via].indiceAcidentes === 0 ? 'Nenhum acidente registrado' : `${AcidentesPorVias[via].indiceAcidentes} ${AcidentesPorVias[via].indiceAcidentes === 1 ? 'acidente' : 'acidentes'}`}` : "Sem dados disponíveis"}
                       </Text>
-                      {AcidentesPorVias[via]?.horarioMaiorIncidencia.length > 0 && (
-                        <>
-                          <View style={styles.rowWithBorder}>
-                            <Text style={styles.infoText}>
-                              <Text style={styles.label}>Horário de maior incidência:</Text>
-                            </Text>
-                            <TouchableOpacity onPress={alternarHorarios} style={styles.expandButton}>
-                              <Icon name={horarios ? "expand-less" : "expand-more"} size={24} color="#007BFF" />
-                            </TouchableOpacity>
-                          </View>
-                          {horarios && (
-                            <Text style={styles.infoTextWithBorder}>
-                              {AcidentesPorVias[via].horarioMaiorIncidencia.join(", ")}
-                            </Text>
-                          )}
-                        </>
-                      )}
                     </View>
                   ))}
                 </View>

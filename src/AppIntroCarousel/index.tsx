@@ -127,6 +127,8 @@ const styles = StyleSheet.create({ // Estilos do componente
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 8,
+    borderWidth: 0.5,
+    borderColor: '#007BFF',
   },
   icon: {
     marginBottom: 20,

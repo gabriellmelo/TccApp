@@ -45,6 +45,7 @@ export default function Home() { // Componente principal da tela inicial
   const [legendaVisivel, setLegendaVisivel] = useState(false); // Estado da legenda
   const [corMarcadorBairro, setCorMarcadorBairro] = useState("blue"); // Estado da cor do marcador do bairro
   const [pesquisa, setPesquisa] = useState(''); // Estado da pesquisa
+  const [erroPesquisa, setErroPesquisa] = useState(""); // Estado para mensagem de erro
   const [bairrosFiltrados, setBairrosFiltrados] = useState(bairros); // Estado dos bairros filtrados
   const [bairrosDropdownAberto, setBairrosDropdownAberto] = useState(false); // Estado do dropdown de bairros
   const [viasDropdownAberto, setViasDropdownAberto] = useState(false); // Estado do dropdown de vias
@@ -203,14 +204,22 @@ export default function Home() { // Componente principal da tela inicial
 
   const Busca = (text) => { // Função para buscar bairros
     setPesquisa(text); // Atualiza o estado da pesquisa
-    setBairrosFiltrados(bairros.filter(bairro => bairro.toLowerCase().includes(text.toLowerCase()))); // Filtra os bairros
+    const bairrosFiltrados = bairros.filter(bairro => bairro.toLowerCase().includes(text.toLowerCase())); // Filtra os bairros
+    setBairrosFiltrados(bairrosFiltrados); // Atualiza os bairros filtrados
     setBairrosDropdownAberto(true); // Abre o dropdown ao digitar
-
+  
     if (text === "") { // Limpa a seleção ao apagar o texto
       limparSelecao(); // Limpa a seleção de bairro e via
+      setErroPesquisa(""); // Limpa a mensagem de erro
     } else if (bairroSelecionado && text.length < bairroSelecionado.length) { // Limpa a seleção ao apagar o texto
       setBairroSelecionado(text); // Atualiza o estado do bairro selecionado
       setCoordenadas({ latitude: -20.5386, longitude: -47.4006 }); // Retorna ao centro da cidade
+    }
+  
+    if (bairrosFiltrados.length === 0 && text !== "") { // Verifica se não há bairros correspondentes e se o texto não está vazio
+      setErroPesquisa("Nenhum bairro encontrado."); // Define a mensagem de erro
+    } else {
+      setErroPesquisa(""); // Limpa a mensagem de erro
     }
   };
 
@@ -417,7 +426,9 @@ export default function Home() { // Componente principal da tela inicial
               )}
             </View>
           </View>
-
+          {erroPesquisa && pesquisa ? ( // Exibe a mensagem de erro se houver e se o texto não estiver vazio
+            <Text style={styles.erroTexto}>{erroPesquisa}</Text>
+          ) : null}
           {bairrosDropdownAberto && ( // Exibe o dropdown de bairros
             <FlatList // Lista de bairros
               data={bairrosFiltrados} // Dados do dropdown
@@ -717,6 +728,11 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     marginBottom: 10,
+  },
+  erroTexto: {
+    color: 'red',
+    textAlign: 'center',
+    marginTop: 5,
   },
   input: {
     flex: 1,
