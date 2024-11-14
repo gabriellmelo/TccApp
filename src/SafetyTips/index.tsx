@@ -54,6 +54,8 @@ const styles = StyleSheet.create({ // Estilos do componente
     borderRadius: 20,
     overflow: 'hidden',
     backgroundColor: '#eee',
+    borderWidth: 0.5,
+    borderColor: '#007BFF',
   },
   image: {
     width: '100%',

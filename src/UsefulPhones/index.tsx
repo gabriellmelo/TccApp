@@ -39,7 +39,7 @@ const styles = StyleSheet.create({ // Estilos do componente
     marginVertical: 10,
     padding: 16,
     backgroundColor: '#007BFF',
-    borderRadius: 10,
+    borderRadius: 50,
     width: '100%',
   },
   phoneText: {

@@ -13,8 +13,8 @@ export const bairros = [ // Lista de bairros
   "Prolongamento Jardim Brasilândia", "Prolongamento Jardim Paulista",
   "Prolongamento Vila Santa Cruz", "Recanto Cap. Heliodoro Pinheiro",
   "Residencial Jardim Vera Cruz", "São Joaquim", "Vila Aparecida",
-  "Vila Europa", "Vila Marta", "Vila Rezende", "Vila Santa Cruz",
-  "Vila Santa Rita", "Vila Santa Terezinha"
+  "Vila Europa", "Vila Marta", "Vila Rezende", "Vila São Sebastião",
+  "Vila Santa Cruz", "Vila Santa Rita", "Vila Santa Terezinha",
 ];
 
 export const ViasPorBairro: { [bairro: string]: string[] } = { // lista de vias por bairro
@@ -35,7 +35,7 @@ export const ViasPorBairro: { [bairro: string]: string[] } = { // lista de vias 
   "Cidade Nova": [
     "Avenida Major Nicácio",
     "Avenida Presidente Vargas",
-    "Rua Franscisco Barbosa",
+    "Rua Prudente de Morais",
   ],
   "City Petrópolis": [
     "Avenida Coelho Neto",
@@ -120,7 +120,7 @@ export const ViasPorBairro: { [bairro: string]: string[] } = { // lista de vias 
     "Rua José Abraão Mine",
   ],
   "Jardim Primavera": [
-    "Rua Dos Bem-Te-Vi",
+    "Rua Dos Bem-Te-Vis",
   ],
   "Jardim Roselândia": [
     "Rua Batatais",
@@ -191,6 +191,9 @@ export const ViasPorBairro: { [bairro: string]: string[] } = { // lista de vias 
     "Rua Artur Franchini",
     "Rua Major Moura Matos",
   ],
+  "Vila São Sebastião": [
+    "Rua João de Araújo Malheiros",
+  ],
   "Vila Santa Cruz": [
     "Rua Ozandir Hipólito da Silva",
   ],
@@ -205,23 +208,21 @@ export const ViasPorBairro: { [bairro: string]: string[] } = { // lista de vias 
 
 export const AcidentesPorVias: { // Dados de acidentes por via
   [via: string]: { // Chave é o nome da via
-    bairro: string; 
-    indiceAcidentes: number; 
-    causasMaisFrequentes: string[]; 
+    bairro: string;
+    indiceAcidentes: number;
+    causasMaisFrequentes: string[];
+    horarioMaiorIncidencia: string[];
   };
 } = {
-  "Avenida Ricarte Soares Silva": {
-    bairro: "Jardim Marambaia",
-    indiceAcidentes: 1,
-    causasMaisFrequentes: [
-      "Choque"
-    ]
-  },
   "Avenida Adhemar Pereira De Barros": {
     bairro: "Jardim Brasilândia",
     indiceAcidentes: 2,
     causasMaisFrequentes: [
       "Choque"
+    ],
+    horarioMaiorIncidencia: [
+      "Tarde",
+      "Noite",
     ]
   },
   "Avenida Alagoas": {
@@ -229,6 +230,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Outros"
+    ],
+    horarioMaiorIncidencia: [
+      "Manhã"
     ]
   },
   "Avenida Antônio Barbosa Filho": {
@@ -236,6 +240,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Choque"
+    ],
+    horarioMaiorIncidencia: [
+      "Noite"
     ]
   },
   "Avenida Brasil": {
@@ -245,6 +252,11 @@ export const AcidentesPorVias: { // Dados de acidentes por via
       "Tombamento",
       "Colisão Transversal",
       "Atropelamento"
+    ],
+    horarioMaiorIncidencia: [
+      "Manhã",
+      "Tarde",
+      "Noite",
     ]
   },
   "Avenida Carlos Roberto Hadade": {
@@ -252,6 +264,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Choque"
+    ],
+    horarioMaiorIncidencia: [
+      "Tarde",
     ]
   },
   "Avenida Cesar Martins Pirajá": {
@@ -259,6 +274,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Atropelamento"
+    ],
+    horarioMaiorIncidencia: [
+      "Noite",
     ]
   },
   "Avenida Champagnat": {
@@ -266,6 +284,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Colisão Frontal"
+    ],
+    horarioMaiorIncidencia: [
+      "Tarde",
     ]
   },
   "Avenida Chico Júlio": {
@@ -273,6 +294,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Colisão Transversal"
+    ],
+    horarioMaiorIncidencia: [
+      "Noite",
     ]
   },
   "Avenida Cláudio da Cruz Ribeiro": {
@@ -280,6 +304,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Atropelamento"
+    ],
+    horarioMaiorIncidencia: [
+      "Noite",
     ]
   },
   "Avenida Coelho Neto": {
@@ -287,6 +314,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Atropelamento"
+    ],
+    horarioMaiorIncidencia: [
+      "Noite",
     ]
   },
   "Avenida César Martins Pirajá": {
@@ -296,6 +326,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
       "Atropelamento",
       "Colisão Lateral",
       "Colisão Frontal"
+    ],
+    horarioMaiorIncidencia: [
+
     ]
   },
   "Avenida Dom Pedro I": {
@@ -303,6 +336,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Colisão Transversal"
+    ],
+    horarioMaiorIncidencia: [
+      "Não disponível"
     ]
   },
   "Avenida Doutor Abrahão Brickmann": {
@@ -311,6 +347,10 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     causasMaisFrequentes: [
       "Choque",
       "Atropelamento"
+    ],
+    horarioMaiorIncidencia: [
+      "Noite",
+      "Manhã",
     ]
   },
   "Avenida Doutor Chafic Facury": {
@@ -318,6 +358,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Atropelamento"
+    ],
+    horarioMaiorIncidencia: [
+      "Manhã",
     ]
   },
   "Avenida Doutor Flávio Rocha": {
@@ -326,6 +369,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     causasMaisFrequentes: [
       "Choque",
       "Atropelamento"
+    ],
+    horarioMaiorIncidencia: [
+      "Madrugada",
     ]
   },
   "Avenida Doutor Hélio Palermo": {
@@ -334,6 +380,10 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     causasMaisFrequentes: [
       "Choque",
       "Outros"
+    ],
+    horarioMaiorIncidencia: [
+      "Tarde",
+      "Madrugada",
     ]
   },
   "Avenida Doutor Ismael Alonso Y Alonso": {
@@ -342,6 +392,10 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     causasMaisFrequentes: [
       "Choque",
       "Colisão Outros"
+    ],
+    horarioMaiorIncidencia: [
+      "Tarde",
+      "Madrugada",
     ]
   },
   "Avenida Frei Germano": {
@@ -349,6 +403,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Choque"
+    ],
+    horarioMaiorIncidencia: [
+      "Tarde",
     ]
   },
   "Avenida Geralda Rocha Silva": {
@@ -356,6 +413,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Colisão Frontal"
+    ],
+    horarioMaiorIncidencia: [
+      "Noite",
     ]
   },
   "Avenida Jaime Telini": {
@@ -364,6 +424,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     causasMaisFrequentes: [
       "Choque",
       "Capotamento"
+    ],
+    horarioMaiorIncidencia: [
+      "Madugada",
     ]
   },
   "Avenida José da Silva": {
@@ -371,6 +434,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Atropelamento"
+    ],
+    horarioMaiorIncidencia: [
+      "Noite",
     ]
   },
   "Avenida José Lopes Ribeiro": {
@@ -378,6 +444,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Atropelamento"
+    ],
+    horarioMaiorIncidencia: [
+      "Não disponível",
     ]
   },
   "Avenida José Moisés Pereira": {
@@ -385,6 +454,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Atropelamento"
+    ],
+    horarioMaiorIncidencia: [
+      "Noite",
     ]
   },
   "Avenida Lisete Coelho Lourenço": {
@@ -392,6 +464,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Atropelamento"
+    ],
+    horarioMaiorIncidencia: [
+      "Noite",
     ]
   },
   "Avenida Major Elías Mota": {
@@ -400,6 +475,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     causasMaisFrequentes: [
       "Colisão Traseira",
       "Colisão Transversal"
+    ],
+    horarioMaiorIncidencia: [
+      "Tarde",
     ]
   },
   "Avenida Major Nicácio": {
@@ -408,6 +486,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     causasMaisFrequentes: [
       "Atropelamento",
       "Colisão Transversal"
+    ],
+    horarioMaiorIncidencia: [
+      "Manhã",
     ]
   },
   "Avenida Martinho Ribeiro": {
@@ -415,6 +496,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Colisão Outros"
+    ],
+    horarioMaiorIncidencia: [
+      "Tarde",
     ]
   },
   "Avenida Miguel Sábio de Melo": {
@@ -423,6 +507,10 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     causasMaisFrequentes: [
       "Choque",
       "Colisão Frontal"
+    ],
+    horarioMaiorIncidencia: [
+      "Manhã",
+      "Madrugada",
     ]
   },
   "Avenida Ministro Rui Barbosa": {
@@ -430,6 +518,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Colisão Transversal"
+    ],
+    horarioMaiorIncidencia: [
+      "Tarde",
     ]
   },
   "Avenida Nelson Nogueira": {
@@ -437,6 +528,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Colisão Frontal"
+    ],
+    horarioMaiorIncidencia: [
+      "Noite",
     ]
   },
   "Avenida Nossa Senhora de Lourdes": {
@@ -444,6 +538,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Choque"
+    ],
+    horarioMaiorIncidencia: [
+      "Noite",
     ]
   },
   "Avenida Orlando Dom Pierre": {
@@ -452,6 +549,10 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     causasMaisFrequentes: [
       "Atropelamento",
       "Choque"
+    ],
+    horarioMaiorIncidencia: [
+      "Manhã",
+      "Tarde",
     ]
   },
   "Avenida Paulino Puci": {
@@ -459,6 +560,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Choque"
+    ],
+    horarioMaiorIncidencia: [
+      "Madugada",
     ]
   },
   "Avenida Paulo Roberto Cavalheiro Coelho": {
@@ -466,6 +570,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Atropelamento"
+    ],
+    horarioMaiorIncidencia: [
+      "Noite",
     ]
   },
   "Avenida Paulo VI": {
@@ -473,6 +580,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Atropelamento"
+    ],
+    horarioMaiorIncidencia: [
+      "Manhã",
     ]
   },
   "Avenida Presidente Vargas": {
@@ -481,7 +591,13 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     causasMaisFrequentes: [
       "Atropelamento",
       "Colisão Transversal",
+      "Colisão Traseira",
       "Colisão Lateral"
+    ],
+    horarioMaiorIncidencia: [
+      "Manhã",
+      "Tarde",
+      "Madugada",
     ]
   },
   "Avenida Primo Menegheti": {
@@ -489,6 +605,19 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Colisão Transversal"
+    ],
+    horarioMaiorIncidencia: [
+      "Tarde",
+    ]
+  },
+  "Avenida Ricarte Soares Silva": {
+    bairro: "Jardim Marambaia",
+    indiceAcidentes: 1,
+    causasMaisFrequentes: [
+      "Choque"
+    ],
+    horarioMaiorIncidencia: [
+      "Noite",
     ]
   },
   "Avenida Rio Branco": {
@@ -496,6 +625,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Tombamento"
+    ],
+    horarioMaiorIncidencia: [
+      "Tarde",
     ]
   },
   "Avenida Santos Dumont": {
@@ -505,6 +637,10 @@ export const AcidentesPorVias: { // Dados de acidentes por via
       "Choque",
       "Atropelamento",
       "Colisão Transversal"
+    ],
+    horarioMaiorIncidencia: [
+      "Manhã",
+      "Tarde",
     ]
   },
   "Avenida Severino Toster Meireles": {
@@ -512,6 +648,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Choque"
+    ],
+    horarioMaiorIncidencia: [
+      "Manhã",
     ]
   },
   "Avenida São Vicente": {
@@ -520,6 +659,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     causasMaisFrequentes: [
       "Choque",
       "Colisão Outros"
+    ],
+    horarioMaiorIncidencia: [
+      "Tarde",
     ]
   },
   "Avenida Vanderlei Silveira": {
@@ -527,6 +669,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Atropelamento"
+    ],
+    horarioMaiorIncidencia: [
+      "Noite",
     ]
   },
   "Avenida Wilson Sábio de Mello": {
@@ -534,6 +679,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Colisão Outros"
+    ],
+    horarioMaiorIncidencia: [
+      "Manhã",
     ]
   },
   "Rua Para": {
@@ -541,6 +689,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Outros"
+    ],
+    horarioMaiorIncidencia: [
+      "Madugada",
     ]
   },
   "Rua Abílio Coutinho": {
@@ -548,6 +699,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Colisão Traseira"
+    ],
+    horarioMaiorIncidencia: [
+      "Noite",
     ]
   },
   "Rua Alfredo Tosi": {
@@ -555,6 +709,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Colisão Frontal"
+    ],
+    horarioMaiorIncidencia: [
+      "Não disponível",
     ]
   },
   "Rua Angelica Gomes Faleiros": {
@@ -562,6 +719,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Choque"
+    ],
+    horarioMaiorIncidencia: [
+      "Manhã",
     ]
   },
   "Rua Angelo Melani": {
@@ -569,6 +729,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Colisão Transversal"
+    ],
+    horarioMaiorIncidencia: [
+      "Tarde",
     ]
   },
   "Rua Artur Franchini": {
@@ -576,6 +739,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Colisão Lateral"
+    ],
+    horarioMaiorIncidencia: [
+      "Manhã",
     ]
   },
   "Rua Batatais": {
@@ -583,6 +749,17 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Colisão Lateral"
+    ],
+    horarioMaiorIncidencia: [
+      "Não disponível",
+    ]
+  },
+  "Rua Carlos de Campos": {
+    bairro: "Jardim Aeroporto II",
+    indiceAcidentes: 0,
+    causasMaisFrequentes: [
+    ],
+    horarioMaiorIncidencia: [
     ]
   },
   "Rua Congonhas do Campo": {
@@ -590,6 +767,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Choque"
+    ],
+    horarioMaiorIncidencia: [
+      "Tarde",
     ]
   },
 
@@ -597,7 +777,10 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     bairro: "Centro",
     indiceAcidentes: 0,
     causasMaisFrequentes: [
-      "Colisão Frontal"
+
+    ],
+    horarioMaiorIncidencia: [
+
     ]
   },
   "Rua Das Orquídeas": {
@@ -605,6 +788,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Outros"
+    ],
+    horarioMaiorIncidencia: [
+      "Manhã",
     ]
   },
   "Rua Diogo Feijó": {
@@ -612,13 +798,19 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Colisão Lateral"
+    ],
+    horarioMaiorIncidencia: [
+      "Tarde",
     ]
   },
-  "Rua Dos Bem-Te-Vi": {
+  "Rua Dos Bem-Te-Vis": {
     bairro: "Jardim Primavera",
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Choque"
+    ],
+    horarioMaiorIncidencia: [
+      "Não disponível",
     ]
   },
   "Rua Doutor Júlio Cardoso": {
@@ -626,6 +818,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Tombamento"
+    ],
+    horarioMaiorIncidencia: [
+      "Noite",
     ]
   },
   "Rua General Carneiro": {
@@ -633,6 +828,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Atropelamento"
+    ],
+    horarioMaiorIncidencia: [
+      "Tarde",
     ]
   },
   "Rua General José Oliveira Ramos": {
@@ -640,6 +838,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Colisão Lateral"
+    ],
+    horarioMaiorIncidencia: [
+      "Tarde"
     ]
   },
   "Rua General Teles": {
@@ -647,6 +848,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Colisão Lateral"
+    ],
+    horarioMaiorIncidencia: [
+      "Manhã",
     ]
   },
   "Rua Geraldo Bassoteli": {
@@ -654,6 +858,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Tombamento"
+    ],
+    horarioMaiorIncidencia: [
+      "Manhã",
     ]
   },
   "Rua Geraldo Flausino de Senne": {
@@ -661,6 +868,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Colisão Lateral"
+    ],
+    horarioMaiorIncidencia: [
+      "Noite",
     ]
   },
   "Rua Hipólito José da Costa": {
@@ -669,6 +879,10 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     causasMaisFrequentes: [
       "Choque",
       "Colisão Lateral"
+    ],
+    horarioMaiorIncidencia: [
+      "Noite",
+      "Madrugada",
     ]
   },
   "Rua Homero Pachêco Alves": {
@@ -676,6 +890,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Colisão Frontal"
+    ],
+    horarioMaiorIncidencia: [
+      "Manhã",
     ]
   },
   "Rua José Abraão Mine": {
@@ -683,6 +900,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Choque"
+    ],
+    horarioMaiorIncidencia: [
+      "Tarde",
     ]
   },
   "Rua Major Moura Matos": {
@@ -690,6 +910,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Atropelamento"
+    ],
+    horarioMaiorIncidencia: [
+      "Noite",
     ]
   },
   "Rua Maria Conceição Machado": {
@@ -697,6 +920,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Colisão Frontal"
+    ],
+    horarioMaiorIncidencia: [
+      "Tarde",
     ]
   },
   "Rua Martins MMDC": {
@@ -704,6 +930,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Atropelamento"
+    ],
+    horarioMaiorIncidencia: [
+      "Tarde",
     ]
   },
   "Rua Monsenhor Rosa": {
@@ -711,6 +940,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Atropelamento"
+    ],
+    horarioMaiorIncidencia: [
+      "Manhã",
     ]
   },
   "Rua Nelson Japaulo": {
@@ -718,6 +950,17 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Choque"
+    ],
+    horarioMaiorIncidencia: [
+      "Noite",
+    ]
+  },
+  "Rua Nelson Ribeiro": {
+    bairro: "Jardim Aeroporto II",
+    indiceAcidentes: 0,
+    causasMaisFrequentes: [
+    ],
+    horarioMaiorIncidencia: [
     ]
   },
   "Rua Ouvidor Freire": {
@@ -725,6 +968,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Atropelamento"
+    ],
+    horarioMaiorIncidencia: [
+      "Tarde",
     ]
   },
   "Rua Ovídio Vanine": {
@@ -732,6 +978,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Outros"
+    ],
+    horarioMaiorIncidencia: [
+      "Não disponível",
     ]
   },
   "Rua Ozandir Hipólito da Silva": {
@@ -739,6 +988,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Atropelamento"
+    ],
+    horarioMaiorIncidencia: [
+      "Tarde",
     ]
   },
   "Rua Padre Conrado": {
@@ -746,6 +998,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Colisão Outros"
+    ],
+    horarioMaiorIncidencia: [
+      "Noite",
     ]
   },
   "Rua Rachide Salomão": {
@@ -753,6 +1008,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Tombamento"
+    ],
+    horarioMaiorIncidencia: [
+      "Tarde",
     ]
   },
   "Rua Raquel Jacinto Mesquita": {
@@ -760,13 +1018,19 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Atropelamento"
+    ],
+    horarioMaiorIncidencia: [
+      "Noite",
     ]
   },
   "Rua Sebastião Mantovani": {
-    bairro: "Jardim Cambui",
+    bairro: "Jardim Cambuí",
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Choque"
+    ],
+    horarioMaiorIncidencia: [
+      "Não disponível",
     ]
   },
   "Rua Valdir Carrijo Campos": {
@@ -774,6 +1038,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Colisão Frontal"
+    ],
+    horarioMaiorIncidencia: [
+      "Noite",
     ]
   },
   "Rua Valdília Martins dos Santos": {
@@ -781,6 +1048,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Colisão Frontal"
+    ],
+    horarioMaiorIncidencia: [
+      "Noite",
     ]
   },
   "Rua Vitória": {
@@ -788,6 +1058,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     indiceAcidentes: 1,
     causasMaisFrequentes: [
       "Atropelamento"
+    ],
+    horarioMaiorIncidencia: [
+      "Tarde",
     ]
   },
   "Rua Voluntários da Franca": {
@@ -796,6 +1069,9 @@ export const AcidentesPorVias: { // Dados de acidentes por via
     causasMaisFrequentes: [
       "Colisão Traseira",
       "Atropelamento"
+    ],
+    horarioMaiorIncidencia: [
+      "Não disponível",
     ]
   }
 }

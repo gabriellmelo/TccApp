@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Button } from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { WebView } from 'react-native-webview';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const noticias = [ // Dados das notícias
   {
     id: 1, // Identificador da notícia
-    titulo: "Comerciante faz maquete com 'solução' para trânsito da Portinari", 
-    descricao: "Projeto artesanal foi desenvolvido para apontar 'soluções' e cobrar melhorias em trecho urbano da rodovia Cândido Portinari.", 
+    titulo: "Comerciante faz maquete com 'solução' para trânsito da Portinari",
+    descricao: "Projeto artesanal foi desenvolvido para apontar 'soluções' e cobrar melhorias em trecho urbano da rodovia Cândido Portinari.",
     data: '07/05/2024',
-    imagem: require('assets/image.png'), 
-    link: 'https://sampi.net.br/franca/noticias/2831557/franca-e-regiao/2024/05/comerciante-faz-maquete-com-solucao-para-transito-da-portinari' 
+    imagem: require('assets/image.png'),
+    link: 'https://sampi.net.br/franca/noticias/2831557/franca-e-regiao/2024/05/comerciante-faz-maquete-com-solucao-para-transito-da-portinari'
   },
   {
     id: 2,
@@ -116,7 +117,10 @@ const NoticiasScreen = () => { // Componente da tela de notícias
     return ( // Retorna a interface da notícia selecionada
       <View style={{ flex: 1 }}>
         <TouchableOpacity style={styles.voltarButton} onPress={SelecionarVoltar}>
-          <Text style={styles.voltarButtonText}>Voltar para notícias</Text>
+          <View style={styles.voltarButtonContent}>
+            <FontAwesome5 name="newspaper" size={24} color="#FFF" />
+            <Text style={styles.voltarButtonText}>Voltar para notícias</Text>
+          </View>
         </TouchableOpacity>
         <WebView source={{ uri: selecionarNoticia.link }} style={styles.webView} />
       </View>
@@ -124,9 +128,9 @@ const NoticiasScreen = () => { // Componente da tela de notícias
   }
 
   return (
-    <ScrollView style={styles.container}>  
+    <ScrollView style={styles.container}>
       {noticias.map(noticia => ( // Mapeia as notícias
-        <TouchableOpacity key={noticia.id} onPress={() => ApertarNoticia(noticia)}>  
+        <TouchableOpacity key={noticia.id} onPress={() => ApertarNoticia(noticia)}>
           <View style={styles.noticiaContainer}>
             <Image source={noticia.imagem} style={styles.imagem} />
             <View style={styles.textContainer}>
@@ -185,9 +189,14 @@ const styles = StyleSheet.create({ // Estilos do componente
     borderRadius: 10,
     alignItems: 'center',
   },
+  voltarButtonContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   voltarButtonText: {
     color: '#FFF',
     fontSize: 16,
+    marginLeft: 10, // Espaçamento entre o ícone e o texto
   },
   webView: {
     flex: 1,
