@@ -52,7 +52,6 @@ Este aplicativo oferece informações detalhadas sobre os índices de acidentes 
 
 - **React Native**: Para o desenvolvimento da interface.
 - **API de Geocoding**: Para conversão de endereços em coordenadas geográficas.
-- **Mapas**: Integração com um provedor de mapas para visualização geográfica.
 - **Streamlit**: Para o painel interativo de análise de dados.
 ---
 
