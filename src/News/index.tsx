@@ -6,6 +6,14 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 const noticias = [ // Dados das notícias
   {
     id: 1, // Identificador da notícia
+    titulo: "Franca tem aumento expressivo de acidentes de trânsito em 2024",
+    descricao: 'Dados apontam 768 casos de acidente com lesão corporal em Franca nos primeiros nove meses de 2024, superando o total de 2023.',
+    data: '13/11/2024',
+    imagem: require('assets/imageExpressivo.webp'),
+    link: 'https://sampi.net.br/franca/noticias/2867791/franca-e-regiao/2024/11/franca-tem-aumento-expressivo-de-acidentes-de-transito-em-2024'
+  },
+  {
+    id: 2, 
     titulo: "Comerciante faz maquete com 'solução' para trânsito da Portinari",
     descricao: "Projeto artesanal foi desenvolvido para apontar 'soluções' e cobrar melhorias em trecho urbano da rodovia Cândido Portinari.",
     data: '07/05/2024',
@@ -13,7 +21,7 @@ const noticias = [ // Dados das notícias
     link: 'https://sampi.net.br/franca/noticias/2831557/franca-e-regiao/2024/05/comerciante-faz-maquete-com-solucao-para-transito-da-portinari'
   },
   {
-    id: 2,
+    id: 3,
     titulo: 'Trânsito assassino: carros e motos matam mais que armas em Franca',
     descricao: 'De acordo com dados divulgados pela PM, nos últimos cinco anos, foram 229 mortes nas ruas, avenidas e rodovias de Franca; motociclistas são as principais vítimas.',
     data: '27/09/2023',
@@ -21,7 +29,7 @@ const noticias = [ // Dados das notícias
     link: 'https://sampi.net.br/franca/noticias/2789401/local/2023/09/transito-assassino-carros-e-motos-matam-mais-que-armas-em-franca'
   },
   {
-    id: 3,
+    id: 4,
     titulo: 'Acidente em alça de acesso causa lentidão na rodovia Portinari',
     descricao: 'Colisão entre mociclista e ciclista na alça de acesso da rodovia Cândido Portinari para o Jardim Guanabara, em Franca, deixou duas pessoas feridas.',
     data: '03/06/2024',
@@ -29,7 +37,7 @@ const noticias = [ // Dados das notícias
     link: 'https://sampi.net.br/franca/noticias/2836946/franca-e-regiao/2024/06/acidente-em-alca-de-acesso-causa-lentidao-na-rodovia-portinari'
   },
   {
-    id: 4,
+    id: 5,
     titulo: 'Produtor rural de Batatais morre em grave acidente em Passos',
     descricao: 'Com a gravidade do impacto, o produtor rural Altair José Capato morreu no local do acidente, sem chances de ser socorrido.',
     data: '03/06/2024',
@@ -37,7 +45,7 @@ const noticias = [ // Dados das notícias
     link: 'https://sampi.net.br/franca/noticias/2836833/franca-e-regiao/2024/06/produtor-rural-de-batatais-morre-em-grave-acidente-em-passos'
   },
   {
-    id: 5,
+    id: 6,
     titulo: 'Idoso de 86 anos morre atropelado em Franca',
     descricao: 'Após o acidente, o motorista de veículo não identificado, que atingiu o idoso, fugiu do local.',
     data: '02/06/2024',
@@ -45,7 +53,7 @@ const noticias = [ // Dados das notícias
     link: 'https://sampi.net.br/franca/noticias/2836763/franca-e-regiao/2024/06/idoso-de-86-anos-morre-atropelado-em-franca'
   },
   {
-    id: 6,
+    id: 7,
     titulo: 'Câmera filmou acidente fatal na Av. Santos Dumont; ASSISTA',
     descricao: 'Rafael Batista Borges e seu amigo Fernando Borges da Silva voltavam da Expoagro quando o acidente aconteceu. Aos policiais, Fernando disse que ambos beberam na madrugada.',
     data: '27/05/2024',
@@ -53,7 +61,7 @@ const noticias = [ // Dados das notícias
     link: 'https://sampi.net.br/franca/noticias/2835630/franca-e-regiao/2024/05/camera-filmou-acidente-fatal-na-av-santos-dumont-assista'
   },
   {
-    id: 7,
+    id: 8,
     titulo: 'Médico francano sobrevive a grave acidente perto do Paineirão',
     descricao: 'Veículo do médico francano atingiu a traseira de um caminhão que iria acessar o Posto Paineirão',
     data: '13/10/2024',
@@ -61,7 +69,7 @@ const noticias = [ // Dados das notícias
     link: 'https://sampi.net.br/franca/noticias/2861942/policia/2024/10/medico-francano-sobrevive-a-grave-acidente-perto-do-paineirao'
   },
   {
-    id: 8,
+    id: 9,
     titulo: 'VÍDEO: Conversão proibida de moto causa grave acidente na Vargasco francano sobrevive a grave acidente perto do Paineirão',
     descricao: 'Uma conversão proibida resultou em um grave acidente na noite desta segunda-feira, 14, no cruzamento da avenida Presidente Vargas com a rua Afonso Pena, na Cidade Nova, região central de Franca.',
     data: '14/10/2024',
@@ -69,7 +77,7 @@ const noticias = [ // Dados das notícias
     link: 'https://sampi.net.br/franca/noticias/2862124/franca-e-regiao/2024/10/video-conversao-proibida-de-moto-causa-grave-acidente-na-vargas'
   },
   {
-    id: 9,
+    id: 10,
     titulo: 'Colisão na Portinari deixa 3 vítimas presas às ferragens; VÍDEO',
     descricao: 'Caminhão tombou ao atingir mureta de proteção na rodovia Cândido Portinari',
     data: '14/10/2024',
@@ -77,7 +85,7 @@ const noticias = [ // Dados das notícias
     link: 'https://sampi.net.br/franca/noticias/2861944/regiao/2024/10/colisao-na-portinari-deixa-3-vitimas-presas-as-ferragens-video'
   },
   {
-    id: 10,
+    id: 11,
     titulo: "Motorista desrespeita 'pare' e causa acidente no Cidade Nova",
     descricao: 'EcoSport tombou e atingiu outro veículo estacionado',
     data: '14/10/2024',
@@ -85,7 +93,7 @@ const noticias = [ // Dados das notícias
     link: 'https://sampi.net.br/franca/noticias/2862059/franca-e-regiao/2024/10/motorista-desrespeita-pare-e-causa-acidente-no-cidade-nova'
   },
   {
-    id: 11,
+    id: 12,
     titulo: "Grave acidente entre motos deixa dois feridos em Franca",
     descricao: 'Um grave acidente envolvendo duas motocicletas foi registrado na avenida Major Elias Motta, no bairro Jardim São Luiz, em Franca, no final da tarde deste domingo, 13.',
     data: '14/10/2024',
@@ -93,12 +101,28 @@ const noticias = [ // Dados das notícias
     link: 'https://sampi.net.br/franca/noticias/2861969/franca-e-regiao/2024/10/grave-acidente-entre-motos-deixa-dois-feridos-em-franca'
   },
   {
-    id: 12,
+    id: 13,
     titulo: "Motoqueiro fica em estado grave após acidente com ciclista",
     descricao: 'Um motociclista de 18 anos ficou em estado grave e um outro rapaz numa bicicleta sofreu ferimentos leves após se envolverem em um acidente de trânsito na noite desta sexta-feira, 11, na rua Érico Veríssimo, no Miramontes, zona norte de Franca.',
     data: '11/10/2024',
     imagem: require('assets/imageSamu.webp'),
     link: 'https://sampi.net.br/franca/noticias/2861969/franca-e-regiao/2024/10/grave-acidente-entre-motos-deixa-dois-feridos-em-franca'
+  },
+  {
+    id: 14,
+    titulo: "Acidentes em sequência envolvem oito veículos na Portinari",
+    descricao: 'Caminhão, carro e caminhonete envolvidos no segundo acidente na rodovia Cândido Portinari.',
+    data: '18/11/2024',
+    imagem: require('assets/imagePortinariSequencia.webp'),
+    link: 'https://sampi.net.br/franca/noticias/2868495/franca-e-regiao/2024/11/acidentes-em-sequencia-envolvem-oito-veiculos-na-portinari-'
+  },
+  {
+    id: 15,
+    titulo: "Portinari tem sequência de acidentes com 8 veículos",
+    descricao: 'Uma sequência de colisões gerou um grande engarrafamento na tarde desta sexta-feira, 8, no quilômetro 401 da Rodovia Cândido Portinari, em Franca, sentido Guanabara-Vila São Sebastião.',
+    data: '08/11/2024',
+    imagem: require('assets/imageSequenciaAcidente.webp'),
+    link: 'https://sampi.net.br/franca/noticias/2866945/franca-e-regiao/2024/11/portinari-tem-sequencia-de-acidentes-com-8-veiculos'
   },
 ];
 
