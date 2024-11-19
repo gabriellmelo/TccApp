@@ -1,31 +1,59 @@
 # Aplicativo de Estatísticas de Acidentes de Trânsito em Franca/SP
 
-Este aplicativo permite aos usuários acessar informações detalhadas sobre os índices de acidentes de trânsito em diferentes regiões da cidade de **Franca/SP**. Ele exibe estatísticas por bairro e fornece dados específicos sobre ruas e avenidas, incluindo índice de acidentes, horários com maior incidência, causas mais frequentes e rotas alternativas.
+Este aplicativo oferece informações detalhadas sobre os índices de acidentes de trânsito em diferentes regiões de **Franca/SP**, incluindo estatísticas por bairro e dados específicos de ruas e avenidas. Ele também integra acesso a uma análise de dados dos últimos 5 anos, uma página com notícias sobre acidentes e uma seção com dicas de segurança no trânsito.
 
 ## Funcionalidades Principais
 
-- **Visualização no Mapa**: As ruas e avenidas são marcadas no mapa de Franca/SP, permitindo uma visualização geográfica das regiões abrangidas.
-
-- **Seleção por Bairro**: Os usuários podem selecionar um bairro específico de Franca/SP para visualizar os dados de acidentes relacionados a esse local.
-
-- **Seleção por Rua/Avenida**: Após selecionar um bairro, é possível escolher uma rua ou avenida dentro desse bairro para ver informações detalhadas sobre os acidentes ocorridos nessa via.
-
-- **Detalhes dos Acidentes**: O aplicativo exibe detalhes como o índice de acidentes nos últimos 5 anos, o horário com maior incidência, as causas mais frequentes e rotas alternativas para evitar acidentes.
+- **Visualização no Mapa**: Exibição geográfica das regiões de Franca/SP, com marcadores indicando ruas e avenidas relevantes.
+- **Seleção por Bairro**: Escolha um bairro de Franca/SP para visualizar os dados de acidentes relacionados.
+- **Seleção por Rua/Avenida**: Após selecionar um bairro, visualize informações específicas de ruas ou avenidas.
+- **Detalhes dos Acidentes**:
+  - Índice de acidentes nos últimos 5 anos.
+  - Horário com maior incidência.
+  - Causas mais frequentes.
+  - Rotas alternativas.
+- **Acesso Rápido a Órgãos de Segurança**:
+  - Lista de números de órgãos de segurança pública.
+  - Redirecionamento direto para o aplicativo nativo de chamadas do celular.
+- **Análise de Dados via Streamlit**:
+  - Link para um painel interativo em Streamlit com análises detalhadas dos últimos 5 anos.
+  - Informações incluem tendências de acidentes, horários críticos e dados comparativos por bairro e rua.
+- **Página de Notícias**:
+  - Notícias atualizadas sobre acidentes de trânsito na cidade de Franca.
+  - Informações relevantes sobre segurança e prevenção.
+- **Página de Dicas de Segurança**:
+  - Orientações práticas para prevenção de acidentes.
 
 ## Como Usar
 
-1. **Selecionar Bairro**: Escolha um bairro na lista suspensa de bairros disponíveis em Franca/SP.
-
-2. **Selecionar Rua/Avenida**: Após selecionar um bairro, uma lista suspensa de ruas e avenidas disponíveis nesse bairro será exibida. Selecione uma rua ou avenida para ver os detalhes dos acidentes relacionados.
-
-3. **Visualizar Dados**: Os detalhes dos acidentes serão exibidos abaixo das listas suspensas, incluindo informações sobre o índice de acidentes, horário com maior incidência, causas mais frequentes e rotas alternativas.
+1. **Selecionar Bairro**: 
+   - Escolha um bairro na lista de bairros disponíveis em Franca/SP.
+2. **Selecionar Rua/Avenida**:
+   - Após selecionar um bairro, escolha uma rua ou avenida para ver os detalhes dos acidentes.
+3. **Visualizar Dados**:
+   - Os detalhes sobre acidentes serão exibidos, incluindo índices, horários e causas.
+4. **Analisar Dados no Streamlit**:
+   - Acesse o painel de análise de dados clicando no link disponível no aplicativo.
+5. **Acessar Notícias**:
+   - Navegue para a página de notícias diretamente pelo menu principal do aplicativo.
+6. **Consultar Dicas de Segurança**:
+   - Acesse a página de dicas para obter orientações úteis sobre como evitar acidentes no trânsito.
+7. **Contato com Órgãos de Segurança**:
+   - Acesse a lista de números de órgãos de segurança pública.
+   - Clique em um número para ser redirecionado ao aplicativo de chamadas do celular.
 
 ## Observações
 
-- Os dados exibidos são baseados em informações reais, mas podem conter apenas informações simuladas para fins de teste.
+- Os dados exibidos podem incluir informações simuladas para fins de teste.
+- Caso uma rua ou avenida específica não tenha dados disponíveis, será exibida uma mensagem indicando a ausência de informações.
+- Este aplicativo visa promover **conscientização** e **segurança no trânsito** por meio de informações úteis.
 
-- Caso uma rua ou avenida específica não tenha dados disponíveis, uma mensagem indicando a falta de informações será exibida.
+## Tecnologias Utilizadas
 
-- Este aplicativo foi desenvolvido para fornecer aos usuários informações úteis sobre os padrões de acidentes de trânsito em diferentes partes da cidade de Franca/SP, com o objetivo de promover a **conscientização** e a **segurança no trânsito**.
+- **React Native**: Para o desenvolvimento da interface.
+- **API de Geocoding**: Para conversão de endereços em coordenadas geográficas.
+- **Mapas**: Integração com um provedor de mapas para visualização geográfica.
+- **Streamlit**: Para o painel interativo de análise de dados.
+---
 
---- 
+Contribuímos para uma Franca/SP mais segura ao fornecer ferramentas práticas e acessíveis para os usuários.
